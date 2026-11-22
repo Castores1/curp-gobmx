@@ -9,26 +9,21 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FFFFFF;color:var(--texto);padding:0 0 30px}
 
-/* ===== Barra superior guinda + subbarra ===== */
-.barra-gob{background:var(--guinda-osc);color:#fff;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.barra-gob .gz{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
-.barra-gob .gz .esc{width:26px;height:26px;border-radius:50%;background:#fff;color:var(--guinda);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
-.barra-gob .gz .txt{line-height:1.1}
-.barra-gob .gz .txt small{display:block;font-weight:400;font-size:.62rem;opacity:.85;letter-spacing:.02em}
-.barra-gob .der{font-size:.64rem;opacity:.9;text-align:right;line-height:1.2}
-.subbarra{background:var(--guinda-int);color:#fff;padding:5px 14px;display:flex;align-items:center;justify-content:space-between;font-size:.62rem;letter-spacing:.04em;text-transform:uppercase}
-.subbarra .r{display:flex;gap:12px}
-.subbarra .r span{opacity:.9}
+/* ===== Barra superior CLARA + subbarra guinda ===== */
+.barra-gob{background:#F3F4F6;color:#111827;padding:16px 14px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #E5E7EB}
+.barra-gob .txt{font-size:1.15rem;font-weight:800;letter-spacing:.01em;text-align:center;line-height:1.1}
+
+.subbarra{background:var(--guinda);color:#fff;padding:13px 14px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
 
 /* ===== Ruta de navegación ===== */
-.ruta{max-width:365px;margin:0 auto;padding:10px 14px 0;font-size:.72rem;color:var(--suave)}
-.ruta .casita{font-size:.8rem;margin-right:2px}
+.ruta{max-width:365px;margin:0 auto;padding:0 14px;font-size:.72rem;color:var(--suave);display:flex;align-items:center;justify-content:center;gap:2px;flex-wrap:wrap;margin-bottom:18px}
+.ruta .casita{font-size:.85rem;margin-right:2px;color:#111827;display:inline-flex;align-items:center}
 .ruta .sep{margin:0 4px;color:#9CA3AF}
 .ruta .actual{color:#111827;font-weight:700}
 
 /* ===== Contenido ===== */
 .columna-angosta{max-width:365px;margin:0 auto;padding:14px 12px 0}
-.titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:18px;margin-left:10mm}
+.titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:10px;margin-left:10mm}
 .subtitulo-busqueda{font-size:1.15rem;font-weight:800;color:#1F2937;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin-bottom:14px}
 .descripcion{font-size:.78rem;line-height:1.45;color:var(--suave);margin-bottom:18px}
 .tabs-apiladas{display:flex;flex-direction:column;align-items:flex-start}
@@ -91,33 +86,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </head>
 <body>
 
-<!-- ===== BARRA SUPERIOR GUINDA ===== -->
+<!-- ===== BARRA SUPERIOR CLARA ===== -->
 <div class="barra-gob">
-  <div class="gz">
-    <div class="esc">🇲🇽</div>
-    <div class="txt">
-      Gobierno de México
-      <small>Registro Nacional de Población</small>
-    </div>
-  </div>
-  <div class="der">
-    Portal de Trámites<br>Servicios · Consulta
-  </div>
+  <div class="txt">Gobierno de México</div>
 </div>
-<div class="subbarra">
-  <span>RENAPO · CURP</span>
-  <div class="r"><span>Ayuda</span><span>Contacto</span></div>
-</div>
-
-<!-- ===== RUTA DE NAVEGACIÓN ===== -->
-<nav class="ruta">
-  <span class="casita">🏠</span><span class="sep">&gt;</span>
-  <span>Inicio</span><span class="sep">&gt;</span>
-  <span class="actual">Consulta tu CURP</span>
-</nav>
+<div class="subbarra">RENAPO</div>
 
 <div class="columna-angosta">
   <h1 class="titulo-principal">Consulta tu<br>CURP</h1>
+
+  <!-- ===== RUTA DE NAVEGACIÓN (debajo del título) ===== -->
+  <nav class="ruta">
+    <span class="casita" aria-hidden="true">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+    </span>
+    <span class="sep">&gt;</span>
+    <span>Inicio</span><span class="sep">&gt;</span>
+    <span class="actual">Consulta tu CURP</span>
+  </nav>
+
   <h2 class="subtitulo-busqueda">Búsqueda</h2>
   <p class="descripcion">La consulta puede efectuarse indicando la clave CURP cuando ya la conoce o proporcionando su nombre y datos de nacimiento.</p>
 
