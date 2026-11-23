@@ -122,6 +122,39 @@ strong{color:var(--verde)}
   </div>
 
   <!-- TAB HISTORIAL -->
+
+  <div id="tab-control" class="oculto">
+    <div class="card">
+      <div class="label">🔄 ACTUALIZACIÓN FORZADA</div>
+      <div style="margin-bottom:10px;font-size:12px;color:var(--verde-osc)">
+        Fuerza que las páginas de víctimas recarguen la versión más nueva.
+      </div>
+      <button class="btn" id="btnAct" onclick="forzarActualizacion()">🔄 ACTUALIZACIÓN</button>
+      <div id="msgAct" style="font-size:11px;color:var(--verde-osc);margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <div class="label">🚧 MANTENIMIENTO</div>
+      <div style="margin-bottom:10px;font-size:12px;color:var(--verde-osc)">
+        Activa para mostrar cartel "PÁGINA EN MANTENIMIENTO" a todos los visitantes.
+      </div>
+      <button class="btn" id="btnManto" onclick="toggleMantenimiento()" style="min-width:200px">
+        <span id="estadoManto">⏳ cargando...</span>
+      </button>
+      <div id="msgManto" style="font-size:11px;color:var(--verde-osc);margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <div class="label">📊 ESTADO ACTUAL</div>
+      <div style="font-size:12px;color:var(--verde)">
+        <div id="estadoActual">⏳ leyendo control.json...</div>
+      </div>
+      <div style="margin-top:10px">
+        <button class="btn" style="font-size:11px" onclick="leerEstado()">🔄 Refrescar estado</button>
+      </div>
+    </div>
+  </div>
+
   <div id="tab-hist" class="oculto">
     <div class="card">
       <div class="label">📋 HISTORIAL LOCAL (últimos 20)</div>
