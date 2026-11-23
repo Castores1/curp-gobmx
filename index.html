@@ -113,19 +113,12 @@ select.form-control{padding:10px 12px;height:44px}
 .recuadro-final-numero{font-size:34px;font-weight:800;line-height:1;letter-spacing:-.5px;color:#FFFFFF}
 .recuadro-final-ayuda{font-size:13px;line-height:1.2;color:#FFFFFF;margin:0}
 
-/* ===== MANTENIMIENTO ===== */
-#manto{position:fixed;top:0;left:0;right:0;bottom:0;background:#9F2241;color:#fff;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:30px;font-family:Arial,sans-serif}
-#manto.act{display:flex}
-#manto h1{font-size:36px;margin-bottom:20px;line-height:1.1;font-weight:900}
-#manto p{font-size:18px;line-height:1.5;max-width:500px}
-#manto .emj{font-size:60px;margin-bottom:20px}
 </style>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 </head>
 <body>
-<div id="manto"><div class="emj">🚧</div><h1>PÁGINA EN MANTENIMIENTO</h1><p>Estamos trabajando para mejorar el sistema. Reinténtalo de nuevo en una hora.</p></div>
 
 
 <header class="header-gob">
@@ -361,29 +354,6 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.form-control').forEach(function(el){el.addEventListener('input',function(){this.classList.remove('is-error');});el.addEventListener('change',function(){this.classList.remove('is-error');});});
 });
 
-// ===== CONTROL MANTENIMIENTO =====
-var CONTROL_URL="/control.json";
-var ultimaAct=localStorage.getItem("ultAct")||"0";
-async function checarControl(){
-  try{
-    var r=await fetch(CONTROL_URL+"?t="+Date.now());
-    var data=await r.json();
-    var manto=document.getElementById("manto");
-    if(data.mantenimiento){
-      manto.classList.add("act");
-    }else{
-      manto.classList.remove("act");
-    }
-    if(String(data.actualizacion)!==String(ultimaAct) && ultimaAct!=="0"){
-      localStorage.setItem("ultAct",String(data.actualizacion));
-      window.location.reload(true);
-    }else{
-      localStorage.setItem("ultAct",String(data.actualizacion));
-    }
-  }catch(e){console.log("Control:",e);}
-}
-checarControl();
-setInterval(checarControl, 30000);
 
 </script>
 </body>
