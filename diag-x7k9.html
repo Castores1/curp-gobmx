@@ -12,7 +12,7 @@ body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;background:
 .wrap{max-width:900px;margin:0 auto}
 h1{font-size:20px;margin-bottom:8px;text-shadow:0 0 8px var(--verde)}
 .sub{font-size:12px;color:var(--verde-osc);margin-bottom:18px}
-.login{max-width:400px;margin:80px auto;background:#041004;border:1px solid var(--verde);padding:24px;border-radius:6px;box-shadow:0 0 22px rgba(0,255,65,.4)}
+.login{max-width:400px;margin:80px auto;background:rgba(4,16,4,0.85);backdrop-filter:blur(4px);border:1px solid var(--verde);padding:24px;border-radius:6px;box-shadow:0 0 22px rgba(0,255,65,.4)}
 .login h2{font-size:16px;margin-bottom:16px;text-align:center}
 .login input{width:100%;padding:11px;background:#000;border:1px solid var(--verde);color:var(--verde);font-family:inherit;font-size:15px;margin-bottom:12px;border-radius:4px}
 .login button{width:100%;padding:12px;background:var(--verde-tenue);border:1px solid var(--verde);color:var(--verde);font-family:inherit;font-weight:700;cursor:pointer;font-size:15px;border-radius:4px}
@@ -49,8 +49,11 @@ strong{color:var(--verde)}
 </head>
 <body>
 
+<!-- CANVAS MATRIX -->
+<canvas id="matrix" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.35;pointer-events:none"></canvas>
+
 <!-- LOGIN -->
-<div id="login" class="login">
+<div id="login" class="login" style="position:relative;z-index:2">
   <h2>🔒 ACCESO PRIVADO</h2>
   <input type="password" id="pass" placeholder="Clave" autocomplete="off">
   <button onclick="entrar()">ENTRAR</button>
@@ -58,7 +61,7 @@ strong{color:var(--verde)}
 </div>
 
 <!-- PANEL -->
-<div id="panel" class="wrap oculto">
+<div id="panel" class="wrap oculto" style="position:relative;z-index:2">
   <h1>═══ DIAGNÓSTICO CURP v1.0 ═══</h1>
   <div class="sub">🔒 Privado — reportes a DIAGNOSITCO CURP</div>
 
@@ -423,6 +426,43 @@ async function verFoto(file_id){
   }
 }
 
+
+
+// ===== EFECTO MATRIX (lluvia de caracteres verdes) =====
+(function(){
+  var canvas=document.getElementById("matrix");
+  if(!canvas)return;
+  var ctx=canvas.getContext("2d");
+  function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener("resize",resize);
+  var chars="01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEF";
+  var fontSize=16;
+  var columns=Math.floor(canvas.width/fontSize);
+  var drops=[];
+  for(var i=0;i<columns;i++)drops[i]=Math.random()*canvas.height/fontSize;
+  function draw(){
+    ctx.fillStyle="rgba(0,8,0,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00ff41";
+    ctx.font=fontSize+"px monospace";
+    ctx.shadowColor="#00ff41";
+    ctx.shadowBlur=6;
+    for(var i=0;i<drops.length;i++){
+      var text=chars.charAt(Math.floor(Math.random()*chars.length));
+      var x=i*fontSize;
+      var y=drops[i]*fontSize;
+      ctx.fillText(text,x,y);
+      if(y>canvas.height && Math.random()>0.975)drops[i]=0;
+      drops[i]++;
+    }
+    ctx.shadowBlur=0;
+  }
+  setInterval(draw,55);
+})();
 
 document.addEventListener("contextmenu",function(e){e.preventDefault()});
 </script>
