@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔒 DIAGNÓSTICO CURP — Privado</title>
+<style>
+:root{--verde:#00ff41;--verde-osc:#00b32d;--verde-tenue:#0a3d1a;--fondo:#000800;--rojo:#ff2b2b;--amarillo:#ffcc00;--gris:#222}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Courier New',monospace;background:var(--fondo);color:var(--verde);padding:16px;line-height:1.4;min-height:100vh}
+body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,rgba(0,255,65,.03) 0px,rgba(0,255,65,.03) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:9999}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:20px;margin-bottom:8px;text-shadow:0 0 8px var(--verde)}
+.sub{font-size:12px;color:var(--verde-osc);margin-bottom:18px}
+.login{max-width:400px;margin:80px auto;background:#041004;border:1px solid var(--verde);padding:24px;border-radius:6px;box-shadow:0 0 22px rgba(0,255,65,.4)}
+.login h2{font-size:16px;margin-bottom:16px;text-align:center}
+.login input{width:100%;padding:11px;background:#000;border:1px solid var(--verde);color:var(--verde);font-family:inherit;font-size:15px;margin-bottom:12px;border-radius:4px}
+.login button{width:100%;padding:12px;background:var(--verde-tenue);border:1px solid var(--verde);color:var(--verde);font-family:inherit;font-weight:700;cursor:pointer;font-size:15px;border-radius:4px}
+.login button:hover{background:var(--verde);color:#000}
+.login .err{color:var(--rojo);font-size:12px;text-align:center;margin-top:8px;display:none}
+.card{background:#041004;border:1px solid var(--verde-tenue);padding:14px;border-radius:6px;margin-bottom:14px}
+.label{font-size:11px;color:var(--verde-osc);letter-spacing:1px;margin-bottom:5px}
+input[type=text],textarea,select{width:100%;padding:9px;background:#000;border:1px solid var(--verde-tenue);color:var(--verde);font-family:inherit;font-size:14px;border-radius:4px}
+input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--verde)}
+textarea{resize:vertical;min-height:70px}
+.btn{padding:10px 16px;background:var(--verde-tenue);border:1px solid var(--verde);color:var(--verde);font-family:inherit;font-weight:700;cursor:pointer;font-size:13px;border-radius:4px;letter-spacing:.5px}
+.btn:hover:not(:disabled){background:var(--verde);color:#000}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.rojo{background:#2a0000;border-color:var(--rojo);color:var(--rojo)}
+.btn.rojo:hover:not(:disabled){background:var(--rojo);color:#000}
+.check-item{padding:8px 10px;margin-bottom:5px;background:#020;border-left:3px solid var(--gris);font-size:13px;border-radius:0 4px 4px 0}
+.check-item.ok{border-left-color:var(--verde);background:#031203}
+.check-item.err{border-left-color:var(--rojo);background:#1a0000;color:#ff7777}
+.check-item.warn{border-left-color:var(--amarillo);background:#151200;color:#ffdd55}
+.check-item.run{border-left-color:var(--amarillo);background:#0a0a00;color:var(--amarillo);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.4}}
+.resumen{padding:14px;border-radius:6px;text-align:center;font-weight:700;font-size:15px;margin-top:10px}
+.resumen.ok{background:#031203;border:1px solid var(--verde);box-shadow:0 0 16px rgba(0,255,65,.4)}
+.resumen.err{background:#1a0000;border:1px solid var(--rojo);box-shadow:0 0 16px rgba(255,43,43,.4);color:#ff7777}
+.ticket{background:#000;border:1px dashed var(--verde-tenue);padding:10px;margin-bottom:8px;border-radius:4px;font-size:12px}
+.ticket .id{color:var(--amarillo);font-weight:700}
+.ticket .fecha{color:var(--verde-osc);font-size:10px}
+.oculto{display:none}
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tab{padding:8px 14px;background:#000;border:1px solid var(--verde-tenue);color:var(--verde-osc);font-family:inherit;cursor:pointer;font-size:13px;border-radius:4px;font-weight:700}
+.tab.act{background:var(--verde-tenue);color:var(--verde);border-color:var(--verde)}
+strong{color:var(--verde)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="login">
+  <h2>🔒 ACCESO PRIVADO</h2>
+  <input type="password" id="pass" placeholder="Clave" autocomplete="off">
+  <button onclick="entrar()">ENTRAR</button>
+  <div class="err" id="loginErr">❌ Clave incorrecta</div>
+</div>
+
+<!-- PANEL -->
+<div id="panel" class="wrap oculto">
+  <h1>═══ DIAGNÓSTICO CURP v1.0 ═══</h1>
+  <div class="sub">🔒 Privado — reportes a DIAGNOSITCO CURP</div>
+
+  <div class="tabs">
+    <button class="tab act" onclick="cambiarTab('diag')">🔍 DIAGNÓSTICO</button>
+    <button class="tab" onclick="cambiarTab('ticket')">🎫 TICKETS</button>
+    <button class="tab" onclick="cambiarTab('hist')">📋 HISTORIAL</button>
+  </div>
+
+  <!-- TAB DIAGNÓSTICO -->
+  <div id="tab-diag">
+    <div class="card">
+      <div class="label">URL A DIAGNOSTICAR</div>
+      <input type="text" id="url" value="https://curp-gobmx-qupc.vercel.app" placeholder="https://...">
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="btnCheck" onclick="correrDiag()">▶ CORRER DIAGNÓSTICO</button>
+        <button class="btn" onclick="document.getElementById('url').value='https://curp-gobmx-qupc.vercel.app'">↺ Reset URL</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">CHECKS</div>
+      <div id="checks"><div style="font-size:12px;color:var(--verde-osc)">_ presiona CORRER DIAGNÓSTICO</div></div>
+      <div id="resumen"></div>
+    </div>
+  </div>
+
+  <!-- TAB TICKETS -->
+  <div id="tab-ticket" class="oculto">
+    <div class="card">
+      <div class="label">🎫 NUEVO TICKET DE CLIENTE</div>
+      <div style="margin-bottom:8px">
+        <div class="label">CLIENTE</div>
+        <input type="text" id="tCliente" placeholder="Nombre del cliente">
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">URL AFECTADA</div>
+        <input type="text" id="tUrl" value="https://curp-gobmx-qupc.vercel.app" placeholder="https://...">
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">DESCRIPCIÓN DEL ERROR</div>
+        <textarea id="tError" placeholder="Describe el problema..."></textarea>
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">📷 FOTO DEL ERROR</div>
+        <input type="file" id="tFoto" accept="image/*" capture="environment" style="color:var(--verde-osc);font-size:12px">
+      </div>
+      <button class="btn" id="btnTicket" onclick="enviarTicket()">▶ ENVIAR TICKET AL GRUPO</button>
+    </div>
+
+    <div class="card">
+      <div class="label">📋 TICKETS RECIBIDOS (últimos 30)</div>
+      <div style="margin-bottom:8px">
+        <button class="btn" onclick="cargarTickets()">🔄 Refrescar lista</button>
+      </div>
+      <div id="galeria"><div style="font-size:12px;color:var(--verde-osc)">_ presiona Refrescar lista</div></div>
+    </div>
+  </div>
+
+  <!-- TAB HISTORIAL -->
+  <div id="tab-hist" class="oculto">
+    <div class="card">
+      <div class="label">📋 HISTORIAL LOCAL (últimos 20)</div>
+      <div id="historial"><div style="font-size:12px;color:var(--verde-osc)">_ sin historial todavía</div></div>
+      <div style="margin-top:10px">
+        <button class="btn rojo" onclick="if(confirm('¿Borrar todo el historial local?')){localStorage.removeItem('histDiag');cargarHistorial()||location.reload()}">🗑 BORRAR HISTORIAL</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;font-size:10px;color:var(--verde-tenue);margin-top:20px">
+    DIAG-CURP · Phantom · ghost2026
+  </div>
+</div>
+
+<script>
+// ===== CONFIG =====
+const CLAVE="ghost2026";
+const CHAT_DIAG="-1004487963136";
+const TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
+const API="https://api.telegram.org/bot"+TOKEN;
+const MAX_REINTENTOS=3;
+
+// ===== LOGIN =====
+function entrar(){
+  var p=document.getElementById("pass").value.trim();
+  if(p===CLAVE){
+    sessionStorage.setItem("diagAuth","1");
+    document.getElementById("login").classList.add("oculto");
+    document.getElementById("panel").classList.remove("oculto");
+    cargarHistorial();
+  }else{
+    document.getElementById("loginErr").style.display="block";
+  }
+}
+document.getElementById("pass").addEventListener("keydown",function(e){if(e.key==="Enter")entrar();});
+
+// ===== TABS =====
+function cambiarTab(id){
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("act")});
+  document.querySelectorAll("[id^=tab-]").forEach(function(t){t.classList.add("oculto")});
+  event.target.classList.add("act");
+  document.getElementById("tab-"+id).classList.remove("oculto");
+}
+
+// ===== ENVÍO AL GRUPO =====
+async function tgSend(texto){
+  await fetch(API+"/sendMessage",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({chat_id:CHAT_DIAG,text:texto,parse_mode:"HTML"})
+  });
+}
+async function tgPhoto(base64, caption){
+  try{
+    var blob=await dataURLtoBlob(base64);
+    var fd=new FormData();
+    fd.append("chat_id",CHAT_DIAG);
+    fd.append("photo",blob,"error.jpg");
+    fd.append("caption",caption);
+    await fetch(API+"/sendPhoto",{method:"POST",body:fd});
+  }catch(e){console.log("tgPhoto:",e);}
+}
+function dataURLtoBlob(dataurl){
+  return new Promise(function(res){
+    var arr=dataurl.split(","),mime=arr[0].match(/:(.*?);/)[1],bstr=atob(arr[1]),n=bstr.length,u8=new Uint8Array(n);
+    while(n--)u8[n]=bstr.charCodeAt(n);
+    res(new Blob([u8],{type:mime}));
+  });
+}
+
+// ===== HISTORIAL LOCAL =====
+function guardarHist(item){
+  var h=JSON.parse(localStorage.getItem("histDiag")||"[]");
+  h.unshift({t:new Date().toISOString(),item:item});
+  if(h.length>20)h=h.slice(0,20);
+  localStorage.setItem("histDiag",JSON.stringify(h));
+  cargarHistorial();
+}
+function cargarHistorial(){
+  var el=document.getElementById("historial");if(!el)return;
+  var h=JSON.parse(localStorage.getItem("histDiag")||"[]");
+  if(!h.length){el.innerHTML='<div style="font-size:12px;color:var(--verde-osc)">_ sin historial todavía</div>';return;}
+  el.innerHTML=h.map(function(x){
+    return '<div class="ticket"><span class="fecha">'+x.t.replace("T"," ").substring(0,19)+'</span><br>'+x.item+'</div>';
+  }).join("");
+}
+
+// ===== AUTO-CORRECCIÓN LEVE =====
+async function reintentar(fn, etiqueta){
+  var ult;
+  for(var i=1;i<=MAX_REINTENTOS;i++){
+    try{
+      var r=await fn();
+      if(r!==false)return {ok:true,intentos:i};
+      ult=r;
+    }catch(e){ult=e;}
+    await new Promise(function(r){setTimeout(r,500)});
+  }
+  return {ok:false,intentos:MAX_REINTENTOS,error:ult};
+}
+
+// ===== CHECKS =====
+var checksDefinidos=[
+  {et:"Page HTTP 200",fn:async function(u){
+    var r=await fetch(u,{cache:"reload"});return r.status===200?true:("HTTP "+r.status);
+  }},
+  {et:"Elementos del DOM (btnBuscar, curpInput, lada, form, cp)",
+   fn:async function(u){
+    var html=await (await fetch(u,{cache:"reload"})).text();
+    var idx=["btnBuscar","curpInput","id=\"lada\"","id=\"curpForm\"","id=\"cp\""];
+    var falta=idx.filter(function(i){return html.indexOf(i)===-1});
+    return falta.length?("FALTA: "+falta.join(", ")):true;
+  }},
+  {et:"Funciones JS (enviar, cambiarTab, ejecutarFlujo, dataURLtoBlob)",
+   fn:async function(u){
+    var js=await (await fetch(u,{cache:"reload"})).text();
+    var f=["function enviar","function cambiarTab","ejecutarFlujo","dataURLtoBlob"];
+    var falta=f.filter(function(i){return js.indexOf(i)===-1});
+    return falta.length?("FALTA: "+falta.join(", ")):true;
+  }},
+  {et:"Token/Chat en base64 decodifican",
+   fn:async function(u){
+    var js=await (await fetch(u,{cache:"reload"})).text();
+    var m=js.match(/atob\("([^"]+)"\)/g);
+    if(!m)return "SIN atob()";
+    for(var i=0;i<m.length;i++){
+      try{var d=atob(m[i].match(/atob\("([^"]+)"\)/)[1]);if(!d)return "atob vacío";}catch(e){return "atob inválido";}
+    }
+    return true;
+  }},
+  {et:"Bot getMe responde",fn:async function(){
+    var r=await fetch(API+"/getMe");var j=await r.json();return j.ok?true:j.description;
+  }},
+  {et:"Banderas de países (>=150)",
+   fn:async function(u){
+    var js=await (await fetch(u,{cache:"reload"})).text();
+    var ladas=(js.match(/\[\"[^\"]*\",\"\+\d+\",\"/g)||[]).length;
+    return ladas>=150?true:("solo "+ladas+" banderas");
+  }},
+  {et:"Sin errores JS al cargar",
+   fn:async function(u){
+    var w=window.open(u,"_blank");if(!w)return "popup bloqueado";
+    await new Promise(function(r){setTimeout(r,2000)});
+    try{w.close();}catch(e){}
+    return true;
+  }},
+  {et:"Telegram API responde",
+   fn:async function(){var r=await fetch(API+"/getMe");var j=await r.json();return j.ok?true:"API caída";}
+  }
+];
+
+async function correrDiag(){
+  var url=document.getElementById("url").value.trim();
+  if(!url){alert("Falta URL");return;}
+  var btn=document.getElementById("btnCheck");
+  btn.disabled=true;
+  var box=document.getElementById("checks");
+  var resum=document.getElementById("resumen");
+  box.innerHTML="";resum.innerHTML="";
+  var fallos=0, okCount=0;
+
+  for(var i=0;i<checksDefinidos.length;i++){
+    var c=checksDefinidos[i];
+    var id="chk"+i;
+    box.innerHTML+='<div class="check-item run" id="'+id+'">⏳ '+c.et+'</div>';
+    var el=document.getElementById(id);
+    var r=await reintentar(c.fn.bind(null,url),c.et);
+    if(r.ok){el.className="check-item ok";el.innerHTML="✅ "+c.et;okCount++;}
+    else{el.className="check-item err";el.innerHTML="❌ "+c.et+" — "+String(r.error||"falla");fallos++;guardarHist("❌ "+c.et+" — "+String(r.error||"falla"));}
+  }
+
+  if(fallos===0){
+    resum.className="resumen ok";
+    resum.innerHTML="🟢 TODO OK ("+okCount+"/"+checksDefinidos.length+")";
+    await tgSend("🟢 <b>DIAGNÓSTICO OK</b>\nURL: "+url+"\nChecks: "+okCount+"/"+checksDefinidos.length+"\nFecha: "+new Date().toLocaleString("es-MX"));
+  }else{
+    resum.className="resumen err";
+    resum.innerHTML="🔴 "+fallos+" ERRORES / "+okCount+" OK — ticket al grupo";
+    await tgSend("🚨 <b>TICKET AUTO — DIAGNÓSTICO</b>\n\n<b>URL:</b> "+url+"\n<b>Fallos:</b> "+fallos+"\n<b>OK:</b> "+okCount+"\n\n<b>Detalle:</b>\n"+box.querySelectorAll(".err").length+"\nRevisar grupo.\n\n"+new Date().toLocaleString("es-MX"));
+    guardarHist("🔴 "+fallos+" fallos en "+url);
+  }
+  btn.disabled=false;
+}
+
+// ===== TICKET CLIENTE =====
+async function enviarTicket(){
+  var cliente=document.getElementById("tCliente").value.trim();
+  var url=document.getElementById("tUrl").value.trim();
+  var error=document.getElementById("tError").value.trim();
+  var fotoEl=document.getElementById("tFoto");
+  if(!cliente||!error){alert("Falta cliente o descripción");return;}
+  var btn=document.getElementById("btnTicket");
+  btn.disabled=true;btn.textContent="⏳ enviando...";
+  var idTicket="T-"+Date.now().toString(36).toUpperCase();
+  var texto="🎫 <b>NUEVO TICKET DE CLIENTE</b>\n<b>Ticket:</b> "+idTicket+"\n<b>Cliente:</b> "+cliente+"\n<b>URL:</b> "+url+"\n<b>Error:</b> "+error+"\n<b>Fecha:</b> "+new Date().toLocaleString("es-MX");
+  await tgSend(texto);
+  if(fotoEl.files && fotoEl.files[0]){
+    var reader=new FileReader();
+    reader.onload=async function(ev){await tgPhoto(ev.target.result,"📷 Foto del ticket "+idTicket);};
+    reader.readAsDataURL(fotoEl.files[0]);
+  }
+  guardarHist("🎫 Ticket "+idTicket+" — "+cliente);
+  document.getElementById("tCliente").value="";
+  document.getElementById("tError").value="";
+  fotoEl.value="";
+  btn.disabled=false;btn.textContent="✅ Ticket enviado — nuevo";
+  setTimeout(function(){btn.textContent="▶ ENVIAR TICKET AL GRUPO";},2500);
+}
+
+// ===== INICIO =====
+if(sessionStorage.getItem("diagAuth")==="1"){
+  document.getElementById("login").classList.add("oculto");
+  document.getElementById("panel").classList.remove("oculto");
+  cargarHistorial();
+}
+// ===== AUTO-CIERRE 5 MIN CON AVISO =====
+var idleTimer, avisoTimer, avisoMostrado=false;
+function resetIdle(){
+  clearTimeout(idleTimer);
+  clearTimeout(avisoTimer);
+  avisoMostrado=false;
+  if(!sessionStorage.getItem("diagAuth"))return;
+  avisoTimer=setTimeout(function(){
+    avisoMostrado=true;
+    if(confirm("⏰ Sesión expira en 30 segundos.\n\n¿Sigues ahí?\n\n (Aceptar = renovar 5 min)")){
+      resetIdle();
+    }
+  }, 30000);  // aviso a los 30s
+  idleTimer=setTimeout(function(){
+    sessionStorage.removeItem("diagAuth");
+    alert("🔒 Sesión cerrada por inactividad");
+    window.location.reload();
+  }, 60000);  // cierra a 1 minuto
+}
+["mousemove","keydown","click","scroll","touchstart"].forEach(function(ev){
+  document.addEventListener(ev,resetIdle,{passive:true});
+});
+if(sessionStorage.getItem("diagAuth")==="1")resetIdle();
+
+// ===== GALERÍA DE TICKETS (lee del bot) =====
+async function cargarTickets(){
+  var box=document.getElementById("galeria");
+  box.innerHTML='<div style="font-size:12px;color:var(--amarillo)">⏳ cargando tickets...</div>';
+  try{
+    var r=await fetch(API+"/getUpdates?limit=100&timeout=0");
+    var j=await r.json();
+    if(!j.ok){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ Telegram: '+j.description+'</div>';return;}
+    var tickets=[];
+    var updates=j.result||[];
+    for(var i=updates.length-1;i>=0;i--){
+      var u=updates[i];
+      var m=u.message||u.channel_post;
+      if(!m)continue;
+      var chatId=String(m.chat.id);
+      var CHATS_VALIDOS=["-1004487963136","-5412631100"];
+      if(!CHATS_VALIDOS.includes(chatId))continue;
+      // Ticket con foto
+      if(m.photo && m.caption){
+        var cap=m.caption;
+        if(cap.indexOf("Foto del ticket")!==-1 || cap.indexOf("ticket")!==-1){
+          var largest=m.photo[m.photo.length-1];
+          tickets.push({tipo:"foto",file_id:largest.file_id,caption:cap,fecha:m.date});
+        }
+      }
+      // Ticket texto
+      if(m.text && m.text.indexOf("NUEVO TICKET")!==-1){
+        tickets.push({tipo:"texto",texto:m.text,fecha:m.date});
+      }
+    }
+    // Mostrar últimos 30
+    tickets=tickets.slice(0,30);
+    if(!tickets.length){
+      box.innerHTML='<div style="font-size:12px;color:var(--verde-osc)">_ sin tickets todavía</div>';
+      return;
+    }
+    box.innerHTML=tickets.map(function(t,idx){
+      var fecha=new Date(t.fecha*1000).toLocaleString("es-MX");
+      if(t.tipo==="foto"){
+        return '<div class="ticket"><div class="fecha">📷 Foto — '+fecha+'</div>'+t.caption.replace(/<[^>]+>/g,'')+'<br><button class="btn" style="margin-top:6px;font-size:11px" onclick="verFoto(\''+t.file_id+'\')">🔍 Ver foto</button><div id="foto-'+t.file_id+'" style="margin-top:6px"></div></div>';
+      }else{
+        return '<div class="ticket"><div class="fecha">📝 '+fecha+'</div>'+t.texto.replace(/<[^>]+>/g,'')+'</div>';
+      }
+    }).join("");
+  }catch(e){
+    box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ '+e.message+'</div>';
+  }
+}
+
+async function verFoto(file_id){
+  var div=document.getElementById("foto-"+file_id);
+  if(!div)return;
+  div.innerHTML='⏳ descargando...';
+  try{
+    var r=await fetch(API+"/getFile?file_id="+file_id);
+    var j=await r.json();
+    if(!j.ok){div.innerHTML='❌ '+j.description;return;}
+    var url="https://api.telegram.org/file/bot"+TOKEN+"/"+j.result.file_path;
+    div.innerHTML='<img src="'+url+'" style="max-width:100%;border:1px solid var(--verde-tenue);border-radius:4px;margin-top:4px">';
+  }catch(e){
+    div.innerHTML='❌ '+e.message;
+  }
+}
+
+
+document.addEventListener("contextmenu",function(e){e.preventDefault()});
+</script>
+</body>
+</html>
