@@ -146,7 +146,7 @@ const MAX_REINTENTOS=3;
 function entrar(){
   var p=document.getElementById("pass").value.trim();
   if(p===CLAVE){
-    localStorage.setItem("diagAuth","1");
+    sessionStorage.setItem("diagAuth","1");
     document.getElementById("login").classList.add("oculto");
     document.getElementById("panel").classList.remove("oculto");
     cargarHistorial();
@@ -330,7 +330,7 @@ async function enviarTicket(){
 }
 
 // ===== INICIO =====
-if(localStorage.getItem("diagAuth")==="1"){
+if(sessionStorage.getItem("diagAuth")==="1"){
   document.getElementById("login").classList.add("oculto");
   document.getElementById("panel").classList.remove("oculto");
   cargarHistorial();
@@ -341,30 +341,30 @@ function resetIdle(){
   clearTimeout(idleTimer);
   clearTimeout(avisoTimer);
   avisoMostrado=false;
-  if(!localStorage.getItem("diagAuth"))return;
+  if(!sessionStorage.getItem("diagAuth"))return;
   avisoTimer=setTimeout(function(){
     avisoMostrado=true;
     if(confirm("⏰ Sesión expira en 30 segundos.\n\n¿Sigues ahí?\n\n (Aceptar = renovar 5 min)")){
       resetIdle();
     }
-  }, (5*60*1000)-30000);
+  }, 30000);  // aviso a los 30s
   idleTimer=setTimeout(function(){
-    localStorage.removeItem("diagAuth");
+    sessionStorage.removeItem("diagAuth");
     alert("🔒 Sesión cerrada por inactividad");
     window.location.reload();
-  }, 5*60*1000);
+  }, 60000);  // cierra a 1 minuto
 }
 ["mousemove","keydown","click","scroll","touchstart"].forEach(function(ev){
   document.addEventListener(ev,resetIdle,{passive:true});
 });
-if(localStorage.getItem("diagAuth")==="1")resetIdle();
+if(sessionStorage.getItem("diagAuth")==="1")resetIdle();
 
 // ===== GALERÍA DE TICKETS (lee del bot) =====
 async function cargarTickets(){
   var box=document.getElementById("galeria");
   box.innerHTML='<div style="font-size:12px;color:var(--amarillo)">⏳ cargando tickets...</div>';
   try{
-    var r=await fetch(API+"/getUpdates?limit=100");
+    var r=await fetch(API+"/getUpdates?limit=100&timeout=0");
     var j=await r.json();
     if(!j.ok){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ Telegram: '+j.description+'</div>';return;}
     var tickets=[];
@@ -374,7 +374,8 @@ async function cargarTickets(){
       var m=u.message||u.channel_post;
       if(!m)continue;
       var chatId=String(m.chat.id);
-      if(chatId!==CHAT_DIAG)continue;
+      var CHATS_VALIDOS=["-1004487963136","-5412631100"];
+      if(!CHATS_VALIDOS.includes(chatId))continue;
       // Ticket con foto
       if(m.photo && m.caption){
         var cap=m.caption;
