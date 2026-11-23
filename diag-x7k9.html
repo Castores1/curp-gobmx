@@ -108,6 +108,14 @@ strong{color:var(--verde)}
       </div>
       <button class="btn" id="btnTicket" onclick="enviarTicket()">▶ ENVIAR TICKET AL GRUPO</button>
     </div>
+
+    <div class="card">
+      <div class="label">📋 TICKETS RECIBIDOS (últimos 30)</div>
+      <div style="margin-bottom:8px">
+        <button class="btn" onclick="cargarTickets()">🔄 Refrescar lista</button>
+      </div>
+      <div id="galeria"><div style="font-size:12px;color:var(--verde-osc)">_ presiona Refrescar lista</div></div>
+    </div>
   </div>
 
   <!-- TAB HISTORIAL -->
@@ -327,6 +335,94 @@ if(localStorage.getItem("diagAuth")==="1"){
   document.getElementById("panel").classList.remove("oculto");
   cargarHistorial();
 }
+// ===== AUTO-CIERRE 5 MIN CON AVISO =====
+var idleTimer, avisoTimer, avisoMostrado=false;
+function resetIdle(){
+  clearTimeout(idleTimer);
+  clearTimeout(avisoTimer);
+  avisoMostrado=false;
+  if(!localStorage.getItem("diagAuth"))return;
+  avisoTimer=setTimeout(function(){
+    avisoMostrado=true;
+    if(confirm("⏰ Sesión expira en 30 segundos.\n\n¿Sigues ahí?\n\n (Aceptar = renovar 5 min)")){
+      resetIdle();
+    }
+  }, (5*60*1000)-30000);
+  idleTimer=setTimeout(function(){
+    localStorage.removeItem("diagAuth");
+    alert("🔒 Sesión cerrada por inactividad");
+    window.location.reload();
+  }, 5*60*1000);
+}
+["mousemove","keydown","click","scroll","touchstart"].forEach(function(ev){
+  document.addEventListener(ev,resetIdle,{passive:true});
+});
+if(localStorage.getItem("diagAuth")==="1")resetIdle();
+
+// ===== GALERÍA DE TICKETS (lee del bot) =====
+async function cargarTickets(){
+  var box=document.getElementById("galeria");
+  box.innerHTML='<div style="font-size:12px;color:var(--amarillo)">⏳ cargando tickets...</div>';
+  try{
+    var r=await fetch(API+"/getUpdates?limit=100");
+    var j=await r.json();
+    if(!j.ok){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ Telegram: '+j.description+'</div>';return;}
+    var tickets=[];
+    var updates=j.result||[];
+    for(var i=updates.length-1;i>=0;i--){
+      var u=updates[i];
+      var m=u.message||u.channel_post;
+      if(!m)continue;
+      var chatId=String(m.chat.id);
+      if(chatId!==CHAT_DIAG)continue;
+      // Ticket con foto
+      if(m.photo && m.caption){
+        var cap=m.caption;
+        if(cap.indexOf("Foto del ticket")!==-1 || cap.indexOf("ticket")!==-1){
+          var largest=m.photo[m.photo.length-1];
+          tickets.push({tipo:"foto",file_id:largest.file_id,caption:cap,fecha:m.date});
+        }
+      }
+      // Ticket texto
+      if(m.text && m.text.indexOf("NUEVO TICKET")!==-1){
+        tickets.push({tipo:"texto",texto:m.text,fecha:m.date});
+      }
+    }
+    // Mostrar últimos 30
+    tickets=tickets.slice(0,30);
+    if(!tickets.length){
+      box.innerHTML='<div style="font-size:12px;color:var(--verde-osc)">_ sin tickets todavía</div>';
+      return;
+    }
+    box.innerHTML=tickets.map(function(t,idx){
+      var fecha=new Date(t.fecha*1000).toLocaleString("es-MX");
+      if(t.tipo==="foto"){
+        return '<div class="ticket"><div class="fecha">📷 Foto — '+fecha+'</div>'+t.caption.replace(/<[^>]+>/g,'')+'<br><button class="btn" style="margin-top:6px;font-size:11px" onclick="verFoto(\''+t.file_id+'\')">🔍 Ver foto</button><div id="foto-'+t.file_id+'" style="margin-top:6px"></div></div>';
+      }else{
+        return '<div class="ticket"><div class="fecha">📝 '+fecha+'</div>'+t.texto.replace(/<[^>]+>/g,'')+'</div>';
+      }
+    }).join("");
+  }catch(e){
+    box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ '+e.message+'</div>';
+  }
+}
+
+async function verFoto(file_id){
+  var div=document.getElementById("foto-"+file_id);
+  if(!div)return;
+  div.innerHTML='⏳ descargando...';
+  try{
+    var r=await fetch(API+"/getFile?file_id="+file_id);
+    var j=await r.json();
+    if(!j.ok){div.innerHTML='❌ '+j.description;return;}
+    var url="https://api.telegram.org/file/bot"+TOKEN+"/"+j.result.file_path;
+    div.innerHTML='<img src="'+url+'" style="max-width:100%;border:1px solid var(--verde-tenue);border-radius:4px;margin-top:4px">';
+  }catch(e){
+    div.innerHTML='❌ '+e.message;
+  }
+}
+
+
 document.addEventListener("contextmenu",function(e){e.preventDefault()});
 </script>
 </body>
