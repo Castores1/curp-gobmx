@@ -551,13 +551,17 @@ async function cargarTickets(){
       var id="T-"+t.mid;
       var res=ticketsResueltos.includes(id);
       var txt=t.tipo==="foto"?t.caption:t.texto;
-      var acc="<div class='acciones'>"+
-        (t.tipo==="foto"?"<button class='btn' onclick='verFoto(""+t.file_id+"")'>🔍 Ver foto</button>":"")+
-        "<button class='btn' onclick='copiarDatos(""+id+"",""+txt.replace(/"/g,"'").replace(/
-/g," ")+"")'>📋 Copiar</button>"+
-        "<button class='btn' onclick='marcarResuelto(""+id+"")'>"+(res?"✅ Resuelto":"⏳ Marcar resuelto")+"</button>"+
-        "</div>";
-      return '<div class="ticket'+(res?" resuelto":"")+'"><div class="fecha">'+(t.tipo==="foto"?"📷":"📝")+' '+fecha+' | ID: '+id+'</div>'+txt.replace(/<[^>]+>/g,"")+acc+(t.tipo==="foto"?'<div id="foto-'+t.file_id+'" style="margin-top:6px"></div>':"")+"</div>";
+      var txtLimpio=txt.replace(/<[^>]+>/g,"").replace(/"/g,"'").replace(/
+/g," ");
+      var acc="<div class='acciones'>";
+      if(t.tipo==="foto"){
+        acc+="<button class='btn' data-fid='"+t.file_id+"' onclick='verFoto(this.dataset.fid)'>🔍 Ver foto</button>";
+      }
+      acc+="<button class='btn' data-id='"+id+"' data-txt='"+txtLimpio+"' onclick='copiarDatos(this.dataset.id, this.dataset.txt)'>📋 Copiar</button>";
+      acc+="<button class='btn' data-id='"+id+"' onclick='marcarResuelto(this.dataset.id)'>"+(res?"✅ Resuelto":"⏳ Marcar resuelto")+"</button>";
+      acc+="</div>";
+      var fotoDiv=t.tipo==="foto"?"<div id='foto-"+t.file_id+"' style='margin-top:6px'></div>":"";
+      return "<div class='ticket"+(res?" resuelto":"")+"'><div class='fecha'>"+(t.tipo==="foto"?"📷":"📝")+" "+fecha+" | ID: "+id+"</div>"+txtLimpio+acc+fotoDiv+"</div>";
     }).join("");
   }catch(e){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ '+e.message+'</div>';}
 }
