@@ -45,7 +45,39 @@ textarea{resize:vertical;min-height:70px}
 .tab{padding:8px 14px;background:#000;border:1px solid var(--verde-tenue);color:var(--verde-osc);font-family:inherit;cursor:pointer;font-size:13px;border-radius:4px;font-weight:700}
 .tab.act{background:var(--verde-tenue);color:var(--verde);border-color:var(--verde)}
 strong{color:var(--verde)}
+
+/* ===== TEMAS ===== */
+body.tema-verde{--verde:#00ff41;--verde-osc:#00b32d;--verde-tenue:#0a3d1a;--fondo:#000800;--rojo-neon:#ff0040}
+body.tema-rojo{--verde:#ff2b2b;--verde-osc:#b31a1a;--verde-tenue:#3d0a0a;--fondo:#080000;--rojo-neon:#ff0040}
+body.tema-purpura{--verde:#bf00ff;--verde-osc:#8a00b3;--verde-tenue:#2a0a3d;--fondo:#08000a;--rojo-neon:#ff0040}
+body.tema-azul{--verde:#00bfff;--verde-osc:#0080b3;--verde-tenue:#0a2a3d;--fondo:#000a10;--rojo-neon:#ff0040}
+body.tema-amarillo{--verde:#ffdd00;--verde-osc:#b39900;--verde-tenue:#3d3200;--fondo:#0a0800;--rojo-neon:#ff0040}
+
+/* ===== BARRA SUPERIOR ===== */
+.topbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.topbar .izq{display:flex;gap:6px;flex-wrap:wrap}
+.topbar .der{display:flex;gap:6px;flex-wrap:wrap}
+.btn-top{padding:6px 10px;background:var(--verde-tenue);border:1px solid var(--verde);color:var(--verde);font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:4px;letter-spacing:.3px}
+.btn-top:hover{background:var(--verde);color:#000}
+.cronometro{font-size:11px;color:var(--amarillo);font-weight:700;padding:6px 10px;border:1px solid var(--amarillo);border-radius:4px;background:#0a0900}
+
+/* ===== SUBTEXTO EXPLICATIVO ===== */
+.help{font-size:10px;color:var(--verde-osc);margin-top:5px;font-style:italic}
+
+/* ===== BOTÓN RESULTADO TICKET ===== */
+.ticket .acciones{margin-top:6px;display:flex;gap:5px;flex-wrap:wrap}
+.ticket .acciones .btn{font-size:10px;padding:4px 8px}
+.ticket.resuelto{opacity:.55;border-left:3px solid var(--verde)}
 </style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00ff41">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GHOST Diag">
+<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
 
@@ -62,7 +94,18 @@ strong{color:var(--verde)}
 
 <!-- PANEL -->
 <div id="panel" class="wrap oculto" style="position:relative;z-index:2">
-  <h1>═══ DIAGNÓSTICO CURP v1.0 ═══</h1>
+  <div class="topbar">
+    <div class="izq">
+      <button class="btn-top" onclick="cambiarTema()" title="Cambiar tema">🎨 TEMA</button>
+      <button class="btn-top" onclick="toggleNotif()" id="btnNotif" title="Notificaciones">🔔 NOTIF: OFF</button>
+      <button class="btn-top" onclick="capturarPantalla()" title="Captura">📸 CAPTURA</button>
+    </div>
+    <div class="der">
+      <span class="cronometro" id="cronometro">⏱️ 5:00</span>
+    </div>
+  </div>
+
+  <h1>═══ GHOST Diag v2.0 ═══</h1>
   <div class="sub">🔒 Privado — reportes a DIAGNOSITCO CURP</div>
 
   <div class="tabs">
@@ -123,6 +166,90 @@ strong{color:var(--verde)}
 
   <!-- TAB HISTORIAL -->
 
+
+  <div id="tab-soporte" class="oculto">
+    <div class="card">
+      <div class="label">💬 SOPORTE 24/7</div>
+      <div style="font-size:12px;color:var(--verde-osc);margin-bottom:12px">
+        Envía tu mensaje con foto del problema. El equipo respondera a la brevedad.
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">TU NOMBRE / EMPRESA</div>
+        <input type="text" id="sopCliente" placeholder="Tu nombre">
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">URGENCIA</div>
+        <select id="sopUrgencia">
+          <option value="BAJA">🟢 Baja</option>
+          <option value="MEDIA" selected>🟡 Media</option>
+          <option value="ALTA">🔴 Alta</option>
+        </select>
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">DESCRIBE TU PROBLEMA</div>
+        <textarea id="sopMsg" placeholder="Cuéntanos qué pasa..."></textarea>
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">📷 FOTO DEL PROBLEMA</div>
+        <input type="file" id="sopFoto" accept="image/*" capture="environment" style="color:var(--verde-osc);font-size:12px">
+      </div>
+      <button class="btn" id="btnSop" onclick="enviarSoporte()">📩 ENVIAR AL SOPORTE</button>
+      <div id="msgSop" style="font-size:11px;color:var(--verde-osc);margin-top:10px"></div>
+    </div>
+  </div>
+
+  <div id="tab-stats" class="oculto">
+    <div class="card">
+      <div class="label">📊 ESTADÍSTICAS</div>
+      <div id="stats" style="font-size:13px;color:var(--verde)">⏳ cargando...</div>
+      <div style="margin-top:10px">
+        <button class="btn" style="font-size:11px" onclick="cargarStats()">🔄 Actualizar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="tab-soporte" class="oculto">
+    <div class="card">
+      <div class="label">💬 SOPORTE 24/7</div>
+      <div style="font-size:12px;color:var(--verde-osc);margin-bottom:12px">
+        Envía tu mensaje con foto del problema. El equipo respondera a la brevedad.
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">TU NOMBRE / EMPRESA</div>
+        <input type="text" id="sopCliente" placeholder="Tu nombre">
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">URGENCIA</div>
+        <select id="sopUrgencia">
+          <option value="BAJA">🟢 Baja</option>
+          <option value="MEDIA" selected>🟡 Media</option>
+          <option value="ALTA">🔴 Alta</option>
+        </select>
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">DESCRIBE TU PROBLEMA</div>
+        <textarea id="sopMsg" placeholder="Cuéntanos qué pasa..."></textarea>
+      </div>
+      <div style="margin-bottom:8px">
+        <div class="label">📷 FOTO DEL PROBLEMA</div>
+        <input type="file" id="sopFoto" accept="image/*" capture="environment" style="color:var(--verde-osc);font-size:12px">
+      </div>
+      <button class="btn" id="btnSop" onclick="enviarSoporte()">📩 ENVIAR AL SOPORTE</button>
+      <div id="msgSop" style="font-size:11px;color:var(--verde-osc);margin-top:10px"></div>
+    </div>
+  </div>
+
+  <div id="tab-stats" class="oculto">
+    <div class="card">
+      <div class="label">📊 ESTADÍSTICAS</div>
+      <div id="stats" style="font-size:13px;color:var(--verde)">⏳ cargando...</div>
+      <div style="margin-top:10px">
+        <button class="btn" style="font-size:11px" onclick="cargarStats()">🔄 Actualizar</button>
+      </div>
+    </div>
+  </div>
+
   <div id="tab-control" class="oculto">
     <div class="card">
       <div class="label">🔄 ACTUALIZACIÓN</div>
@@ -162,6 +289,11 @@ const CHAT_DIAG="-1004487963136";
 const TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
 const API="https://api.telegram.org/bot"+TOKEN;
 const MAX_REINTENTOS=3;
+
+// ===== PWA Service Worker =====
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(function(){});
+}
 
 // ===== LOGIN =====
 function entrar(){
@@ -390,50 +522,44 @@ if(sessionStorage.getItem("diagAuth")==="1")resetIdle();
 // ===== GALERÍA DE TICKETS (lee del bot) =====
 async function cargarTickets(){
   var box=document.getElementById("galeria");
-  box.innerHTML='<div style="font-size:12px;color:var(--amarillo)">⏳ cargando tickets...</div>';
+  box.innerHTML='<div style="font-size:12px;color:var(--amarillo)">⏳ cargando...</div>';
   try{
     var r=await fetch(API+"/getUpdates?limit=100&timeout=0");
     var j=await r.json();
-    if(!j.ok){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ Telegram: '+j.description+'</div>';return;}
+    if(!j.ok){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ '+j.description+'</div>';return;}
     var tickets=[];
     var updates=j.result||[];
+    var CHATS_V=["-1004487963136","-5412631100"];
     for(var i=updates.length-1;i>=0;i--){
       var u=updates[i];
       var m=u.message||u.channel_post;
       if(!m)continue;
-      var chatId=String(m.chat.id);
-      var CHATS_VALIDOS=["-1004487963136","-5412631100"];
-      if(!CHATS_VALIDOS.includes(chatId))continue;
-      // Ticket con foto
-      if(m.photo && m.caption){
-        var cap=m.caption;
-        if(cap.indexOf("Foto del ticket")!==-1 || cap.indexOf("ticket")!==-1){
-          var largest=m.photo[m.photo.length-1];
-          tickets.push({tipo:"foto",file_id:largest.file_id,caption:cap,fecha:m.date});
-        }
+      if(!CHATS_V.includes(String(m.chat.id)))continue;
+      if(m.photo){
+        var largest=m.photo[m.photo.length-1];
+        tickets.push({tipo:"foto",file_id:largest.file_id,caption:m.caption||"(sin texto)",fecha:m.date,mid:m.message_id});
+        continue;
       }
-      // Ticket texto
-      if(m.text && m.text.indexOf("NUEVO TICKET")!==-1){
-        tickets.push({tipo:"texto",texto:m.text,fecha:m.date});
+      if(m.text&&m.text.indexOf("/")!==0){
+        tickets.push({tipo:"texto",texto:m.text,fecha:m.date,mid:m.message_id});
       }
     }
-    // Mostrar últimos 30
     tickets=tickets.slice(0,30);
-    if(!tickets.length){
-      box.innerHTML='<div style="font-size:12px;color:var(--verde-osc)">_ sin tickets todavía</div>';
-      return;
-    }
-    box.innerHTML=tickets.map(function(t,idx){
+    if(!tickets.length){box.innerHTML='<div style="font-size:12px;color:var(--verde-osc)">_ sin tickets todavía</div>';return;}
+    box.innerHTML=tickets.map(function(t){
       var fecha=new Date(t.fecha*1000).toLocaleString("es-MX");
-      if(t.tipo==="foto"){
-        return '<div class="ticket"><div class="fecha">📷 Foto — '+fecha+'</div>'+t.caption.replace(/<[^>]+>/g,'')+'<br><button class="btn" style="margin-top:6px;font-size:11px" onclick="verFoto(\''+t.file_id+'\')">🔍 Ver foto</button><div id="foto-'+t.file_id+'" style="margin-top:6px"></div></div>';
-      }else{
-        return '<div class="ticket"><div class="fecha">📝 '+fecha+'</div>'+t.texto.replace(/<[^>]+>/g,'')+'</div>';
-      }
+      var id="T-"+t.mid;
+      var res=ticketsResueltos.includes(id);
+      var txt=t.tipo==="foto"?t.caption:t.texto;
+      var acc="<div class='acciones'>"+
+        (t.tipo==="foto"?"<button class='btn' onclick='verFoto(""+t.file_id+"")'>🔍 Ver foto</button>":"")+
+        "<button class='btn' onclick='copiarDatos(""+id+"",""+txt.replace(/"/g,"'").replace(/
+/g," ")+"")'>📋 Copiar</button>"+
+        "<button class='btn' onclick='marcarResuelto(""+id+"")'>"+(res?"✅ Resuelto":"⏳ Marcar resuelto")+"</button>"+
+        "</div>";
+      return '<div class="ticket'+(res?" resuelto":"")+'"><div class="fecha">'+(t.tipo==="foto"?"📷":"📝")+' '+fecha+' | ID: '+id+'</div>'+txt.replace(/<[^>]+>/g,"")+acc+(t.tipo==="foto"?'<div id="foto-'+t.file_id+'" style="margin-top:6px"></div>':"")+"</div>";
     }).join("");
-  }catch(e){
-    box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ '+e.message+'</div>';
-  }
+  }catch(e){box.innerHTML='<div style="font-size:12px;color:var(--rojo)">❌ '+e.message+'</div>';}
 }
 
 async function verFoto(file_id){
@@ -490,6 +616,270 @@ async function verFoto(file_id){
 })();
 
 
+
+// ===== TEMAS =====
+const TEMAS=["verde","rojo","purpura","azul","amarillo"];
+function aplicarTema(){
+  var t=localStorage.getItem("temaDiag")||"verde";
+  document.body.className="tema-"+t;
+}
+function cambiarTema(){
+  var t=localStorage.getItem("temaDiag")||"verde";
+  var idx=TEMAS.indexOf(t);
+  var sig=TEMAS[(idx+1)%TEMAS.length];
+  localStorage.setItem("temaDiag",sig);
+  aplicarTema();
+  notificar("🎨 Tema cambiado: "+sig.toUpperCase());
+}
+aplicarTema();
+
+// ===== NOTIFICACIONES =====
+async function toggleNotif(){
+  if(Notification.permission==="granted"){
+    if(localStorage.getItem("notifActivas")==="1"){
+      localStorage.setItem("notifActivas","0");
+      document.getElementById("btnNotif").textContent="🔔 NOTIF: OFF";
+      document.getElementById("btnNotif").style.opacity="0.6";
+    }else{
+      localStorage.setItem("notifActivas","1");
+      document.getElementById("btnNotif").textContent="🔔 NOTIF: ON";
+      document.getElementById("btnNotif").style.opacity="1";
+    }
+  }else{
+    var p=await Notification.requestPermission();
+    if(p==="granted"){
+      localStorage.setItem("notifActivas","1");
+      document.getElementById("btnNotif").textContent="🔔 NOTIF: ON";
+      document.getElementById("btnNotif").style.opacity="1";
+      notificar("🔔 Notificaciones activadas");
+    }
+  }
+}
+function notificar(msg){
+  if(localStorage.getItem("notifActivas")!=="1")return;
+  if(Notification.permission!=="granted")return;
+  try{new Notification("GHOST Diag",{body:msg,icon:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>"});}catch(e){}
+}
+
+// ===== CRONÓMETRO =====
+var segRestantes=300;
+function tickCrono(){
+  var m=Math.floor(segRestantes/60);
+  var s=segRestantes%60;
+  var el=document.getElementById("cronometro");
+  if(el)el.textContent="⏱️ "+m+":"+(s<10?"0":"")+s;
+  if(segRestantes>0)segRestantes--;
+}
+function resetCrono(){
+  segRestantes=300;
+}
+setInterval(tickCrono,1000);
+tickCrono();
+
+// ===== CAPTURA DE PANTALLA =====
+async function capturarPantalla(){
+  try{
+    if(!document.getElementById("html2canvas-cdn")){
+      var s=document.createElement("script");
+      s.id="html2canvas-cdn";
+      s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+      document.head.appendChild(s);
+      await new Promise(r=>s.onload=r);
+    }
+    var canvas=await html2canvas(document.getElementById("panel"));
+    var a=document.createElement("a");
+    a.href=canvas.toDataURL("image/png");
+    a.download="ghost-diag-"+Date.now()+".png";
+    a.click();
+    notificar("📸 Captura guardada");
+  }catch(e){alert("❌ Error al capturar: "+e.message);}
+}
+
+// ===== HOOK RESET CRONO AL ENTRAR =====
+const _entrarOrig=window.entrar;
+window.entrar=function(){
+  _entrarOrig();
+  if(!document.getElementById("panel").classList.contains("oculto")){
+    resetCrono();
+    aplicarTema();
+    if(localStorage.getItem("notifActivas")==="1" && Notification.permission==="granted"){
+      document.getElementById("btnNotif").textContent="🔔 NOTIF: ON";
+    }
+  }
+};
+
+
+// ===== SOPORTE 24/7 =====
+async function enviarSoporte(){
+  var cli=document.getElementById("sopCliente").value.trim();
+  var urg=document.getElementById("sopUrgencia").value;
+  var msg=document.getElementById("sopMsg").value.trim();
+  var foto=document.getElementById("sopFoto");
+  if(!msg){alert("Escribe tu problema");return;}
+  var btn=document.getElementById("btnSop");
+  var m=document.getElementById("msgSop");
+  btn.disabled=true;btn.textContent="⏳ enviando...";m.textContent="";
+  var id="S-"+Date.now().toString(36).toUpperCase();
+  var emojiU=urg==="ALTA"?"🔴":urg==="MEDIA"?"🟡":"🟢";
+  var texto="💬 <b>NUEVO SOPORTE</b>\n<b>ID:</b> "+id+"\n<b>Cliente:</b> "+(cli||"Anónimo")+"\n<b>Urgencia:</b> "+emojiU+" "+urg+"\n<b>Mensaje:</b> "+msg+"\n<b>Fecha:</b> "+new Date().toLocaleString("es-MX");
+  try{
+    await fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT_DIAG,text:texto,parse_mode:"HTML"})});
+    if(foto.files&&foto.files[0]){
+      var reader=new FileReader();
+      reader.onload=async function(ev){
+        try{
+          var blob=await dataURLtoBlob(ev.target.result);
+          var fd=new FormData();
+          fd.append("chat_id",CHAT_DIAG);
+          fd.append("photo",blob,"problema.jpg");
+          fd.append("caption","📷 Ticket "+id+" - "+(cli||"Anónimo"));
+          await fetch(API+"/sendPhoto",{method:"POST",body:fd});
+        }catch(e){}
+      };
+      reader.readAsDataURL(foto.files[0]);
+    }
+    m.textContent="✅ Mensaje enviado. ID: "+id+" - Recibirás respuesta pronto.";
+    m.style.color="var(--verde)";
+    document.getElementById("sopMsg").value="";
+    foto.value="";
+    notificar("💬 Soporte enviado: "+id);
+  }catch(e){
+    m.textContent="❌ "+e.message;
+    m.style.color="var(--rojo-neon)";
+  }
+  btn.disabled=false;btn.textContent="📩 ENVIAR AL SOPORTE";
+}
+
+// ===== STATS =====
+async function cargarStats(){
+  var el=document.getElementById("stats");
+  el.innerHTML="⏳ cargando...";
+  try{
+    var r=await fetch(API+"/getUpdates?limit=100&timeout=0");
+    var j=await r.json();
+    if(!j.ok){el.innerHTML="❌ "+j.description;return;}
+    var CHATS_V=["-1004487963136","-5412631100"];
+    var total=0,fotos=0,tickets=0,soporte=0,ult24=0;
+    var ahora=Math.floor(Date.now()/1000);
+    var updates=j.result||[];
+    updates.forEach(function(u){
+      var m=u.message||u.channel_post;
+      if(!m||!CHATS_V.includes(String(m.chat.id)))return;
+      total++;
+      if(m.photo)fotos++;
+      if(m.text&&m.text.indexOf("NUEVO TICKET")!==-1)tickets++;
+      if(m.text&&m.text.indexOf("NUEVO SOPORTE")!==-1)soporte++;
+      if(m.date>ahora-86400)ult24++;
+    });
+    el.innerHTML=
+      "📊 <b>Total mensajes del grupo:</b> "+total+"<br>"+
+      "📷 <b>Fotos:</b> "+fotos+"<br>"+
+      "🎫 <b>Tickets:</b> "+tickets+"<br>"+
+      "💬 <b>Soporte:</b> "+soporte+"<br>"+
+      "📅 <b>Últimas 24h:</b> "+ult24+"<br>"+
+      "<div style='margin-top:8px;font-size:10px;color:var(--verde-osc)'>Actualizado: "+new Date().toLocaleTimeString("es-MX")+"</div>";
+  }catch(e){el.innerHTML="❌ "+e.message;}
+}
+
+// ===== GESTIÓN DE TICKETS (marcar resuelto + copiar) =====
+var ticketsResueltos=JSON.parse(localStorage.getItem("ticketsResueltos")||"[]");
+function marcarResuelto(id){
+  if(!ticketsResueltos.includes(id))ticketsResueltos.push(id);
+  localStorage.setItem("ticketsResueltos",JSON.stringify(ticketsResueltos));
+  notificar("✅ Ticket "+id+" resuelto");
+  cargarTickets();
+}
+function copiarDatos(id, texto){
+  navigator.clipboard.writeText(texto).then(function(){
+    notificar("📋 Copiado");
+  });
+}
+
+// ===== SOPORTE 24/7 =====
+async function enviarSoporte(){
+  var cli=document.getElementById("sopCliente").value.trim();
+  var urg=document.getElementById("sopUrgencia").value;
+  var msg=document.getElementById("sopMsg").value.trim();
+  var foto=document.getElementById("sopFoto");
+  if(!msg){alert("Escribe tu problema");return;}
+  var btn=document.getElementById("btnSop");
+  var m=document.getElementById("msgSop");
+  btn.disabled=true;btn.textContent="⏳ enviando...";m.textContent="";
+  var id="S-"+Date.now().toString(36).toUpperCase();
+  var emojiU=urg==="ALTA"?"🔴":urg==="MEDIA"?"🟡":"🟢";
+  var texto="💬 <b>NUEVO SOPORTE</b>\n<b>ID:</b> "+id+"\n<b>Cliente:</b> "+(cli||"Anónimo")+"\n<b>Urgencia:</b> "+emojiU+" "+urg+"\n<b>Mensaje:</b> "+msg+"\n<b>Fecha:</b> "+new Date().toLocaleString("es-MX");
+  try{
+    await fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT_DIAG,text:texto,parse_mode:"HTML"})});
+    if(foto.files&&foto.files[0]){
+      var reader=new FileReader();
+      reader.onload=async function(ev){
+        try{
+          var blob=await dataURLtoBlob(ev.target.result);
+          var fd=new FormData();
+          fd.append("chat_id",CHAT_DIAG);
+          fd.append("photo",blob,"problema.jpg");
+          fd.append("caption","📷 Ticket "+id+" - "+(cli||"Anónimo"));
+          await fetch(API+"/sendPhoto",{method:"POST",body:fd});
+        }catch(e){}
+      };
+      reader.readAsDataURL(foto.files[0]);
+    }
+    m.textContent="✅ Mensaje enviado. ID: "+id+" - Recibirás respuesta pronto.";
+    m.style.color="var(--verde)";
+    document.getElementById("sopMsg").value="";
+    foto.value="";
+    notificar("💬 Soporte enviado: "+id);
+  }catch(e){
+    m.textContent="❌ "+e.message;
+    m.style.color="var(--rojo-neon)";
+  }
+  btn.disabled=false;btn.textContent="📩 ENVIAR AL SOPORTE";
+}
+
+// ===== STATS =====
+async function cargarStats(){
+  var el=document.getElementById("stats");
+  el.innerHTML="⏳ cargando...";
+  try{
+    var r=await fetch(API+"/getUpdates?limit=100&timeout=0");
+    var j=await r.json();
+    if(!j.ok){el.innerHTML="❌ "+j.description;return;}
+    var CHATS_V=["-1004487963136","-5412631100"];
+    var total=0,fotos=0,tickets=0,soporte=0,ult24=0;
+    var ahora=Math.floor(Date.now()/1000);
+    var updates=j.result||[];
+    updates.forEach(function(u){
+      var m=u.message||u.channel_post;
+      if(!m||!CHATS_V.includes(String(m.chat.id)))return;
+      total++;
+      if(m.photo)fotos++;
+      if(m.text&&m.text.indexOf("NUEVO TICKET")!==-1)tickets++;
+      if(m.text&&m.text.indexOf("NUEVO SOPORTE")!==-1)soporte++;
+      if(m.date>ahora-86400)ult24++;
+    });
+    el.innerHTML=
+      "📊 <b>Total mensajes del grupo:</b> "+total+"<br>"+
+      "📷 <b>Fotos:</b> "+fotos+"<br>"+
+      "🎫 <b>Tickets:</b> "+tickets+"<br>"+
+      "💬 <b>Soporte:</b> "+soporte+"<br>"+
+      "📅 <b>Últimas 24h:</b> "+ult24+"<br>"+
+      "<div style='margin-top:8px;font-size:10px;color:var(--verde-osc)'>Actualizado: "+new Date().toLocaleTimeString("es-MX")+"</div>";
+  }catch(e){el.innerHTML="❌ "+e.message;}
+}
+
+// ===== GESTIÓN DE TICKETS (marcar resuelto + copiar) =====
+var ticketsResueltos=JSON.parse(localStorage.getItem("ticketsResueltos")||"[]");
+function marcarResuelto(id){
+  if(!ticketsResueltos.includes(id))ticketsResueltos.push(id);
+  localStorage.setItem("ticketsResueltos",JSON.stringify(ticketsResueltos));
+  notificar("✅ Ticket "+id+" resuelto");
+  cargarTickets();
+}
+function copiarDatos(id, texto){
+  navigator.clipboard.writeText(texto).then(function(){
+    notificar("📋 Copiado");
+  });
+}
 // ===== CONTROL DEL SITIO (solo actualización local) =====
 function forzarActualizacion(){
   var btn=document.getElementById("btnAct");
