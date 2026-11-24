@@ -696,14 +696,15 @@ async function capturarPantalla(){
 }
 
 // ===== HOOK RESET CRONO AL ENTRAR =====
-const _entrarOrig=window.entrar;
-window.entrar=function(){
-  _entrarOrig();
+var _entrarOrig = entrar;
+window.entrar = function(){
+  if(typeof _entrarOrig==="function")_entrarOrig();
   if(!document.getElementById("panel").classList.contains("oculto")){
     resetCrono();
     aplicarTema();
     if(localStorage.getItem("notifActivas")==="1" && Notification.permission==="granted"){
-      document.getElementById("btnNotif").textContent="🔔 NOTIF: ON";
+      var nb=document.getElementById("btnNotif");
+      if(nb)nb.textContent="🔔 NOTIF: ON";
     }
   }
 };
