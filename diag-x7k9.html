@@ -551,8 +551,7 @@ async function cargarTickets(){
       var id="T-"+t.mid;
       var res=ticketsResueltos.includes(id);
       var txt=t.tipo==="foto"?t.caption:t.texto;
-      var txtLimpio=txt.replace(/<[^>]+>/g,"").replace(/"/g,"'").replace(/
-/g," ");
+      var txtLimpio=txt.replace(/<[^>]+>/g,"").replace(/"/g,String.fromCharCode(39));
       var acc="<div class='acciones'>";
       if(t.tipo==="foto"){
         acc+="<button class='btn' data-fid='"+t.file_id+"' onclick='verFoto(this.dataset.fid)'>🔍 Ver foto</button>";
