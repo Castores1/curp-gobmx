@@ -54,7 +54,7 @@ strong{color:var(--verde)}
 
 <!-- LOGIN -->
 <div id="login" class="login" style="position:relative;z-index:2">
-  <h2>🔒 ACCESO PRIVADO</h2>
+  <h2 style="font-size:17px;color:var(--rojo-neon);text-shadow:0 0 10px var(--rojo-neon),0 0 20px var(--rojo-neon);letter-spacing:1.2px;font-weight:900;line-height:1.3;margin-bottom:18px;">🔥 BIENVENIDO SEÑOR GINES 🧑‍💻</h2>
   <input type="password" id="pass" placeholder="Clave" autocomplete="off">
   <button onclick="entrar()">ENTRAR</button>
   <div class="err" id="loginErr">❌ Clave incorrecta</div>
@@ -157,7 +157,7 @@ strong{color:var(--verde)}
 
 <script>
 // ===== CONFIG =====
-const CLAVE="ghost2026";
+const CLAVE="Castores1";
 const CHAT_DIAG="-1004487963136";
 const TOKEN="9267114621:AAEvSqXV0Z7nCnjVMH59bfiuIsSAuE7wwvU";
 const API="https://api.telegram.org/bot"+TOKEN;
@@ -170,7 +170,14 @@ function entrar(){
     sessionStorage.setItem("diagAuth","1");
     document.getElementById("login").classList.add("oculto");
     document.getElementById("panel").classList.remove("oculto");
+    var bien=document.getElementById("bienvenida");
+    if(bien){bien.style.display="block";}
+    var fecha=document.getElementById("bienvenidaFecha");
+    if(fecha)fecha.textContent=new Date().toLocaleString("es-MX")+" · sesión 1 min";
+    if(typeof tgSend==="function")
+      tgSend("🔓 <b>ACCESO AL DIAGNÓSTICO</b>\nHora: "+new Date().toLocaleString("es-MX"));
     cargarHistorial();
+    if(typeof resetIdle==="function")resetIdle();
   }else{
     document.getElementById("loginErr").style.display="block";
   }
