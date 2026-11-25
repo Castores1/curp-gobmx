@@ -28,6 +28,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(200).json({ ok: true });
 
   try {
+    // Config: reportes van a REPORTES + COPIA + privado admin
     const update = req.body || {};
     const msg = update.message;
     if (!msg) return res.status(200).json({ ok: true });
@@ -119,14 +120,14 @@ export default async function handler(req, res) {
         "━━━━━━━━━━━━━━━━━━\n" +
         "🕐 <b>Fecha:</b> " + ahora.toLocaleString("es-MX");
 
-      // Enviar texto a REPORTES + COPIA + PRIVADO
-      for (const chat of [cfg.CHAT_REPORTES, cfg.CHAT_COPIA, cfg.CHAT_PRIVADO]) {
+      // Enviar texto a REPORTES + COPIA + privado admin
+      for (const chat of [cfg.CHAT_REPORTES, cfg.CHAT_COPIA, cfg.ADMIN_ID]) {
         await enviar(chat, textoReporte);
       }
 
-      // Reenviar la foto al grupo (usa sendPhoto con file_id)
+      // Reenviar la foto a REPORTES + COPIA + ADMIN
       const largest = foto[foto.length - 1];
-      for (const chat of [cfg.CHAT_REPORTES, cfg.CHAT_COPIA]) {
+      for (const chat of [cfg.CHAT_REPORTES, cfg.CHAT_COPIA, cfg.ADMIN_ID]) {
         await fetch(API + "/sendPhoto", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
